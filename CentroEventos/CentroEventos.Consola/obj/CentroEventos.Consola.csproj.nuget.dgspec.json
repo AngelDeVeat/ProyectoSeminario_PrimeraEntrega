@@ -1,30 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\CentroEventos\\CentroEventos.Consola\\CentroEventos.Consola.csproj": {}
+    "C:\\Users\\Usuario\\proyecto\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Consola\\CentroEventos.Consola.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj": {
+    "C:\\Users\\Usuario\\proyecto\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj",
+        "projectUniqueName": "C:\\Users\\Usuario\\proyecto\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj",
         "projectName": "CentroEventos.Aplicacion",
-        "projectPath": "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj",
+        "projectPath": "C:\\Users\\Usuario\\proyecto\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj",
         "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\CentroEventos\\CentroEventos.Aplicacion\\obj\\",
+        "outputPath": "C:\\Users\\Usuario\\proyecto\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Aplicacion\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -63,42 +58,37 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.407/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\CentroEventos\\CentroEventos.Consola\\CentroEventos.Consola.csproj": {
+    "C:\\Users\\Usuario\\proyecto\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Consola\\CentroEventos.Consola.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\CentroEventos\\CentroEventos.Consola\\CentroEventos.Consola.csproj",
+        "projectUniqueName": "C:\\Users\\Usuario\\proyecto\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Consola\\CentroEventos.Consola.csproj",
         "projectName": "CentroEventos.Consola",
-        "projectPath": "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\CentroEventos\\CentroEventos.Consola\\CentroEventos.Consola.csproj",
+        "projectPath": "C:\\Users\\Usuario\\proyecto\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Consola\\CentroEventos.Consola.csproj",
         "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\CentroEventos\\CentroEventos.Consola\\obj\\",
+        "outputPath": "C:\\Users\\Usuario\\proyecto\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Consola\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj": {
-                "projectPath": "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj"
+              "C:\\Users\\Usuario\\proyecto\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj": {
+                "projectPath": "C:\\Users\\Usuario\\proyecto\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj"
               },
-              "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\CentroEventos\\CentroEventos.Repositorios\\CentroEventos.Repositorios.csproj": {
-                "projectPath": "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\CentroEventos\\CentroEventos.Repositorios\\CentroEventos.Repositorios.csproj"
+              "C:\\Users\\Usuario\\proyecto\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Repositorios\\CentroEventos.Repositorios.csproj": {
+                "projectPath": "C:\\Users\\Usuario\\proyecto\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Repositorios\\CentroEventos.Repositorios.csproj"
               }
             }
           }
@@ -133,39 +123,34 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.407/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\CentroEventos\\CentroEventos.Repositorios\\CentroEventos.Repositorios.csproj": {
+    "C:\\Users\\Usuario\\proyecto\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Repositorios\\CentroEventos.Repositorios.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\CentroEventos\\CentroEventos.Repositorios\\CentroEventos.Repositorios.csproj",
+        "projectUniqueName": "C:\\Users\\Usuario\\proyecto\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Repositorios\\CentroEventos.Repositorios.csproj",
         "projectName": "CentroEventos.Repositorios",
-        "projectPath": "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\CentroEventos\\CentroEventos.Repositorios\\CentroEventos.Repositorios.csproj",
+        "projectPath": "C:\\Users\\Usuario\\proyecto\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Repositorios\\CentroEventos.Repositorios.csproj",
         "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\CentroEventos\\CentroEventos.Repositorios\\obj\\",
+        "outputPath": "C:\\Users\\Usuario\\proyecto\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Repositorios\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj": {
-                "projectPath": "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj"
+              "C:\\Users\\Usuario\\proyecto\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj": {
+                "projectPath": "C:\\Users\\Usuario\\proyecto\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj"
               }
             }
           }
@@ -200,7 +185,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.407/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
