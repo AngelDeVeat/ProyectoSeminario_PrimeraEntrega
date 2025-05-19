@@ -1,13 +1,15 @@
-public class RepositorioActividadDeportivaTXT : IRepositorioEventoDeportiva
+using CentroEventos.Aplicacion;
+
+public class RepositorioActividadDeportivaTXT : IRepositorioEventoDeportivo
 {
     readonly string _nombreArch = "ActividadesDeportivas.txt";
     static int _ID = 0;
 
-    public void AgregarEventoDeportivo(EventoDeportiva evento)
+    public void AgregarEventoDeportivo(EventoDeportivo evento)
     {
         using var sw = new StreamWriter(_nombreArch, true);
         _ID++;
-        evento.ID=_ID;
+        evento.ID = _ID;
         sw.WriteLine(evento.ID);
         sw.WriteLine(evento.Nombre);
         sw.WriteLine(evento.Descripcion);
@@ -19,42 +21,42 @@ public class RepositorioActividadDeportivaTXT : IRepositorioEventoDeportiva
         sw.WriteLine(evento.ResponsableID);
     }
 
-    public List<EventoDeportiva> ListarEventosDeportivos()
+    public List<EventoDeportivo> ListarEventosDeportivos()
     {
-        var resultado = new List<EventoDeportiva>();
+        var resultado = new List<EventoDeportivo>();
         using var sr = new StreamReader(_nombreArch);
         while (!sr.EndOfStream)
         {
-            var evento = new EventoDeportiva();
-            evento.ID=int.Parse(sr.ReadLine()?? "");
-            evento.Nombre=sr.ReadLine()??"";
-            evento.Descripcion=sr.ReadLine()?? "";
-            evento.FechaHoraInicio=DateTime.Parse(sr.ReadLine()?? "");
-            evento.DuracionHoras=double.Parse(sr.ReadLine()?? "");
-            evento.DiasDisponibles=int.Parse(sr.ReadLine()?? "");
-            evento.CupoMaximo=int.Parse(sr.ReadLine()?? "");
-            evento.CuposOcupados=int.Parse(sr.ReadLine()?? "");
-            evento.ResponsableID=int.Parse(sr.ReadLine()?? "");
+            var evento = new EventoDeportivo();
+            evento.ID = int.Parse(sr.ReadLine() ?? "");
+            evento.Nombre = sr.ReadLine() ?? "";
+            evento.Descripcion = sr.ReadLine() ?? "";
+            evento.FechaHoraInicio = DateTime.Parse(sr.ReadLine() ?? "");
+            evento.DuracionHoras = double.Parse(sr.ReadLine() ?? "");
+            evento.DiasDisponibles = int.Parse(sr.ReadLine() ?? "");
+            evento.CupoMaximo = int.Parse(sr.ReadLine() ?? "");
+            evento.CuposOcupados = int.Parse(sr.ReadLine() ?? "");
+            evento.ResponsableID = int.Parse(sr.ReadLine() ?? "");
             resultado.Add(evento);
         }
         return resultado;
     }
 
-    public EventoDeportiva? GetEventoDeportivo(int ID)
+    public EventoDeportivo? GetEventoDeportivo(int ID)
     {
         using var sr = new StreamReader(_nombreArch);
         while (!sr.EndOfStream)
         {
-            var evento = new EventoDeportiva();
-            evento.ID=int.Parse(sr.ReadLine()?? "");
-            evento.Nombre=sr.ReadLine()??"";
-            evento.Descripcion=sr.ReadLine()?? "";
-            evento.FechaHoraInicio=DateTime.Parse(sr.ReadLine()?? "");
-            evento.DuracionHoras=double.Parse(sr.ReadLine()?? "");
-            evento.DiasDisponibles=int.Parse(sr.ReadLine()?? "");
-            evento.CupoMaximo=int.Parse(sr.ReadLine()?? "");
-            evento.CuposOcupados=int.Parse(sr.ReadLine()?? "");
-            evento.ResponsableID=int.Parse(sr.ReadLine()?? "");
+            var evento = new EventoDeportivo();
+            evento.ID = int.Parse(sr.ReadLine() ?? "");
+            evento.Nombre = sr.ReadLine() ?? "";
+            evento.Descripcion = sr.ReadLine() ?? "";
+            evento.FechaHoraInicio = DateTime.Parse(sr.ReadLine() ?? "");
+            evento.DuracionHoras = double.Parse(sr.ReadLine() ?? "");
+            evento.DiasDisponibles = int.Parse(sr.ReadLine() ?? "");
+            evento.CupoMaximo = int.Parse(sr.ReadLine() ?? "");
+            evento.CuposOcupados = int.Parse(sr.ReadLine() ?? "");
+            evento.ResponsableID = int.Parse(sr.ReadLine() ?? "");
 
             if (evento.ID == ID)
             {
@@ -64,7 +66,7 @@ public class RepositorioActividadDeportivaTXT : IRepositorioEventoDeportiva
         return null;
     }
 
-    public void ModificarEventoDeportivo(EventoDeportiva evento)
+    public void ModificarEventoDeportivo(EventoDeportivo evento)
     {
         var lineas = File.ReadAllLines(_nombreArch);
         using var sw = new StreamWriter(_nombreArch, false);
@@ -74,15 +76,15 @@ public class RepositorioActividadDeportivaTXT : IRepositorioEventoDeportiva
             int id = int.Parse(lineas[i]);
             if (id == evento.ID)
             {
-                 sw.WriteLine(evento.ID);
-                 sw.WriteLine(evento.Nombre);
-                 sw.WriteLine(evento.Descripcion);
-                 sw.WriteLine(evento.FechaHoraInicio);
-                 sw.WriteLine(evento.DuracionHoras);
-                 sw.WriteLine(evento.DiasDisponibles);
-                 sw.WriteLine(evento.CupoMaximo);
-                 sw.WriteLine(evento.CuposOcupados);
-                 sw.WriteLine(evento.ResponsableID);
+                sw.WriteLine(evento.ID);
+                sw.WriteLine(evento.Nombre);
+                sw.WriteLine(evento.Descripcion);
+                sw.WriteLine(evento.FechaHoraInicio);
+                sw.WriteLine(evento.DuracionHoras);
+                sw.WriteLine(evento.DiasDisponibles);
+                sw.WriteLine(evento.CupoMaximo);
+                sw.WriteLine(evento.CuposOcupados);
+                sw.WriteLine(evento.ResponsableID);
             }
             else
             {

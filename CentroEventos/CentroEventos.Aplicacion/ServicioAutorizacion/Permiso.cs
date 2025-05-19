@@ -1,4 +1,6 @@
-public enum Permisos{
+namespace CentroEventos.Aplicacion;
+
+public enum Permiso{
     EventoAlta,
     EventoModificacion,
     EventoBaja,
@@ -8,8 +10,4 @@ public enum Permisos{
     UsuarioAlta,
     UsuarioBaja,
     UsuarioModificacion
-}
-public interface IServicioAutorizacion{
-    public bool PoseeElPermiso(int IDUsuario, Permisos permiso);
-
 }
