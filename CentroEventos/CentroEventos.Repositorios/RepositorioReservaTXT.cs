@@ -1,4 +1,9 @@
-public class RepositorioReservaTXT : IRepositorioReserva{
+//using CentroEventos.Aplicacion;
+
+using CentroEventos.Aplicacion;
+
+public class RepositorioReservaTXT : IRepositorioReserva
+{
     readonly string _nombreArch = "Reservas.txt";
     static int _ID = 0;
 

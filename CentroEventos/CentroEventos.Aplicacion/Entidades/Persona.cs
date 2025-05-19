@@ -1,4 +1,4 @@
-class Persona{
+public class Persona{
     public int id{get; set;}
     public int NumeroDeCarnet{get; set;}
     public string Nombre{get; set;}

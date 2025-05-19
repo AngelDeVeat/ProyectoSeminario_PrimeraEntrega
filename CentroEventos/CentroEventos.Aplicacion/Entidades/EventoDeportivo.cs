@@ -1,12 +1,12 @@
 
-public class ActividadDeportiva{
+public class EventoDeportivo{
     public int ID{get; set;}
     public string Nombre {get; set;}="";
     public int DiasDisponibles{get; set;}
     public int CuposOcupados{get; set;}
     public int CupoMaximo{get;  set;}
-    public ActividadDeportiva(){}
-     public ActividadDeportiva( string nombre, int diasDisponibles, int cupoMaximo)
+    public EventoDeportivo(){}
+     public EventoDeportivo( string nombre, int diasDisponibles, int cupoMaximo)
     {
         Nombre = nombre;
         DiasDisponibles = diasDisponibles;
