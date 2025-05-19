@@ -41,7 +41,7 @@ public class ListarEventosConCupoDisponibleUseCase
 
     public List<EventoDeportivo> Ejecutar()
     {
-        List<Reserva> reservas = _ireserva.GetReserva();
+        List<Reserva> reservas = _ireserva.ListarReservas();
         List<CampoLista> eventos_temp = new List<CampoLista>();
 
         foreach (Reserva idx in reservas)

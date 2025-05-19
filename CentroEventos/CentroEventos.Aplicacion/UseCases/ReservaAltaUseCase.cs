@@ -36,7 +36,7 @@ public class ReservaAltaUseCase
             throw new DuplicadoException("La persona que intenta reservar este evento deportivo ya tiene reservado dicho evento");
 
         reserva.FechaAltaReserva = DateTime.Now;
-        // TODO: reserva.EstadoAsistencia =
+        reserva.EstadoAsistencia =
 
         _ireserva.AgregarReserva(reserva);
     }
