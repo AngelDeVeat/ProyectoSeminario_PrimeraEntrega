@@ -22,6 +22,8 @@ public class ListarAsistenciaAEventoUseCase
             if (idx.EventoDeportivoID == evento_id)
             {
                 Persona? persona = _ipersona.GetPersona(idx.PersonaID);
+                // Esto lo tenes que arreglar emi, revisa si estado asistencia es igual al valor Presente
+                // en base a como lo hayas implementado vos 
                 if (persona != null && idx.EstadoAsistencia == Presente)
                     asistentes.Add(persona);
             }

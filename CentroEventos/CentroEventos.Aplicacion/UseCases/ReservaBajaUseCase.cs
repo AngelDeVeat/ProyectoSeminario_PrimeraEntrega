@@ -12,7 +12,7 @@ public class ReservaBajaUseCase
         _autorizacion = autorizacion;
     }
 
-    // DECILE A EMI QUE EN LOS REPOSITORIOS NO DEBERIA REVIZAR SI EXISTE EL ID ENVIADO A LA HORA DE BORRAR
+    
     public void Ejecutar(int id, int IdUsuario)
     {
         Permiso permiso = new Permiso();
