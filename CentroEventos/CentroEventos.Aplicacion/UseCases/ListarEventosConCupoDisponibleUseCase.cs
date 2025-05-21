@@ -43,6 +43,18 @@ public class ListarEventosConCupoDisponibleUseCase
     {
         List<Reserva> reservas = _ireserva.ListarReservas();
         List<CampoLista> eventos_temp = new List<CampoLista>();
+        List<EventoDeportivo> eventos_fin = new List<EventoDeportivo>();
+        if (reservas.Count == 0) //si no hay reservas y la fecha del evento es futura si o si tiene cupos disponibles 
+        {
+            List<EventoDeportivo> eventos = _ievento.ListarEventosDeportivos();
+            foreach (EventoDeportivo even in eventos)
+            {
+                if (even.FechaHoraInicio > DateTime.Now )
+                {
+                    eventos_fin.Add(even);
+                }
+            }
+        }
 
         foreach (Reserva idx in reservas)
         {
@@ -64,7 +76,6 @@ public class ListarEventosConCupoDisponibleUseCase
             }
         }
 
-        List<EventoDeportivo> eventos_fin = new List<EventoDeportivo>();
         foreach (CampoLista idx in eventos_temp)
         {
             if (idx.evento.CupoMaximo > idx.cantidad) eventos_fin.Add(idx.evento);

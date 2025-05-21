@@ -39,7 +39,6 @@ public class Validador_Reserva
         return r;
     }
 
-    // (decile a emi que no hace falta poner la variable cantidad de reservas)
     // revisa que el evento deportivo a reservar aun tenga cupos
     public static bool CuposDisponibles(int evento_id, IRepositorioReserva reserva, IRepositorioEventoDeportivo ed)
     {
@@ -61,7 +60,7 @@ public class Validador_Reserva
     {
         bool r = false;
 
-        if (reserva.GetEventoDeportivo(id) != null) r = true;
+        if (reserva.GetReserva(id) != null) r = true;
 
         return r;
     }

@@ -12,6 +12,6 @@ public class PersonaListadoUseCase
 
     public List<Persona> Listado()
     {
-        return _ipersona.ListarPersona();
+        return _ipersona.ListarPersonas();
     }
 }

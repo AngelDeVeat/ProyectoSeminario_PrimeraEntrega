@@ -7,9 +7,9 @@ public static class Validador_EventoDeportivo
 {
     public static bool Validar_NombreVacio(string nombre) => nombre == "";
     public static bool Validar_DescripcionVacio(string descripcion) => descripcion == "";
-    public static bool Validar_FechaCorrecta(DateTime fecha) => fecha >= DateTime.Today;
+    public static bool Validar_FechaCorrecta(DateTime fecha) => fecha >= DateTime.Now;
     public static bool isCorrect_CupoMaximo(int cupo) => cupo > 0;
-    public static bool isCorrect_DuracionHoras(int horas) => horas > 0;
+    public static bool isCorrect_DuracionHoras(double horas) => horas > 0;
     // Recibe el id del responsable del evento y revisa si esa id existe en el repositorio de personas 
     public static bool exist_ResponsableId(int id, IRepositorioPersona persona)
     {
@@ -20,7 +20,7 @@ public static class Validador_EventoDeportivo
         int i = 0;
         while (!r && i < personas.Count)
         {
-            if (personas[i].id == id) r = true;
+            if (personas[i].ID == id) r = true;
             else i++;
         }
 

@@ -7,7 +7,7 @@ public static class Validador_Persona
     public static bool isEmpty_Nombre(string nombre) => nombre == "";
     public static bool isEmpty_Apellido(string apellido) => apellido == "";
     public static bool isEmpty_Email(string email) => email == "";
-    public static bool isEmpty_DNI(int dni) => dni != 0;
+    public static bool isEmpty_DNI(int dni) => dni == 0;
 
     // Recibe un DNI y revisa si ya existe una persona en el repositorio de personas con ese dni 
     public static bool isUnique_DNI(int dni, IRepositorioPersona persona)
