@@ -25,7 +25,14 @@ public class Persona{
     }
     public override string ToString()
     {
-        return " ID : " + ID + ", numero de carnet : " + DNI + ", Nombre : " + Nombre + ", Apellido : " + Apellido + ",  direccion : " + Direccion + ", telefono : " + Telefono + ", correo electronico : " + Email;
+        return $"[ID : {ID}] \n" +
+               $"[DNI : {DNI}] \n" +
+               $"[Nombre : {Nombre}]\n" +
+               $"[Apellido : {Apellido}]\n" +
+               $"[Direccion : {Direccion}]\n" +
+               $"[Telefono : {Telefono}]\n" +
+               $"[Facultad: {Facultad}]\n" +
+               $"[Email : {Email}]\n";
     }
     
 }
