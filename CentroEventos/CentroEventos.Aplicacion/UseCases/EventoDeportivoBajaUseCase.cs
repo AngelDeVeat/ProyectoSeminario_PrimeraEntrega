@@ -21,7 +21,7 @@ public class EventoDeportivoBajaUseCase
             throw new FalloAutorizacionException(IdUsuario, "Baja");
 
         if (!Validador_EventoDeportivo.exist_ID(id, _ievento))
-            throw new EntidadNotFoundException("El id al que se esta intentando dar de baja no existe");
+            throw new EntidadNotFoundException("El id del evento deportivo al que se esta intentando dar de baja no existe");
 
         if (Validador_EventoDeportivo.hasReservas(id, _ireserva))
             throw new OperacionInvalidaException("Se ha intentado eliminar un evento deportivo que posee reservas");

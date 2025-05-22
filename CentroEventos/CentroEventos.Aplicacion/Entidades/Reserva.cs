@@ -22,6 +22,10 @@ public class Reserva{
     }
     public override string ToString()
     {
-        return "ID : " + ID + ", Persona : " + PersonaID + ", Actividad Depotiva : " + EventoDeportivoID + " Fecha de la Reserva : " + FechaAltaReserva + " Estado de Asistencia : " + EstadoAsistencia;
+        return $"[ID : {ID}]\n" +
+               $"[Persona ID : {PersonaID}]\n" +
+               $"[Evento Deportivo ID : {EventoDeportivoID}]\n" +
+               $"[Fecha de la Reserva : {FechaAltaReserva}]\n" +
+               $"[Estado de Asistencia : {EstadoAsistencia}]\n";
     }
 }

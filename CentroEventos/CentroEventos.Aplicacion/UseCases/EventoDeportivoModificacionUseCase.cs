@@ -21,7 +21,7 @@ public class EventoDeportivoModificacionUseCase
             throw new FalloAutorizacionException(IdUsuario, "Modificacion");
 
         if (!Validador_EventoDeportivo.exist_ID(evento.ID, _ievento))
-            throw new EntidadNotFoundException("El id al que se esta intentando modificar no existe");
+            throw new EntidadNotFoundException("El id del evento deportivo al que se esta intentando modificar no existe");
       
         EventoDeportivo? to_modify = _ievento.GetEventoDeportivo(evento.ID);
         if (to_modify == null)
@@ -35,7 +35,7 @@ public class EventoDeportivoModificacionUseCase
             throw new ValidacionException("Se intento modificar a un EventoDeportivo con campo Descripcion vacio");
 
         if (!Validador_EventoDeportivo.Validar_FechaCorrecta(evento.FechaHoraInicio))
-            throw new ValidacionException("Se intento modificar a un Evento deportivo con fecha previa a la fecha actual");
+            throw new ValidacionException("Se intento modificar la fecha de un evento deportivo a una fecha previa a la actual");
 
         if (!Validador_EventoDeportivo.isCorrect_CupoMaximo(evento.CupoMaximo))
             throw new ValidacionException("Se intento modificar a un Evento Deportivo con el campo CupoMaximo menor o igual a 0");
