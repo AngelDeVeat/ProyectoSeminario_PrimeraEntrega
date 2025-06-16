@@ -1,4 +1,7 @@
-public interface IRepositorioPersona{
+namespace CentroEventos.Aplicacion;
+
+public interface IRepositorioPersona
+{
     void AgregarPersona(Persona persona);
     List<Persona> ListarPersonas();
     Persona? GetPersona(int ID);

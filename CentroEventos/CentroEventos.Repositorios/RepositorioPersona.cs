@@ -1,4 +1,5 @@
 using System;
+using CentroEventos.Aplicacion;
 
 namespace CentroEventos.Repositorios;
 
@@ -55,7 +56,7 @@ public class RepositorioPersona : IRepositorioPersona
             aModificar.Nombre = persona.Nombre;
             aModificar.Telefono = persona.Telefono;
 
-            context.SaveChanges();   
+            context.SaveChanges();
         }
     }
 
