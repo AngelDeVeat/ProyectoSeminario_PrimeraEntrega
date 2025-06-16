@@ -14,11 +14,11 @@ public class EventoDeportivoBajaUseCase
         _autorizacion = autorizacion;
     }
 
-    public void Baja(int id, int IdUsuario)
+    public void Baja(int id, Usuario usuario)
     {
         Permiso permiso = new Permiso();
-        if (!_autorizacion.PoseeElPermiso(IdUsuario, permiso))
-            throw new FalloAutorizacionException(IdUsuario, "Baja");
+        if (!_autorizacion.PoseeElPermiso(usuario.Permisos, permiso))
+            throw new FalloAutorizacionException(usuario.Nombre, "Baja");
 
         if (!Validador_EventoDeportivo.exist_ID(id, _ievento))
             throw new EntidadNotFoundException("El id del evento deportivo al que se esta intentando dar de baja no existe");

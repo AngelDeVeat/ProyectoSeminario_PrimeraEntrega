@@ -12,11 +12,11 @@ public class PersonaModificacionUseCase
         _autorizacion = autorizacion;
     }
 
-    public void Modificacion(Persona persona, int IdUsuario)
+    public void Modificacion(Persona persona, Usuario usuario)
     {
         Permiso permiso = new Permiso();
-        if (!_autorizacion.PoseeElPermiso(IdUsuario, permiso))
-            throw new FalloAutorizacionException(IdUsuario, "Modificacion");
+        if (!_autorizacion.PoseeElPermiso(usuario.Permisos, permiso))
+            throw new FalloAutorizacionException(usuario.Nombre, "Modificacion");
 
         if (!Validador_Persona.exist_ID(persona.ID, _ipersona))
             throw new EntidadNotFoundException("El id de la persona a la que se esta intentando modificar no existe");

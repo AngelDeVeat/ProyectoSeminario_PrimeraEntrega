@@ -14,11 +14,11 @@ public class EventoDeportivoAltaUseCase
         _autorizacion = autorizacion;
     }
 
-    public void Alta(EventoDeportivo evento, int IdUsuario)
+    public void Alta(EventoDeportivo evento, Usuario usuario)
     {
         Permiso permiso = new Permiso();
-        if (!_autorizacion.PoseeElPermiso(IdUsuario, permiso))
-            throw new FalloAutorizacionException(IdUsuario, "Alta");
+        if (!_autorizacion.PoseeElPermiso(usuario.Permisos, permiso))
+            throw new FalloAutorizacionException(usuario.Nombre, "Alta");
 
         if (Validador_EventoDeportivo.Validar_NombreVacio(evento.Nombre))
             throw new ValidacionException("Se intento dar alta a un EventoDeportivo con campo Nombre vacio");

@@ -12,11 +12,11 @@ public class PersonaAltaUseCase
         _autorizacion = autorizacion;
     }
 
-    public void Alta(Persona persona, int IdUsuario)
+    public void Alta(Persona persona, Usuario usuario)
     {
         Permiso permiso = new Permiso();
-        if (!_autorizacion.PoseeElPermiso(IdUsuario, permiso))
-            throw new FalloAutorizacionException(IdUsuario, "Alta");
+        if (!_autorizacion.PoseeElPermiso(usuario.Permisos, permiso))
+            throw new FalloAutorizacionException(usuario.Nombre, "Alta");
 
         if (Validador_Persona.isEmpty_Apellido(persona.Apellido))
             throw new ValidacionException("Validacion fallida debido a que el campo Apellido de la clase Persona esta vacio");

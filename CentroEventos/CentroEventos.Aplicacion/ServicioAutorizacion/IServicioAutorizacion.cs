@@ -2,6 +2,6 @@
 using CentroEventos.Aplicacion;
 
 public interface IServicioAutorizacion{
-    public bool PoseeElPermiso(int IDUsuario, Permiso permiso);
+    public bool PoseeElPermiso(List<Permiso> permisos, Permiso permiso);
 
 }

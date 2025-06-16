@@ -17,11 +17,11 @@ public class ReservaAltaUseCase
         _autorizacion = autorizacion;
     }
 
-    public void Ejecutar(Reserva reserva, int IdUsuario)
+    public void Ejecutar(Reserva reserva, Usuario usuario)
     {
         Permiso permiso = new Permiso();
-        if (!_autorizacion.PoseeElPermiso(IdUsuario, permiso))
-            throw new FalloAutorizacionException(IdUsuario, "Alta");
+        if (!_autorizacion.PoseeElPermiso(usuario.Permisos, permiso))
+            throw new FalloAutorizacionException(usuario.Nombre, "Alta");
 
         if (!Validador_Reserva.exist_PersonaId(reserva.PersonaID, _ipersona))
             throw new EntidadNotFoundException("El id de la persona que reserva no existe");

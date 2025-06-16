@@ -17,11 +17,12 @@ public class ReservaModificacionUseCase
         _autorizacion = autorizacion;
     }
 
-    public void Ejecutar(Reserva reserva, int IdUsuario)
+    public void Ejecutar(Reserva reserva, Usuario usuario)
     {
         Permiso permiso = new Permiso();
-        if (!_autorizacion.PoseeElPermiso(IdUsuario, permiso))
-            throw new FalloAutorizacionException(IdUsuario, "Modificacion");
+        permiso = Permiso.ReservaModificacion;
+        if (!_autorizacion.PoseeElPermiso(usuario.Permisos, permiso))
+            throw new FalloAutorizacionException(usuario.Nombre, "Modificacion");
 
         if (!Validador_Reserva.exist_ID(reserva.ID, _ireserva))
             throw new EntidadNotFoundException("El id de la reserva a la que se esta intentando modificar no existe");

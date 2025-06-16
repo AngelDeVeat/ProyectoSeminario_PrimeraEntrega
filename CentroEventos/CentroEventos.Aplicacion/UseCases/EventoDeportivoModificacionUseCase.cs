@@ -14,11 +14,11 @@ public class EventoDeportivoModificacionUseCase
         _autorizacion = autorizacion;
     }
 
-    public void Modificacion(EventoDeportivo evento, int IdUsuario)
+    public void Modificacion(EventoDeportivo evento, Usuario usuario)
     {
         Permiso permiso = new Permiso();
-        if (!_autorizacion.PoseeElPermiso(IdUsuario, permiso))
-            throw new FalloAutorizacionException(IdUsuario, "Modificacion");
+        if (!_autorizacion.PoseeElPermiso(usuario.Permisos, permiso))
+            throw new FalloAutorizacionException(usuario.Nombre, "Modificacion");
 
         if (!Validador_EventoDeportivo.exist_ID(evento.ID, _ievento))
             throw new EntidadNotFoundException("El id del evento deportivo al que se esta intentando modificar no existe");

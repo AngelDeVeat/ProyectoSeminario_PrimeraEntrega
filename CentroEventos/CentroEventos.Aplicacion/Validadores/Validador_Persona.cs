@@ -63,7 +63,18 @@ public static class Validador_Persona
         bool r = false;
 
         if (persona.GetPersona(id) != null) r = true;
-        
+
         return r;
+    }
+    public static bool hasEvento(int id, IRepositorioEventoDeportivo ievento)
+    {
+        bool ok = false;
+        List<EventoDeportivo> eventos = ievento.ListarEventosDeportivos();
+        foreach (EventoDeportivo e in eventos)
+        {
+            if (e.ID == id)
+                ok = true;
+        }
+        return ok;
     }
 }
