@@ -1,23 +1,27 @@
 using System.Data.Common;
 
-public class Persona{
-    public int ID{get;  set; }
-    public int DNI{get;  set;}
-    public string Nombre{get;  set;}="";
-    public string Apellido{get;  set;}="";
-    public string Direccion{get;  set;}="";
-    public string Email{get;  set;}="";
-    public Persona(){}
-     public Persona( int numeroDeCarnet, string nombre, string apellido, string direccion, string correoElectronico)
+namespace CentroEventos.Aplicacion;
+
+public class Persona
+{
+    public int ID { get; set; }
+    public int DNI { get; set; }
+    public string Nombre { get; set; } = "";
+    public string Apellido { get; set; } = "";
+    public string Telefono { get; set; } = "";
+    public string Email { get; set; } = "";
+    public Persona() { }
+    public Persona(int numeroDeCarnet, string nombre, string apellido, string telefono, string correoElectronico)
     {
         DNI = numeroDeCarnet;
         Nombre = nombre;
         Apellido = apellido;
-        Direccion = direccion;
+        Telefono = telefono;
         Email = correoElectronico;
     }
-    public Persona( int id,int numeroDeCarnet, string nombre, string apellido, string direccion,string correoElectronico): this(numeroDeCarnet, nombre, apellido, direccion, correoElectronico) {
-        ID=id;
+    public Persona(int id, int numeroDeCarnet, string nombre, string apellido, string direccion, string correoElectronico) : this(numeroDeCarnet, nombre, apellido, direccion, correoElectronico)
+    {
+        ID = id;
     }
     public override string ToString()
     {
@@ -25,8 +29,8 @@ public class Persona{
                $"[DNI : {DNI}] \n" +
                $"[Nombre : {Nombre}]\n" +
                $"[Apellido : {Apellido}]\n" +
-               $"[Direccion : {Direccion}]\n" +
+               $"[Telefono : {Telefono}]\n" +
                $"[Email : {Email}]\n";
     }
-    
+
 }

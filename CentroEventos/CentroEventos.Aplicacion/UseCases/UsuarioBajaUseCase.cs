@@ -1,4 +1,4 @@
-namespace CentroEventos.Aplicacion.UseCases;
+namespace CentroEventos.Aplicacion;
 
 public class UsuarioBajaUseCase
 {
@@ -15,9 +15,9 @@ public class UsuarioBajaUseCase
         permiso = Permiso.UsuarioBaja;
         if (!_autorizacion.PoseeElPermiso(usuarioadmin.Permisos, permiso))
             throw new FalloAutorizacionException(usuarioadmin.Nombre, "Baja");
-        if (!Validador_Usuario.Exist_Usuario(usuario.CorreoElectronico, _iusuario))
-            throw new EntidadNotFoundException("el usuario que se quiere dar de baja o existe");
-        _iusuario.EliminarUsuario(usuario.CorreoElectronico);
+        if (!Validador_Usuario.Exist_Usuario(usuario.ID, _iusuario))
+            throw new EntidadNotFoundException("el usuario que se quiere dar de baja no existe");
+        _iusuario.EliminarUsuario(usuario.ID);
 
     }
 }

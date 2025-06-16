@@ -1,4 +1,4 @@
-namespace CentroEventos.Aplicacion.UseCases;
+namespace CentroEventos.Aplicacion;
 
 public class RegistrarseUseCase
 {

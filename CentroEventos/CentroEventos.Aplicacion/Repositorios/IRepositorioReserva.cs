@@ -1,4 +1,7 @@
-public interface IRepositorioReserva{
+namespace CentroEventos.Aplicacion;
+
+public interface IRepositorioReserva
+{
     void AgregarReserva(Reserva reserva);
     List<Reserva> ListarReservas();
     Reserva? GetReserva(int ID);

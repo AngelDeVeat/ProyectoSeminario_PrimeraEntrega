@@ -1,6 +1,5 @@
 using System;
-
-namespace CentroEventos.Aplicacion.Repositorios;
+namespace CentroEventos.Aplicacion;
 
 public interface IRepositorioUsuario
 {
@@ -8,6 +7,6 @@ public interface IRepositorioUsuario
     List<Usuario> ListarUsuarios();
     Usuario? GetUsuario(int ID);
     void ModificarUsuario(Usuario usuario);
-    void ModificarPermisosUsuario(int id, Permiso permisos);
+    void ModificarPermisosUsuario(int id, List<Permiso> permisos);
     void EliminarUsuario(int ID);
 }

@@ -1,4 +1,3 @@
-
 using System;
 
 namespace CentroEventos.Aplicacion;
@@ -29,7 +28,7 @@ public class Usuario
         }
         return devolver;
     }
-    public Usuario(int id, string nombre, string apellido, string correo, string cotraseña): this( nombre, apellido, correo, cotraseña)
+    public Usuario(int id, string nombre, string apellido, string correo, string cotraseña) : this(nombre, apellido, correo, cotraseña)
     {
         ID = id;
     }

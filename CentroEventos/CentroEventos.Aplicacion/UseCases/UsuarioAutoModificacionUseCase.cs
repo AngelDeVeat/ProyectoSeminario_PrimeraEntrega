@@ -10,8 +10,8 @@ public class UsuarioAutoModificacionUseCase
     public void Ejecutar(Usuario usuarioadmin,Usuario usuario)
     {
         if (usuario.CorreoElectronico != usuario.CorreoElectronico)
-            if (!Validador_Usuario.Exist_Email|(usuario.CorreoElectronico, _iusuario))
-                throw new EntidadNotFoundException("el usuario que se quiere dar de baja o existe");
+            if (!Validador_Usuario.Exist_Usuario(usuario.ID, _iusuario))
+                throw new EntidadNotFoundException("el usuario que se quiere modificar no existe");
         if (!Validador_Usuario.isEmpty_Nombre(usuario.Nombre))
             throw new ValidacionException("la validacion fallo debido a que el campo Nombre de la clase Usuario esta vacio");
         if (!Validador_Usuario.isEmpty_Apellido(usuario.Apellido))

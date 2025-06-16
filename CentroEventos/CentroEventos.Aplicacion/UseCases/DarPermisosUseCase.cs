@@ -16,7 +16,7 @@ public class DarPermisosUseCase
         if (!_autorizacion.PoseeElPermiso(usuarioadmin.Permisos, permiso))
             throw new FalloAutorizacionException(usuarioadmin.Nombre, "Dar Permisos");
         if (!Validador_Usuario.Exist_Usuario(usuario.ID, _iusuario))
-            throw new EntidadNotFoundException("el usuario que se quiere dar de baja o existe");
-        _iusuario.ModificarPermisos(usuario.CorreoElectronico,permisos);
+            throw new EntidadNotFoundException("el usuario al cual se quiere modificar los permisos no existe");
+        _iusuario.ModificarPermisosUsuario(usuario.ID, permisos);
     }
 }

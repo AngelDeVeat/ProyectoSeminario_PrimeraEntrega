@@ -1,4 +1,5 @@
 using System;
+using CentroEventos.Aplicacion;
 
 namespace CentroEventos.Repositorios;
 

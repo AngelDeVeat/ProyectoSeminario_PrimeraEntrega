@@ -1,6 +1,6 @@
 using System;
 
-namespace CentroEventos.Aplicacion.UseCases;
+namespace CentroEventos.Aplicacion;
 
 public class ReservaListadoUseCase
 {

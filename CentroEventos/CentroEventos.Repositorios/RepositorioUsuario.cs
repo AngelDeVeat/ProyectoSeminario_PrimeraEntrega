@@ -1,6 +1,5 @@
 using System;
 using CentroEventos.Aplicacion;
-using CentroEventos.Aplicacion.Repositorios;
 
 namespace CentroEventos.Repositorios;
 
@@ -24,6 +23,7 @@ public class RepositorioUsuario : IRepositorioUsuario
         var listado = new List<Usuario>();
 
         using var context = new CentroEventosContext();
+       
         foreach (Usuario u in context.Usuarios)
         {
             listado.Add(u);
@@ -52,14 +52,14 @@ public class RepositorioUsuario : IRepositorioUsuario
         {
             // VERIFICA QUE ESTO ESTE BIEN CAPO
             aModificar.Apellido = usuario.Apellido;
-            aModificar.Direccion = usuario.Nombre;
-            aModificar.DNI = usuario.Email;
-            aModificar.Email = usuario.contraseña;
+            aModificar.Nombre = usuario.Nombre;
+            aModificar.Contraseña = usuario.Contraseña;
+            aModificar.CorreoElectronico = usuario.CorreoElectronico;
 
             context.SaveChanges();   
         }
     }
-    public void ModificarPermisosUsuario(int id, Permiso permisos)
+    public void ModificarPermisosUsuario(int id, List<Permiso> permisos)
     {
         CentroEventosSqlite.Inicializar();
 

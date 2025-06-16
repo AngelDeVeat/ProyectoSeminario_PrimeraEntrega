@@ -37,9 +37,9 @@ public static class Validador_Usuario
         else
             return false;
     }
-    public static bool Exist_Usuario(int id, IRepositorioPersona Iusuario)
+    public static bool Exist_Usuario(int id, IRepositorioUsuario Iusuario)
     {
-         Usuario? usuario = Iusuario.GetUsuario(id);
+        Usuario? usuario = Iusuario.GetUsuario(id);
         if (usuario == null)
             return false;
        else
