@@ -1,0 +1,61 @@
+@page "/EventoDeportivo/{id:int?}/{user:Usuario?}"
+@rendermode InteractiveServer
+@inject NavigationManager Navegador;
+@inject EventoDeportivoAltaUseCase EventoDeportivoAltaUseCase 
+@inject EventoDeportivoModificacionUseCase EventoDeportivoModificacionUseCase
+@inject ObtenerEventoDeportivoUseCase ObtenerEventoDeportivoUseCase
+@inject ObtenerPersonaUseCase ObtenerPersonaUseCase
+<DialogoEx  @ref="dialogoex"/>
+@if (_esnuevoevento)
+ {
+<h3>Agregando un nuevo Evento</h3>
+ }
+ else
+{
+<h3> Modificando al Evento "@_evento.Nombre"</h3>
+ }
+<input placeholder="Nombre" @bind="_evento.Nombre" class="form-control">
+<input placeholder="Descripcion" @bind="_evento.Descripcion" class="form-control">
+<input placeholder="Fecha Inicio" @bind="_evento.FechaHoraInicio" class="form-control">
+<input placeholder="Duracion" @bind="_evento.DuracionHoras" class="form-control">
+<input placeholder="Cupo maximo" @bind="_evento.CupoMaximo" class="form-control">
+<input placeholder="ID Persona Responsable " @bind="_evento.ResponsableID" class="form-control">
+<button class="btn btn-primary" @onclick="Aceptar">Aceptar</button>
+<button class="btn btn-danger" @onclick="()=>VolverInicio()">
+            Volver al inicio
+        </button>
+@code {
+EventoDeportivo _evento = new EventoDeportivo();
+[Parameter] public int? id{get;set;}
+[Parameter] public Usuario? user{get; set;}
+bool _esnuevoevento=true;
+DialogoEx dialogoex=new DialogoEx(); 
+protected override void OnParametersSet()
+{
+if (id != null)
+{
+  var evento = ObtenerEventoDeportivoUseCase.Ejecutar(id.Value);
+  if (evento != null){
+      _evento=evento;
+      _esnuevoevento=false;
+   }
+}
+}
+private void VolverInicio(){
+     Navegador.NavigateTo($"inicio");
+}
+void Aceptar()
+{try{
+if (user!=null){
+    if (_esnuevoevento)
+      EventoDeportivoAltaUseCase.Alta(_evento, user);
+   else
+     EventoDeportivoModificacionUseCase.Modificacion(_evento,user);
+   }
+_evento = new EventoDeportivo();
+Navegador.NavigateTo("listadoclientes");}
+catch(Exception e){
+  dialogoex.Mostrar(e.Message);
+}
+}
+}

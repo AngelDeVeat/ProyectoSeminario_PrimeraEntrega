@@ -1,5 +1,5 @@
 namespace CentroEventos.Aplicacion;
-public class ServicioAutoizacion : IServicioAutorizacion {
+public class ServicioAutorizacion : IServicioAutorizacion {
     public bool PoseeElPermiso(List<Permiso> permisos, Permiso permiso)
     {
         if (permisos.Contains(permiso) || permisos.Contains(Permiso.Todos))

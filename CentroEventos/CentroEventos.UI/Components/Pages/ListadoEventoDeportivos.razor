@@ -1,0 +1,106 @@
+@using CentroEventos.UI.Components
+@page "/listadoEventosDeportivos"
+@rendermode InteractiveServer
+using System.Runtime.InteropServices.Marshalling;
+
+using System.Runtime.InteropServices.Marshalling;
+
+@inject EventoDeportivoListadoUseCase EventoDeportivoListadoUseCase
+@inject EventoDeportivoBajaUseCase  EventoDeportivoBajaUseCase
+@inject ServicioAutorizacion ServicioAutorizacion
+@inject NavigationManager Navegador
+
+@inject UserState UserState
+<DialogoEx  @ref="dialogoex"/>
+<DialogosDeConfirmacion @ref="dialogo" OnConfirmado="Eliminar"/>
+    <table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>NOMBRE</th>
+        <th>DESCRIPCION</th>
+        <th>INICIO</th>
+        <th>DURACION </th>
+        <th>CUPO MAXIMO</th>
+        <th>RESPONSABLE ID</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var evento in _lista)
+    {
+    <tr>
+        <td>@evento.ID</td>
+        <td>@evento.Nombre</td>
+        <td>@evento.Descripcion</td>
+        <td>@evento.FechaHoraInicio</td>
+        <td>@evento.DuracionHoras</td>
+        <td>@evento.CupoMaximo</td>
+         <td>@evento.ResponsableID</td> 
+        <td>
+            @if (Editar){
+            <button class="btn btn-primary" @onclick="()=>Modificacion(evento)">
+                Editar
+            </button>}
+        </td>
+        <td>
+            @if (Elimina){
+            <button class="btn btn-danger" @onclick="()=>ConfirmarEliminacion(evento)">
+                Eliminar
+            </button>}
+        </td>
+    </tr>
+    }
+        <button class="btn btn-danger" @onclick="()=>VolverInicio()">
+            Volver al inicio
+        </button>
+    </tbody>
+    </table>
+@code {
+List<EventoDeportivo> _lista = new List<EventoDeportivo>();
+Usuario User{get; set;}=null;
+ DialogoEx dialogoex = new DialogoEx();
+ bool Editar;
+bool Elimina;
+
+protected override void OnInitialized()
+{
+  Editar= ServicioAutorizacion.PoseeElPermiso(User.Permisos,Permiso.EventoModificacion);
+   Elimina= ServicioAutorizacion.PoseeElPermiso(User.Permisos,Permiso.EventoBaja);
+    User=UserState.User;
+  if (User ==null){
+    dialogoex.Mostrar("Debe registrarse para acceder al menu");
+    Navegador.NavigateTo($"/Home");
+  }
+  else
+    _lista = EventoDeportivoListadoUseCase.Listado();
+}
+DialogosDeConfirmacion dialogo=new DialogosDeConfirmacion() ;
+EventoDeportivo? _evento =null;
+private void VolverInicio(){
+     Navegador.NavigateTo($"/inicio");
+}
+private void ConfirmarEliminacion(EventoDeportivo evento)
+{
+ _evento = evento;
+dialogo.Mostrar($"¿Desea eliminar al Evento {evento.ID} {evento.Nombre} {evento.Descripcion} {evento.FechaHoraInicio}?");
+}
+private void Modificacion(EventoDeportivo evento){
+    Navegador.NavigateTo($"/EventoDeportivo/{evento.ID}");
+}
+private void Eliminar()
+{
+if (_evento !=null)
+{
+    try{
+EventoDeportivoBajaUseCase.Baja(_evento.ID, User);
+_lista = EventoDeportivoListadoUseCase.Listado(); //se actualiza la lista de clientes
+}
+catch(Exception e){
+    dialogoex.Mostrar(e.Message);
+}
+}
+}
+}    using SQLitePCL;
+
+#nullable disable
+#line default

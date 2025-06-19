@@ -26,6 +26,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNZW5zYWplLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/Pages/AgregarEventoDeportivo.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBZ3JlZ2FyRXZlbnRvRGVwb3J0aXZvLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/Pages/AgregarPersona.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBZ3JlZ2FyUGVyc29uYS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/Pages/AgregarReserva.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBZ3JlZ2FyUmVzZXJ2YS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/Pages/AutoModificar.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBdXRvTW9kaWZpY2FyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
@@ -50,6 +62,26 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xJbmljaW9TZXNpb24ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/Pages/ListadoAsistenciaEvento.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xMaXN0YWRvQXNpc3RlbmNpYUV2ZW50by5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/Pages/ListadoEventoDeportivos.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xMaXN0YWRvRXZlbnRvRGVwb3J0aXZvcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/Pages/ListadoEventosConCupoDisponible.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xMaXN0YWRvRXZlbnRvc0NvbkN1cG9EaXNwb25pYmxlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/Pages/ListadoPersonas.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xMaXN0YWRvUGVyc29uYXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/Pages/ListadoReservas.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xMaXN0YWRvUmVzZXJ2YXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/Pages/ListarUsuarios.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xMaXN0YXJVc3Vhcmlvcy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -69,6 +101,14 @@ build_metadata.AdditionalFiles.CssScope =
 [C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xfSW1wb3J0cy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/DialogoEx.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xEaWFsb2dvRXgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-56tvms9gsv
+
+[C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/DialogosDeConfirmacion.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xEaWFsb2dvc0RlQ29uZmlybWFjaW9uLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-naspfr8gsd
 
 [C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/Layout/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTWFpbkxheW91dC5yYXpvcg==
