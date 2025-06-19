@@ -1,4 +1,4 @@
-.dialogo-contenedor {
+.dialogo-contenedor[b-56tvms9gsv] {
 position: fixed;
 top:0;
 left: 0;
@@ -10,7 +10,7 @@ display: flex;
 align-items: center;
 justify-content: center;
 }
-.dialogo-contenido{
+.dialogo-contenido[b-56tvms9gsv]{
 padding: 20px;
 background-color: white;
 }

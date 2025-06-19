@@ -1,18 +1,24 @@
-@page "/Persona/{id:int?}/{user:Usuario?}"
+@page "/Persona/{id:int?}"
 @rendermode InteractiveServer
 @inject NavigationManager Navegador;
 @inject PersonaAltaUseCase PersonaAltaUseCase
 @inject PersonaModificacionUseCase PersonaModificacionUseCase
 @inject PersonaModificacionUseCase PersonaModificacionUseCase
 @inject ObtenerPersonaUseCase ObtenerPersonaUseCase
+@inject UserState User
+@*SI el usuario llego hasta aqui sin pasar por inicio_sesion/registro*@
+<Mensaje @ref=dialogo 
+mensaje="Acceso no autorizado" 
+soloMensaje=true
+OnCerrado="VolverHome"/>
 <DialogoEx  @ref="dialogoex"/>
 @if (_esnuevapersona)
  {
-<h3>Agregando un nuevo Cliente</h3>
+<h3>Agregando un nueva Persona</h3>
  }
  else
 {
-<h3> Modificando al Cliente "@persona.Nombre"</h3>
+<h3> Modificando a la Persona "@persona.Nombre"</h3>
  }
 <input placeholder="DNI" @bind="persona.DNI" class="form-control">
 <input placeholder="Nombre" @bind="persona.Nombre" class="form-control">
@@ -20,12 +26,23 @@
 <input placeholder="Correo Electronico" @bind="persona.Email" class="form-control">
 <input placeholder="Telefono" @bind="persona.Telefono" class="form-control">
 <button class="btn btn-primary" @onclick="Aceptar">Aceptar</button>
+<button class="btn btn-danger" @onclick="()=>VolverInicio()">
+            Volver al inicio
+        </button>
 @code {
 Persona persona = new Persona();
+Mensaje? dialogo=null;
 [Parameter] public int? id{get;set;}
-[Parameter] public Usuario? user{get; set;}
 bool _esnuevapersona=true;
-DialogoEx dialogoex = new DialogoEx();
+DialogoEx? dialogoex;
+Usuario? user{get; set;}=null;
+bool mostrarDialogo= false;
+protected override void OnInitialized(){
+  user=User.user;
+  if (user ==null){
+    mostrarDialogo=true;
+  }
+}
 protected override void OnParametersSet()
 {
 if (id != null)
@@ -37,6 +54,12 @@ if (id != null)
    }
 }
 }
+private void VolverInicio(){
+     Navegador.NavigateTo($"inicio");
+}
+private void VolverHome(){
+     Navegador.NavigateTo($"");
+}
 void Aceptar()
 {
   try{
@@ -47,9 +70,18 @@ void Aceptar()
        PersonaModificacionUseCase.Modificacion(persona,user);
    }
 persona = new Persona();
-Navegador.NavigateTo("listadoclientes");
+Navegador.NavigateTo("listadoPersonas");
 }
  catch(Exception e){
-    dialogoex.Mostrar(e.Message);
+    dialogoex?.Mostrar(e.Message);
  }}
+
+ protected override Task OnAfterRenderAsync(bool firstRender){
+        if (mostrarDialogo && dialogo != null && firstRender){
+            dialogo.Mostrar();
+            mostrarDialogo = false;
+            StateHasChanged();
+        }
+        return Task.CompletedTask;
+    } 
 }

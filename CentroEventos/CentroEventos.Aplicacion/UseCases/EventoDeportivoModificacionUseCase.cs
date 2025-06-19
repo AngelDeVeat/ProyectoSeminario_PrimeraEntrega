@@ -16,7 +16,7 @@ public class EventoDeportivoModificacionUseCase
 
     public void Modificacion(EventoDeportivo evento, Usuario usuario)
     {
-        Permiso permiso = new Permiso();
+        Permiso permiso = Permiso.EventoModificacion;
         if (!_autorizacion.PoseeElPermiso(usuario.Permisos, permiso))
             throw new FalloAutorizacionException(usuario.Nombre, "Modificacion");
 

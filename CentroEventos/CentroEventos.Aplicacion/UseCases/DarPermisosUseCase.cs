@@ -11,8 +11,7 @@ public class DarPermisosUseCase
     }
     public void Ejecutar(Usuario usuarioadmin, Usuario usuario, List<Permiso> permisos)
     {
-        Permiso permiso;
-        permiso = Permiso.DarPermisos;
+        Permiso permiso= Permiso.DarPermisos;
         if (!_autorizacion.PoseeElPermiso(usuarioadmin.Permisos, permiso))
             throw new FalloAutorizacionException(usuarioadmin.Nombre, "Dar Permisos");
         if (!Validador_Usuario.Exist_Usuario(usuario.ID, _iusuario))

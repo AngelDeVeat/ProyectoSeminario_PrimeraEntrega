@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "/0YdkUMoGfw=",
+  "dgSpecHash": "34LBJSb10o4=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Usuario\\Proyecto_Final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\CentroEventos.UI.csproj",
+  "projectFilePath": "C:\\Users\\Usuario\\Proyecto_final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\CentroEventos.UI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Usuario\\.nuget\\packages\\microsoft.data.sqlite.core\\9.0.6\\microsoft.data.sqlite.core.9.0.6.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\microsoft.entityframeworkcore\\9.0.6\\microsoft.entityframeworkcore.9.0.6.nupkg.sha512",

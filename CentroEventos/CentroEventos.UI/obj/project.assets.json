@@ -1303,11 +1303,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Usuario\\Proyecto_Final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\CentroEventos.UI.csproj",
+      "projectUniqueName": "C:\\Users\\Usuario\\Proyecto_final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\CentroEventos.UI.csproj",
       "projectName": "CentroEventos.UI",
-      "projectPath": "C:\\Users\\Usuario\\Proyecto_Final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\CentroEventos.UI.csproj",
+      "projectPath": "C:\\Users\\Usuario\\Proyecto_final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\CentroEventos.UI.csproj",
       "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Usuario\\Proyecto_Final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\obj\\",
+      "outputPath": "C:\\Users\\Usuario\\Proyecto_final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -1322,11 +1322,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Usuario\\Proyecto_Final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj": {
-              "projectPath": "C:\\Users\\Usuario\\Proyecto_Final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj"
+            "C:\\Users\\Usuario\\Proyecto_final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj": {
+              "projectPath": "C:\\Users\\Usuario\\Proyecto_final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj"
             },
-            "C:\\Users\\Usuario\\Proyecto_Final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Repositorios\\CentroEventos.Repositorios.csproj": {
-              "projectPath": "C:\\Users\\Usuario\\Proyecto_Final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Repositorios\\CentroEventos.Repositorios.csproj"
+            "C:\\Users\\Usuario\\Proyecto_final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Repositorios\\CentroEventos.Repositorios.csproj": {
+              "projectPath": "C:\\Users\\Usuario\\Proyecto_final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Repositorios\\CentroEventos.Repositorios.csproj"
             }
           }
         }

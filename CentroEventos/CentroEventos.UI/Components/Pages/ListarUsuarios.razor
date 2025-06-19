@@ -2,13 +2,13 @@
 @rendermode InteractiveServer
 @inject NavigationManager navigator;
 @inject UserState userState;
-@inject ServicioAutoizacion servicioAutoizacion;
+@inject ServicioAutorizacion servicioAutoizacion;
 @inject ListarUsuariosUseCase listarUsuariosUseCase
 @inject UsuarioBajaUseCase usuarioBajaUseCase
 
 @*SI el usuario llego hasta aqui sin pasar por inicio_sesion/registro*@
 <Mensaje @ref=dialogo_NoAutorizado 
-mensaje="Acceso no autorizado" 
+mensaje="Acceso no autorizado"
 soloMensaje=true
 OnCerrado="VolverMain"/>
 

@@ -1,11 +1,19 @@
-@page "/EventoDeportivo/{id:int?}/{user:Usuario?}"
+@page "/EventoDeportivo/{id:int?}"
 @rendermode InteractiveServer
 @inject NavigationManager Navegador;
 @inject EventoDeportivoAltaUseCase EventoDeportivoAltaUseCase 
 @inject EventoDeportivoModificacionUseCase EventoDeportivoModificacionUseCase
 @inject ObtenerEventoDeportivoUseCase ObtenerEventoDeportivoUseCase
 @inject ObtenerPersonaUseCase ObtenerPersonaUseCase
-<DialogoEx  @ref="dialogoex"/>
+@inject UserState User
+@*SI el usuario llego hasta aqui sin pasar por inicio_sesion/registro*@
+<Mensaje @ref=dialogo 
+mensaje="Acceso no autorizado" 
+soloMensaje=true
+OnCerrado="VolverHome"/>
+
+<DialogoEx @ref="dialogoex"/>
+@if (!mostrarDialogo){
 @if (_esnuevoevento)
  {
 <h3>Agregando un nuevo Evento</h3>
@@ -24,12 +32,23 @@
 <button class="btn btn-danger" @onclick="()=>VolverInicio()">
             Volver al inicio
         </button>
+
+  }
 @code {
 EventoDeportivo _evento = new EventoDeportivo();
-[Parameter] public int? id{get;set;}
-[Parameter] public Usuario? user{get; set;}
+
 bool _esnuevoevento=true;
-DialogoEx dialogoex=new DialogoEx(); 
+DialogoEx? dialogoex; 
+Mensaje? dialogo=null;
+[Parameter] public int? id{get; set;}
+Usuario? user{get;set;}=null;
+bool mostrarDialogo=false;
+protected override void OnInitialized(){
+  user=User.user;
+  if (user ==null){
+    mostrarDialogo=true;
+  }
+}
 protected override void OnParametersSet()
 {
 if (id != null)
@@ -44,6 +63,9 @@ if (id != null)
 private void VolverInicio(){
      Navegador.NavigateTo($"inicio");
 }
+private void VolverHome(){
+     Navegador.NavigateTo($"");
+}
 void Aceptar()
 {try{
 if (user!=null){
@@ -53,9 +75,17 @@ if (user!=null){
      EventoDeportivoModificacionUseCase.Modificacion(_evento,user);
    }
 _evento = new EventoDeportivo();
-Navegador.NavigateTo("listadoclientes");}
+Navegador.NavigateTo("listadoEventosDeportivos");}
 catch(Exception e){
-  dialogoex.Mostrar(e.Message);
+  dialogoex?.Mostrar(e.Message);
 }
 }
+ protected override Task OnAfterRenderAsync(bool firstRender){
+        if (mostrarDialogo && dialogo != null && firstRender){
+            dialogo.Mostrar();
+            mostrarDialogo = false;
+            StateHasChanged();
+        }
+        return Task.CompletedTask;
+    } 
 }

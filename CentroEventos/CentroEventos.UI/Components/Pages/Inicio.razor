@@ -7,7 +7,7 @@ mensaje="Acceso no autorizado"
 soloMensaje=true
 OnCerrado="VolverMain"/>
 
-@inject ServicioAutoizacion autorizacion;
+@inject ServicioAutorizacion autorizacion;
 @inject UserState userState;
 @inject NavigationManager navigator;
 
@@ -89,15 +89,15 @@ OnCerrado="VolverMain"/>
         }
         else{
             // use cases generales
-            _useCases.Add("Agregar Personas", "AgregarPersona");
-            _useCases.Add("Listar y/o modificar Personas", "ListadoPersonas");
-            _useCases.Add("Agregar Eventos Deportivos", "AgregarEventoDeportivo");
-            _useCases.Add("Listar y/o modificar Eventos Deportivos", "ListadoEventosDeportivos");
-            _useCases.Add("Agregar Reservas", "AgregarReserva");
-            _useCases.Add("Listar y/o modificar Reservas", "ListadoReservas");
+            _useCases.Add("Agregar Personas", "Persona");
+            _useCases.Add("Listar y/o modificar Personas", "listadoPersonas");
+            _useCases.Add("Agregar Eventos Deportivos", "EventoDeportivo");
+            _useCases.Add("Listar y/o modificar Eventos Deportivos", "listadoEventosDeportivos");
+            _useCases.Add("Agregar Reservas", "Reserva");
+            _useCases.Add("Listar y/o modificar Reservas", "listadoReservas");
             
-            _useCases.Add("Listar eventos con cupo disponible", "ListadoEventosConCupoDisponible");
-            _useCases.Add("Listar asistentes a un evento", "ListadoAsistenciaEvento");
+            _useCases.Add("Listar eventos con cupo disponible", "listadoEventosConCupoDisponible");
+            _useCases.Add("Listar asistentes a un evento", "listadoAsistenciaEvento");
             // si el user posee todos los permisos o algunos de los permisos para gestion de usuario
             if (autorizacion.PoseeElPermiso(user.Permisos, Permiso.Todos) ||
                 autorizacion.PoseeElPermiso(user.Permisos, Permiso.UsuarioBaja) ||

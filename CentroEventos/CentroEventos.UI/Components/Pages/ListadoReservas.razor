@@ -1,5 +1,5 @@
 @using CentroEventos.UI.Components
-@page "/listadoReservas/{user:Usuario?}"
+@page "/listadoReservas"
 @rendermode InteractiveServer
 using System.Runtime.InteropServices.Marshalling;
 
@@ -9,9 +9,18 @@ using System.Runtime.InteropServices.Marshalling;
 @inject ReservaBajaUseCase ReservaBajaUseCase
 @inject ReservaModificacionUseCase ReservaModificacionUseCase
 @inject NavigationManager Navegador
+@inject ServicioAutorizacion ServicioAutorizacion
 @inject UserState UserState
+@*SI el usuario llego hasta aqui sin pasar por inicio_sesion/registro*@
+@if(mostrarDialogo){
+<Mensaje @ref=dialogo 
+mensaje="Acceso no autorizado" 
+soloMensaje=true
+OnCerrado="VolverHome"/>
+}
+else{
 <DialogoEx  @ref="dialogoex"/>
-<DialogosDeConfirmacion @ref="dialogo" OnConfirmado="Eliminar"/>
+<DialogosDeConfirmacion @ref="dialogocon" OnConfirmado="Eliminar"/>
     <table class="table">
     <thead>
     <tr>
@@ -32,12 +41,16 @@ using System.Runtime.InteropServices.Marshalling;
         <td>@reserva.FechaAltaReserva</td>
         <td>@reserva.PersonaID</td>
         <td>
+            @if (Editar){
             <button class="btn btn-primary" @onclick="()=>Modificacion(reserva)">
                 Editar
-            </button>
+            </button>}
+        </td>
+        <td>
+            @if (Elimina){
             <button class="btn btn-danger" @onclick="()=>ConfirmarEliminacion(reserva)">
                 Eliminar
-            </button>
+            </button>}
         </td>
     </tr>
     }
@@ -46,42 +59,60 @@ using System.Runtime.InteropServices.Marshalling;
         </button>
     </tbody>
     </table>
+}
 @code {
 List<Reserva> _lista = new List<Reserva>();
-Usuario User{get; set;}=null;
- DialogoEx dialogoex= new DialogoEx();
+Usuario? user;
+ DialogoEx? dialogoex;
+ bool Editar;
+ bool Elimina;
+ Mensaje? dialogo=null;
+ bool mostrarDialogo=false;
 protected override void OnInitialized()
-{User=UserState.User;
-  if (User ==null){
-    dialogoex.Mostrar("Debe registrarse para acceder al menu");
-    Navegador.NavigateTo($"/Home");
+{user=UserState.user;
+  if (user ==null){
+    mostrarDialogo=true;
   }
-else
+else{
     _lista = ReservaListadoUseCase.Ejecutar();
+    Editar=ServicioAutorizacion.PoseeElPermiso(user.Permisos,Permiso.ReservaModificacion);
+    Elimina=ServicioAutorizacion.PoseeElPermiso(user.Permisos,Permiso.ReservaBaja);
+    }
 }
-DialogosDeConfirmacion dialogo=new DialogosDeConfirmacion() ;
+DialogosDeConfirmacion? dialogocon;
 Reserva? _reserva = null;
 private void VolverInicio(){
      Navegador.NavigateTo($"inicio");
 }
+private void VolverHome(){
+     Navegador.NavigateTo($"");
+}
 private void ConfirmarEliminacion(Reserva reserva)
 {
 _reserva = reserva;
-dialogo.Mostrar($"¿Desea eliminar a la reserva {reserva.ID} {reserva.EstadoAsistencia} {reserva.FechaAltaReserva} {reserva.PersonaID}?");
+dialogocon?.Mostrar($"¿Desea eliminar a la reserva {reserva.ID} {reserva.EstadoAsistencia} {reserva.FechaAltaReserva} {reserva.PersonaID}?");
 }
 private void Modificacion(Reserva reserva){
-    Navegador.NavigateTo($"Persona/{reserva.ID}");
+    Navegador.NavigateTo($"Reserva/{reserva.ID}");
 }
 private void Eliminar()
 {
 if (_reserva != null  )
 {try{
+    if (user!=null){
 ReservaBajaUseCase.Ejecutar(_reserva.ID, user);
-_lista = ReservaListadoUseCase.Ejecutar(); //se actualiza la lista de clientes
+_lista = ReservaListadoUseCase.Ejecutar(); }
 } catch(Exception e){
-    dialogoex.Mostrar(e.Message);
+    dialogoex?.Mostrar(e.Message);
 }}
 }
+ protected override Task OnAfterRenderAsync(bool firstRender){
+        if (mostrarDialogo && dialogo != null && firstRender){
+            dialogo.Mostrar();
+            StateHasChanged();
+        }
+        return Task.CompletedTask;
+    } 
 }    using SQLitePCL;
 
 #nullable disable

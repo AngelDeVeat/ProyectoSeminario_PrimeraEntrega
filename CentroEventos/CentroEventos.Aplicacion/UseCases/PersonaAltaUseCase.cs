@@ -14,7 +14,7 @@ public class PersonaAltaUseCase
 
     public void Alta(Persona persona, Usuario usuario)
     {
-        Permiso permiso = new Permiso();
+        Permiso permiso = Permiso.PersonaAlta;
         if (!_autorizacion.PoseeElPermiso(usuario.Permisos, permiso))
             throw new FalloAutorizacionException(usuario.Nombre, "Alta");
 

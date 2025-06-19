@@ -1,0 +1,75 @@
+@page "/listadoEventosConCupoDisponible"
+@inject ListarEventosConCupoDisponibleUseCase ListarEventosConCupoDisponibleUseCase
+@inject UserState User
+@rendermode InteractiveServer
+@inject NavigationManager Navegador
+@if (mostrarDialogo)
+{
+    <Mensaje  @ref=dialogo 
+        mensaje="Acceso no autorizado" 
+        soloMensaje="true"
+        OnCerrado="VolverHome" />
+}
+else{
+ <table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>NOMBRE</th>
+        <th>DESCRIPCION</th>
+        <th>INICIO</th>
+        <th>DURACION </th>
+        <th>CUPO MAXIMO</th>
+        <th>RESPONSABLE ID</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var evento in _lista)
+    {
+    <tr>
+        <td>@evento.ID</td>
+        <td>@evento.Nombre</td>
+        <td>@evento.Descripcion</td>
+        <td>@evento.FechaHoraInicio</td>
+        <td>@evento.DuracionHoras</td>
+        <td>@evento.CupoMaximo</td>
+         <td>@evento.ResponsableID</td> 
+    </tr>
+    }
+    <button class="btn btn-danger" @onclick="()=>VolverInicio()">
+            Volver al inicio
+        </button>
+    </tbody>
+    </table>
+}
+@code {
+Usuario? user;
+List<EventoDeportivo> _lista= new List<EventoDeportivo>();
+   
+    bool mostrarDialogo=false;
+    Mensaje? dialogo=null;
+    protected override void OnInitialized()
+{   user=User.user;
+  if (user ==null){
+     mostrarDialogo=true;
+    }
+  else{
+    _lista = ListarEventosConCupoDisponibleUseCase.Ejecutar();
+    }
+
+ }
+ private void VolverInicio(){
+     Navegador.NavigateTo($"inicio");
+}
+private void VolverHome(){
+     Navegador.NavigateTo($"");
+}
+protected override Task OnAfterRenderAsync(bool firstRender){
+        if (mostrarDialogo && dialogo != null && firstRender){
+            dialogo.Mostrar();
+            StateHasChanged();
+        }
+        return Task.CompletedTask;
+    } 
+
+ }

@@ -19,7 +19,7 @@ public class ReservaAltaUseCase
 
     public void Ejecutar(Reserva reserva, Usuario usuario)
     {
-        Permiso permiso = new Permiso();
+        Permiso permiso = Permiso.ReservaAlta;
         if (!_autorizacion.PoseeElPermiso(usuario.Permisos, permiso))
             throw new FalloAutorizacionException(usuario.Nombre, "Alta");
 

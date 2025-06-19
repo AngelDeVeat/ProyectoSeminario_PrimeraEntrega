@@ -13,8 +13,7 @@ public class UsuarioModificacionUseCase
     }
     public void Ejecutar(Usuario usuarioadmin, Usuario usuario, string contraseña)
     {
-        Permiso permiso = new Permiso();
-        permiso = Permiso.UsuarioModificacion;
+        Permiso permiso = Permiso.UsuarioModificacion;
         if (!_autorizacion.PoseeElPermiso(usuarioadmin.Permisos, permiso))
             throw new FalloAutorizacionException(usuarioadmin.Nombre, "Modificacion");
         if (!Validador_Usuario.Exist_Usuario(usuario.ID, _iusuario))

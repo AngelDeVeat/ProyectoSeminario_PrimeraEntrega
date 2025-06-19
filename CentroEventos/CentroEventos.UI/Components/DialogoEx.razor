@@ -1,4 +1,5 @@
     @rendermode InteractiveServer
+    @inject NavigationManager Navegador
     @if(visible)
 {
     <div class="dialogo-contenedor">
@@ -12,13 +13,16 @@
     private bool visible = false;
     [Parameter]
     public string Mensaje {get;set;}="";
+
     public void Mostrar(String mensaje)
 {
     Mensaje =mensaje;
     visible=true;
+    StateHasChanged();
 }
     void Cerrar()
 {
     visible=false;
 }
+
 }

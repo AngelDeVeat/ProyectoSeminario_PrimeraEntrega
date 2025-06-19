@@ -1,4 +1,7 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@inject UserState User
+@inject ServicioAutorizacion ServicioAutorizacion
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">CentroEventos.UI</a>
     </div>
@@ -15,14 +18,48 @@
         </div>
 
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
+            <NavLink class="nav-link" href="ListadoPersonas">
+            <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Listado de Personas
             </NavLink>
         </div>
+         <div class="nav-item px-3">
+            <NavLink class="nav-link" href="ListadoReservas">
+            <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Listado de Reservas
+            </NavLink>
+        </div>
+         <div class="nav-item px-3">
+            <NavLink class="nav-link" href="ListadoEventosDeportivos">
+            <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> ListadodeEventosDeportivos
+            </NavLink>
+        </div>
+        @if ( ver){
+         <div class="nav-item px-3">
+            <NavLink class="nav-link" href="Persona">
+            <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> AgregarPersona
+            </NavLink>
+        </div>}
+       @if ( ver){
+         <div class="nav-item px-3">
+            <NavLink class="nav-link" href="Reserva">
+            <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> AgregarReserva
+            </NavLink>
+        </div>}
+
+        @if ( ver){
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="EventoDeportivo">
+            <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> AgregarEventoDeportivo
+            </NavLink>
+        </div>}
 
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-            <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
+            <NavLink class="nav-link" href="ListadoAsistenciaEvento">
+            <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> ListadoAsistenciaEvento
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="ListadoEventosConCupoDisponible">
+            <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> ListadoEventosConCupoDisponible
             </NavLink>
         </div>
         @*
@@ -39,4 +76,12 @@
         </div>*@
     </nav>
 </div>
-
+@code{
+    bool ver=false;
+    Usuario? user{get;set;}=null;
+    protected override void OnInitialized(){
+        user=User.user;
+        if (user!=null)
+            ver=true;
+    }
+}
