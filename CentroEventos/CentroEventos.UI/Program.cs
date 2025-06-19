@@ -42,7 +42,6 @@ builder.Services.AddScoped<IServicioAutorizacion, ServicioAutorizacion>();
 builder.Services.AddTransient<RegistrarseUseCase>();
 builder.Services.AddTransient<IniciarSesionUseCase>();
 builder.Services.AddTransient<ServicioAutorizacion>();
-builder.Services.AddTransient<UsuarioAutoModificacionUseCase>();
 builder.Services.AddTransient<UsuarioBajaUseCase>();
 builder.Services.AddTransient<UsuarioModificacionUseCase>();
 builder.Services.AddTransient<DarPermisosUseCase>();

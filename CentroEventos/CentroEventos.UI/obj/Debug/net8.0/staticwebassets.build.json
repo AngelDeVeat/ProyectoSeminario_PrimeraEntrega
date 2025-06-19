@@ -1,6 +1,10 @@
 {
   "Version": 1,
+<<<<<<< HEAD
+  "Hash": "mPeV/+rwV8CYoltrugVqkBLZ0D858C2OL8g8lJR2KPw=",
+=======
   "Hash": "XfXzj4ImmhnAQ2FAIOsS58XzD8b7DELLZ2E7TqvPyc4=",
+>>>>>>> origin/main
   "Source": "CentroEventos.UI",
   "BasePath": "_content/CentroEventos.UI",
   "Mode": "Default",
@@ -10,17 +14,28 @@
     {
       "Name": "CentroEventos.UI\\wwwroot",
       "Source": "CentroEventos.UI",
+<<<<<<< HEAD
+      "ContentRoot": "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\wwwroot\\",
+=======
       "ContentRoot": "C:\\Users\\Usuario\\Proyecto_final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\wwwroot\\",
+>>>>>>> origin/main
       "BasePath": "_content/CentroEventos.UI",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
+<<<<<<< HEAD
+      "Identity": "c:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\obj\\Debug\\net8.0\\scopedcss\\bundle\\CentroEventos.UI.styles.css",
+      "SourceId": "CentroEventos.UI",
+      "SourceType": "Computed",
+      "ContentRoot": "c:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
+=======
       "Identity": "C:\\Users\\Usuario\\Proyecto_final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\obj\\Debug\\net8.0\\scopedcss\\bundle\\CentroEventos.UI.styles.css",
       "SourceId": "CentroEventos.UI",
       "SourceType": "Computed",
       "ContentRoot": "C:\\Users\\Usuario\\Proyecto_final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
+>>>>>>> origin/main
       "BasePath": "_content/CentroEventos.UI",
       "RelativePath": "CentroEventos.UI.styles.css",
       "AssetKind": "All",
@@ -33,6 +48,15 @@
       "AssetTraitValue": "ApplicationBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
+<<<<<<< HEAD
+      "OriginalItemSpec": "c:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\obj\\Debug\\net8.0\\scopedcss\\bundle\\CentroEventos.UI.styles.css"
+    },
+    {
+      "Identity": "c:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\CentroEventos.UI.bundle.scp.css",
+      "SourceId": "CentroEventos.UI",
+      "SourceType": "Computed",
+      "ContentRoot": "c:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\",
+=======
       "OriginalItemSpec": "C:\\Users\\Usuario\\Proyecto_final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\obj\\Debug\\net8.0\\scopedcss\\bundle\\CentroEventos.UI.styles.css"
     },
     {
@@ -40,6 +64,7 @@
       "SourceId": "CentroEventos.UI",
       "SourceType": "Computed",
       "ContentRoot": "C:\\Users\\Usuario\\Proyecto_final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\",
+>>>>>>> origin/main
       "BasePath": "_content/CentroEventos.UI",
       "RelativePath": "CentroEventos.UI.bundle.scp.css",
       "AssetKind": "All",
@@ -52,6 +77,15 @@
       "AssetTraitValue": "ProjectBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
+<<<<<<< HEAD
+      "OriginalItemSpec": "c:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\CentroEventos.UI.bundle.scp.css"
+    },
+    {
+      "Identity": "c:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\wwwroot\\app.css",
+      "SourceId": "CentroEventos.UI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\wwwroot\\",
+=======
       "OriginalItemSpec": "C:\\Users\\Usuario\\Proyecto_final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\CentroEventos.UI.bundle.scp.css"
     },
     {
@@ -59,6 +93,7 @@
       "SourceId": "CentroEventos.UI",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Usuario\\Proyecto_final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\wwwroot\\",
+>>>>>>> origin/main
       "BasePath": "_content/CentroEventos.UI",
       "RelativePath": "app.css",
       "AssetKind": "All",
@@ -74,10 +109,17 @@
       "OriginalItemSpec": "wwwroot\\app.css"
     },
     {
+<<<<<<< HEAD
+      "Identity": "c:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "SourceId": "CentroEventos.UI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\wwwroot\\",
+=======
       "Identity": "C:\\Users\\Usuario\\Proyecto_final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\wwwroot\\bootstrap\\bootstrap.min.css",
       "SourceId": "CentroEventos.UI",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Usuario\\Proyecto_final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\wwwroot\\",
+>>>>>>> origin/main
       "BasePath": "_content/CentroEventos.UI",
       "RelativePath": "bootstrap/bootstrap.min.css",
       "AssetKind": "All",
@@ -93,10 +135,17 @@
       "OriginalItemSpec": "wwwroot\\bootstrap\\bootstrap.min.css"
     },
     {
+<<<<<<< HEAD
+      "Identity": "c:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "SourceId": "CentroEventos.UI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\wwwroot\\",
+=======
       "Identity": "C:\\Users\\Usuario\\Proyecto_final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "SourceId": "CentroEventos.UI",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Usuario\\Proyecto_final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\wwwroot\\",
+>>>>>>> origin/main
       "BasePath": "_content/CentroEventos.UI",
       "RelativePath": "bootstrap/bootstrap.min.css.map",
       "AssetKind": "All",
@@ -112,10 +161,17 @@
       "OriginalItemSpec": "wwwroot\\bootstrap\\bootstrap.min.css.map"
     },
     {
+<<<<<<< HEAD
+      "Identity": "c:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\wwwroot\\favicon.png",
+      "SourceId": "CentroEventos.UI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\wwwroot\\",
+=======
       "Identity": "C:\\Users\\Usuario\\Proyecto_final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\wwwroot\\favicon.png",
       "SourceId": "CentroEventos.UI",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Usuario\\Proyecto_final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.UI\\wwwroot\\",
+>>>>>>> origin/main
       "BasePath": "_content/CentroEventos.UI",
       "RelativePath": "favicon.png",
       "AssetKind": "All",

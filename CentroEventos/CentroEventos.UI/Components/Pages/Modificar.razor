@@ -1,0 +1,79 @@
+﻿@page "/Modificar/{ID:int?}"
+@rendermode InteractiveServer
+@inject NavigationManager navigator;
+@inject UserState userState;
+@inject UsuarioModificacionUseCase modificacionUseCase;
+
+@*SI el usuario llego hasta aqui sin pasar por inicio_sesion/registro*@
+<Mensaje @ref=dialogo 
+mensaje="Acceso no autorizado" 
+soloMensaje=true
+OnCerrado="VolverMain"/>
+
+<h3>Ingrese la nueva informacion del usuario actual</h3>
+
+<input placeholder="Nuevo Nombre" @bind="_nombre" class="form-control">
+<input placeholder="Nuevo Apellido" @bind="_apellido" class="form-control">
+<input placeholder="Nuevo Correo Electronico" @bind="_email" class="form-control">
+<input placeholder="Nueva Contraseña" @bind="_contraseña" class="form-control">
+
+<button class="btn btn-primary" @onclick="Aceptar">Aceptar</button>
+<h3>Volver a la pagina de inicio</h3>
+<button class="btn btn-secondary" @onclick="IrInicio">Aceptar</button>
+@*Opcion 1*@
+<Mensaje @ref=dialogo 
+mensaje="No se ha podido modificar el usuario debido a un problema con la informacion nueva" 
+soloMensaje=true/>
+@*Opcion 2*@
+<Mensaje @ref=dialogo_2 
+mensaje="El usuario se ha modificado correctamente" 
+soloMensaje=true
+OnCerrado="IrInicio"/> 
+
+@code {
+    string _nombre = "";
+    string _apellido = "";
+    string _email = "";
+    string _contraseña = "";
+    Usuario user {get;set;} = null!;
+    [Parameter] public int? ID {get;set;} = null!;
+    Mensaje dialogo = null!, dialogo_2 = null!, dialogo_noAutorizado = null!;
+    bool mostrarDialogo = false;  
+
+    void VolverMain(){
+        navigator.NavigateTo("");
+    }
+    protected override void OnInitialized(){
+        user = userState.user!;
+        if (user == null){
+            mostrarDialogo = true;
+        }
+    }
+    protected override Task OnAfterRenderAsync(bool firstRender){
+        if (mostrarDialogo && dialogo != null && firstRender){
+            dialogo_noAutorizado.Mostrar();
+            mostrarDialogo = false;
+            StateHasChanged();
+        }
+        return Task.CompletedTask;
+    }
+    
+    void IrInicio(){
+        navigator.NavigateTo("inicio");
+    }
+    void Aceptar(){
+        try{
+            Usuario user_nuevo = new Usuario(_nombre, _apellido, _email);
+            user_nuevo.ID = (int)ID!;
+            modificacionUseCase.Ejecutar(user, user_nuevo, _contraseña);
+            // si se registra correctamente 
+            // aca tendria que ir a la pagina principal
+            dialogo_2.Mostrar();
+        }
+        catch (Exception e){
+            dialogo.CambiarMensaje(e.Message);
+            dialogo.Mostrar();
+        }
+    }
+}
+
