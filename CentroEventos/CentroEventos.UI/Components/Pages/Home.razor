@@ -1,7 +1,19 @@
 ﻿@page "/"
+@rendermode InteractiveServer
+@inject NavigationManager navegador;
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Bienvenido, selecciona una opcion</h1>
 
-Welcome to your new app.
+<button class="btn btn-primary" @onclick="Registro">Registrarse</button>
+<button class="btn btn-secondary" @onclick="InicioSesion">Iniciar Sesion</button>
+
+@code {
+    void Registro(){
+        navegador.NavigateTo("registro");
+    }
+    void InicioSesion(){
+        navegador.NavigateTo("inicio_sesion");
+    }
+}

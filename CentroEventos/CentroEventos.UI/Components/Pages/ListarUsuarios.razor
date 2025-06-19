@@ -1,0 +1,131 @@
+﻿@page "/ListarUsuarios"
+@rendermode InteractiveServer
+@inject NavigationManager navigator;
+@inject UserState userState;
+@inject ServicioAutoizacion servicioAutoizacion;
+@inject ListarUsuariosUseCase listarUsuariosUseCase
+@inject UsuarioBajaUseCase usuarioBajaUseCase
+
+@*SI el usuario llego hasta aqui sin pasar por inicio_sesion/registro*@
+<Mensaje @ref=dialogo_NoAutorizado 
+mensaje="Acceso no autorizado" 
+soloMensaje=true
+OnCerrado="VolverMain"/>
+
+<h3>ListarUsuarios</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>NOMBRE</th>
+            <th>APELLIDO</th>
+            <th>CORREO ELECTRONICO</th>
+            <th>PERMISOS</th>
+            <th>ACCIONES</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var u in _lista)
+        {
+        <tr>
+            <td>@u.ID</td>
+            <td>@u.Nombre</td>
+            <td>@u.Apellido</td>
+            <td>@u.CorreoElectronico</td>
+            <td>
+                @foreach(var p in u.Permisos){
+                    @string.Join(", ", u.Permisos)
+                }
+            </td>
+            <td>
+                <button class="btn btn-primary">Editar</button>
+                <button class="btn btn-primary">Dar Permisos</button>
+                <button class="btn btn-danger" @onclick="()=>ConfirmarEliminacion(u)">Eliminar</button>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+@*Opcion 1-fallo autorizacion listado*@
+<Mensaje @ref=dialogo_1 
+mensaje="No posees permiso para ver los usuarios" 
+soloMensaje=true
+OnCerrado="IrInicio"/>
+@*Opcion 2-fallo autorizacion acciones*@
+<Mensaje @ref=dialogo_2 
+mensaje="No posees permiso para realizar esa accion" 
+soloMensaje=true/>
+@*Opcion 3-confirmar si se quiere realizar una accion*@
+<Mensaje @ref=dialogo_3 
+mensaje="¿Desea realizar esta accion?" 
+soloMensaje=false
+OnConfirmado="Eliminar"/>
+
+@code {
+    Usuario? user {get;set;} = null!; 
+    List<Usuario> _lista = new List<Usuario>();
+    bool mostrarDialogo = false;
+    string mensaje_Exception = "";
+    Mensaje dialogo_NoAutorizado = null!, dialogo_1 = null!, dialogo_2 = null!, dialogo_3 = null!;
+    // ELIMINAR USUARIO
+    Usuario? _userParaEliminar = null;
+    private void ConfirmarEliminacion(Usuario u)
+    {
+        _userParaEliminar = u;
+        dialogo_3.CambiarMensaje($"¿Desea eliminar al usuario {u.Nombre} {u.Apellido}?");
+        dialogo_3.Mostrar();
+    }
+    private void Eliminar()
+    {
+        try{
+            usuarioBajaUseCase.Ejecutar(user!, _userParaEliminar!);
+            _lista = listarUsuariosUseCase.Ejecutar(user!); //se actualiza la lista de clientes
+        }
+        catch (Exception e){
+            dialogo_2.CambiarMensaje(e.Message);
+            dialogo_2.Mostrar();
+        }
+    }
+
+    void IrInicio(){
+        navigator.NavigateTo("inicio");
+    }
+    void VolverMain(){
+        navigator.NavigateTo("");
+    }
+    // CHEQUERAR QUE USUARIO NO SEA NULL
+    protected override void OnInitialized()
+    {
+        user = userState.user;
+        if (user == null){
+            mostrarDialogo = true;
+        }
+        else{
+            try{
+                if(servicioAutoizacion.PoseeElPermiso(user.Permisos, Permiso.ListarUsuarios))
+                    _lista = listarUsuariosUseCase.Ejecutar(user);
+                else
+                    _lista.Add(user);
+            }
+            catch (Exception e){
+                mensaje_Exception = e.Message;
+            }
+        }
+    }
+    protected override Task OnAfterRenderAsync(bool firstRender){
+        if (dialogo_NoAutorizado != null && firstRender){
+            if (mostrarDialogo){
+                dialogo_NoAutorizado.Mostrar();
+                mostrarDialogo = false;
+                StateHasChanged();
+            }
+            else if (mensaje_Exception != ""){
+                dialogo_1.CambiarMensaje(mensaje_Exception);
+                dialogo_1.Mostrar();
+            }
+        }
+        return Task.CompletedTask;
+    } 
+}

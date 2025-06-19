@@ -10,14 +10,14 @@ public static class Validador_Usuario
     public static bool isEmpty_Contraseña(string contraseña) => contraseña == "";
     public static bool isUnique_Email(string email, IRepositorioUsuario Usuario)
     {
-        bool r = false;
+        bool r = true;
 
         List<Usuario> usuarios = Usuario.ListarUsuarios();
 
         int i = 0;
         while (!r && i < usuarios.Count)
         {
-            if (usuarios[i].CorreoElectronico == email) r = true;
+            if (usuarios[i].CorreoElectronico == email) r = false;
             else i++;
         }
 

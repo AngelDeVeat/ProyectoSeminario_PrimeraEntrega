@@ -1,0 +1,43 @@
+﻿@page "/inicio_sesion"
+@rendermode InteractiveServer
+@inject UserState userState;
+@inject IniciarSesionUseCase iniciarSesionUseCase;
+@inject NavigationManager navigator
+
+<h3>Inicio de Sesion</h3>
+<input placeholder="Correo Electronico" @bind="_email" class="form-control">
+<input placeholder="Contraseña" @bind="_contraseña" class="form-control">
+
+<button class="btn btn-primary" @onclick="Aceptar">Aceptar</button>
+@*Opcion 1*@
+<Mensaje @ref=dialogo 
+mensaje="Inicio de sesion fallido debido a que la contraseña o correo electronico son incorrectos" 
+soloMensaje=true/>
+@*Opcion 2*@
+<Mensaje @ref=dialogo_2 
+mensaje="Se ha iniciado sesion correctamente" 
+soloMensaje=true
+OnCerrado="IrMain"/>
+
+@code {
+    string _email = "";
+    string _contraseña = "";
+    Usuario user {get;set;} = null!;
+
+    Mensaje dialogo = null!, dialogo_2 = null!;
+    void IrMain(){
+        userState.user = user;
+        navigator.NavigateTo("inicio");
+    }
+    void Aceptar (){
+        try{
+            // si no tira excepcion, user no sera null
+            user = iniciarSesionUseCase.Ejecutar(_email, _contraseña);
+            dialogo_2.Mostrar();
+        }
+        catch(Exception e){
+            dialogo.CambiarMensaje(e.Message);
+            dialogo.Mostrar();
+        }
+    }
+}

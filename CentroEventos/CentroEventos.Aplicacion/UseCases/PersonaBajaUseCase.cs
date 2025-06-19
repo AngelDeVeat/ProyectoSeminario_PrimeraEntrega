@@ -19,8 +19,7 @@ public class PersonaBajaUseCase
 
     public void Baja(int id, Usuario usuario)
     {
-        Permiso permiso = new Permiso();
-        if (!_autorizacion.PoseeElPermiso(usuario.Permisos, permiso))
+        if (!_autorizacion.PoseeElPermiso(usuario.Permisos, Permiso.PersonaBaja))
             throw new FalloAutorizacionException(usuario.Nombre, "Baja");
 
         if (!Validador_Persona.exist_ID(id, _ipersona))

@@ -1,4 +1,6 @@
 using System;
+using System.Security.Cryptography;
+using System.Text;
 using CentroEventos.Aplicacion;
 
 namespace CentroEventos.Repositorios;
@@ -8,11 +10,27 @@ public class RepositorioUsuario : IRepositorioUsuario
     // LO DE INICIALIZAR TENDRIAS QUE DEJAR DE HACERLO A CADA RATO Y METERLO EN OTRO LADO creo
     public RepositorioUsuario() { }
 
-    public void AgregarUsuario(Usuario usuario)
+    // el user paso como param no tiene ni la contraseña ni los permisos
+    public void AgregarUsuario(Usuario usuario, string contraseña)
     {
         CentroEventosSqlite.Inicializar();
 
         using var context = new CentroEventosContext();
+        // si es el primer user del sistema, le damos todos los permisos
+        List<Permiso> permisos = new List<Permiso>();
+        if (context.Usuarios.Count() == 0)
+        {
+            permisos.Add(Permiso.Todos);
+        }
+        usuario.Permisos.AddRange(permisos);
+
+        // aplicar hash a la contraseña 
+        SHA256 sha256 = SHA256.Create();
+        byte[] hashValue;
+        hashValue = sha256.ComputeHash(Encoding.UTF8.GetBytes(contraseña));
+        // damos al user la version hasheada de la contraseña
+        usuario.Contraseña = hashValue;
+
         context.Add(usuario);
         context.SaveChanges();
     }
@@ -37,12 +55,12 @@ public class RepositorioUsuario : IRepositorioUsuario
 
         using var context = new CentroEventosContext();
 
-        var Usuario = context.Usuarios.Where(a => a.ID == ID).SingleOrDefault();
+        Usuario? Usuario = context.Usuarios.Where(a => a.ID == ID).SingleOrDefault();
 
         return Usuario;
     }
 
-    public void ModificarUsuario(Usuario usuario)
+    public void ModificarUsuario(Usuario usuario, string contraseña)
     {
         CentroEventosSqlite.Inicializar();
 
@@ -53,7 +71,14 @@ public class RepositorioUsuario : IRepositorioUsuario
             // VERIFICA QUE ESTO ESTE BIEN CAPO
             aModificar.Apellido = usuario.Apellido;
             aModificar.Nombre = usuario.Nombre;
-            aModificar.Contraseña = usuario.Contraseña;
+
+            // aplicar hash a la contraseña 
+            SHA256 sha256 = SHA256.Create();
+            byte[] hashValue;
+            hashValue = sha256.ComputeHash(Encoding.UTF8.GetBytes(contraseña));
+            // le damos al user la version hasheada de la nueva contraseña
+            aModificar.Contraseña = hashValue;
+
             aModificar.CorreoElectronico = usuario.CorreoElectronico;
 
             context.SaveChanges();   
@@ -68,7 +93,7 @@ public class RepositorioUsuario : IRepositorioUsuario
         if (aModificar != null)
         {
             // VERIFICA QUE ESTO ESTE BIEN CAPO
-            aModificar.Permisos = permisos;
+            aModificar.Permisos.AddRange(permisos);
 
             context.SaveChanges();   
         }
