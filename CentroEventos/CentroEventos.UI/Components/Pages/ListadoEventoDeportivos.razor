@@ -1,4 +1,4 @@
-@using CentroEventos.UI.Components
+
 @page "/listadoEventosDeportivos"
 @rendermode InteractiveServer
 using System.Runtime.InteropServices.Marshalling;
@@ -9,10 +9,18 @@ using System.Runtime.InteropServices.Marshalling;
 @inject EventoDeportivoBajaUseCase  EventoDeportivoBajaUseCase
 @inject ServicioAutorizacion ServicioAutorizacion
 @inject NavigationManager Navegador
+@inject UserState User
 
-@inject UserState UserState
+@*SI el usuario llego hasta aqui sin pasar por inicio_sesion/registro*@
+@if (mostrarDialogo){
+<Mensaje @ref=dialogo 
+mensaje="Acceso no autorizado" 
+soloMensaje=true
+OnCerrado="VolverHome"/>
+}
+else{
 <DialogoEx  @ref="dialogoex"/>
-<DialogosDeConfirmacion @ref="dialogo" OnConfirmado="Eliminar"/>
+<DialogosDeConfirmacion @ref="dialogocon" OnConfirmado="Eliminar"/>
     <table class="table">
     <thead>
     <tr>
@@ -55,51 +63,65 @@ using System.Runtime.InteropServices.Marshalling;
         </button>
     </tbody>
     </table>
+}
 @code {
 List<EventoDeportivo> _lista = new List<EventoDeportivo>();
-Usuario User{get; set;}=null;
- DialogoEx dialogoex = new DialogoEx();
+Usuario? user{get; set;}=null;
+ DialogoEx? dialogoex;
  bool Editar;
 bool Elimina;
+Mensaje? dialogo=null;
+bool mostrarDialogo=false;
 
 protected override void OnInitialized()
 {
-  Editar= ServicioAutorizacion.PoseeElPermiso(User.Permisos,Permiso.EventoModificacion);
-   Elimina= ServicioAutorizacion.PoseeElPermiso(User.Permisos,Permiso.EventoBaja);
-    User=UserState.User;
-  if (User ==null){
-    dialogoex.Mostrar("Debe registrarse para acceder al menu");
-    Navegador.NavigateTo($"/Home");
+    user=User.user;
+  if (user ==null){
+    mostrarDialogo=true;
   }
-  else
+  else{
     _lista = EventoDeportivoListadoUseCase.Listado();
+    Editar= ServicioAutorizacion.PoseeElPermiso(user.Permisos,Permiso.EventoModificacion);
+   Elimina= ServicioAutorizacion.PoseeElPermiso(user.Permisos,Permiso.EventoBaja);
+    }
 }
-DialogosDeConfirmacion dialogo=new DialogosDeConfirmacion() ;
+DialogosDeConfirmacion? dialogocon;
 EventoDeportivo? _evento =null;
 private void VolverInicio(){
-     Navegador.NavigateTo($"/inicio");
+     Navegador.NavigateTo($"inicio");
+}
+private void VolverHome(){
+     Navegador.NavigateTo($"");
 }
 private void ConfirmarEliminacion(EventoDeportivo evento)
 {
  _evento = evento;
-dialogo.Mostrar($"¿Desea eliminar al Evento {evento.ID} {evento.Nombre} {evento.Descripcion} {evento.FechaHoraInicio}?");
+dialogocon?.Mostrar($"¿Desea eliminar al Evento {evento.ID} {evento.Nombre} {evento.Descripcion} {evento.FechaHoraInicio}?");
 }
 private void Modificacion(EventoDeportivo evento){
-    Navegador.NavigateTo($"/EventoDeportivo/{evento.ID}");
+    Navegador.NavigateTo($"EventoDeportivo/{evento.ID}");
 }
 private void Eliminar()
 {
 if (_evento !=null)
 {
     try{
-EventoDeportivoBajaUseCase.Baja(_evento.ID, User);
-_lista = EventoDeportivoListadoUseCase.Listado(); //se actualiza la lista de clientes
+        if(user!=null){
+        EventoDeportivoBajaUseCase.Baja(_evento.ID, user);
+        _lista = EventoDeportivoListadoUseCase.Listado(); }
 }
 catch(Exception e){
-    dialogoex.Mostrar(e.Message);
+    dialogoex?.Mostrar(e.Message);
 }
 }
 }
+ protected override Task OnAfterRenderAsync(bool firstRender){
+        if (mostrarDialogo && dialogo != null && firstRender){
+            dialogo.Mostrar();
+            StateHasChanged();
+        }
+        return Task.CompletedTask;
+    } 
 }    using SQLitePCL;
 
 #nullable disable

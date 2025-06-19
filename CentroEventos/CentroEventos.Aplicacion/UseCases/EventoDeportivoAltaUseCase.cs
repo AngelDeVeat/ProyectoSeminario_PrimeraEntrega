@@ -16,7 +16,7 @@ public class EventoDeportivoAltaUseCase
 
     public void Alta(EventoDeportivo evento, Usuario usuario)
     {
-        Permiso permiso = new Permiso();
+        Permiso permiso = Permiso.EventoAlta;
         if (!_autorizacion.PoseeElPermiso(usuario.Permisos, permiso))
             throw new FalloAutorizacionException(usuario.Nombre, "Alta");
 

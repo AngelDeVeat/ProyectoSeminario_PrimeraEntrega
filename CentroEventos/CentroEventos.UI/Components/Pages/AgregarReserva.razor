@@ -1,5 +1,5 @@
 @using CentroEventos.UI.Components
-@page "/Reserva/{id:int?}/{user:Usuario?}"
+@page "/Reserva/{id:int?}"
 @rendermode InteractiveServer
 @inject NavigationManager Navegador;
 using System.Linq.Expressions;
@@ -8,6 +8,12 @@ using System.Linq.Expressions;
 @inject ReservaModificacionUseCase ReservaModificacionUseCase
 @inject ObtenerReservaUseCase ObtenerReservaUseCase
 @inject ReservaModificacionUseCase ReservaModificacionUseCase
+@inject UserState User
+@*SI el usuario llego hasta aqui sin pasar por inicio_sesion/registro*@
+<Mensaje @ref=dialogo 
+mensaje="Acceso no autorizado" 
+soloMensaje=true
+OnCerrado="VolverHome"/>
 <DialogoEx  @ref="dialogoex" />
 
 @if (_esnuevareserva)
@@ -21,12 +27,23 @@ using System.Linq.Expressions;
 <input placeholder="ID Dueño de la Reserva" @bind="_reserva.PersonaID" class="form-control">
 <input placeholder="ID Evento a Reservar" @bind="_reserva.EventoDeportivoID" class="form-control">
 <button class="btn btn-primary" @onclick="Aceptar">Aceptar</button>
+<button class="btn btn-danger" @onclick="()=>VolverInicio()">
+            Volver al inicio
+        </button>
 @code {
 Reserva _reserva = new Reserva();
 [Parameter] public int? id{get;set;}
-[Parameter] public Usuario? user{get; set;}
- DialogoEx dialogoex= new DialogoEx();
+Mensaje? dialogo=null;
+ DialogoEx? dialogoex;
+ Usuario? user{get;set;}=null;
+ bool mostrarDialogo=false;
 bool _esnuevareserva=true;
+protected override void OnInitialized(){
+  user=User.user;
+  if (user ==null){
+    mostrarDialogo=true;
+  }
+}
 protected override void OnParametersSet()
 {
 if (id != null)
@@ -37,7 +54,12 @@ if (id != null)
         _reserva=reserva;}
 }
 }
-
+private void VolverInicio(){
+     Navegador.NavigateTo($"inicio");
+     }
+     private void VolverHome(){
+     Navegador.NavigateTo($"");
+}
 void Aceptar()
 {
     try{
@@ -50,7 +72,15 @@ if (user!=null && _reserva !=null){
 _reserva = new Reserva();
 Navegador.NavigateTo("listadoReservas");}
 catch(Exception e){
-    dialogoex.Mostrar(e.Message);
+    dialogoex?.Mostrar(e.Message);
 }
 }
+ protected override Task OnAfterRenderAsync(bool firstRender){
+        if (mostrarDialogo && dialogo != null && firstRender){
+            dialogo.Mostrar();
+            mostrarDialogo = false;
+            StateHasChanged();
+        }
+        return Task.CompletedTask;
+    } 
 }

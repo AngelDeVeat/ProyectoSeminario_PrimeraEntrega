@@ -1,12 +1,25 @@
 @page "/listadoAsistenciaEvento"
 @inject ListarAsistenciaAEventoUseCase ListadoAsistenciaEventoUseCase
 @inject NavigationManager Navegador
+@rendermode InteractiveServer
+@inject UserState User
 
-@inject UserState UserState
-<DialogoEx  @ref="dialogoex"/>
+@if (mostrarDialogo)
+{
+        <Mensaje @ref=dialogo 
+        mensaje="Acceso no autorizado" 
+        soloMensaje="true"
+        OnCerrado="VolverHome" />
+}
 
+
+@if (!mostrarDialogo){
+<DialogoEx  @ref="dialogoEx"/>
 <input placeholder="ID del Evento a buscar sus Asistencias" @bind="ID" class="form-control">
 <button class="btn btn-primary" @onclick="Aceptar">Aceptar</button>
+ <button class="btn btn-danger" @onclick="()=>VolverInicio()">
+            Volver al inicio
+        </button>
 @if (visible){
  <table class="table">
     <thead>
@@ -31,24 +44,38 @@
         <td>@per.Telefono</td>
     </tr>
     }
-         <button class="btn btn-danger" @onclick="()=>VolverInicio()">
-            Volver al inicio
-        </button>
     </tbody>
     </table>}
+}
 @code {
 List<Persona> _lista = new List<Persona>();
-int? ID; 
+int? ID;
 bool visible=false;
-DialogoEx dialogoex = new DialogoEx();
-Usuario User{get; set;}=null;
+Mensaje? dialogo=null;
+Usuario? user{get; set;}=null;
+bool mostrarDialogo=false;
+DialogoEx? dialogoEx=null;
+
 protected override void OnInitialized(){
-  User=UserState.User;
-  if (User ==null){
-    dialogoex.Mostrar("Debe registrarse para acceder al menu");
-    Navegador.NavigateTo($"/Home");
+  user=User.user;
+  if (user ==null){
+    mostrarDialogo=true;
   }
 }
+private void VolverInicio(){
+     Navegador.NavigateTo($"inicio");
+}
+private void VolverHome(){
+     Navegador.NavigateTo($"");
+}
+
+protected override Task OnAfterRenderAsync(bool firstRender){
+        if (mostrarDialogo && dialogo != null && firstRender){
+            dialogo.Mostrar();
+            StateHasChanged();
+        }
+        return Task.CompletedTask;
+    } 
  private void Aceptar()
 {
  if (ID !=null){   
@@ -57,20 +84,12 @@ protected override void OnInitialized(){
     visible=true;
     }
     catch(Exception e){
-        dialogoex.Mostrar(e.Message);
+        dialogoEx?.Mostrar(e.Message);
     }}
     
 else{
-    dialogoex.Mostrar("Debe ingresar un ID");
-     Navegador.NavigateTo($"inicio");
-}
-}
-
-
-
-
-private void VolverInicio(){
-     Navegador.NavigateTo($"inicio");
+    dialogoEx?.Mostrar("Debe ingresar un numero");
+    }
 }
 
 }

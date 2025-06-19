@@ -16,7 +16,7 @@ public class EventoDeportivoBajaUseCase
 
     public void Baja(int id, Usuario usuario)
     {
-        Permiso permiso = new Permiso();
+        Permiso permiso = Permiso.EventoBaja;
         if (!_autorizacion.PoseeElPermiso(usuario.Permisos, permiso))
             throw new FalloAutorizacionException(usuario.Nombre, "Baja");
 

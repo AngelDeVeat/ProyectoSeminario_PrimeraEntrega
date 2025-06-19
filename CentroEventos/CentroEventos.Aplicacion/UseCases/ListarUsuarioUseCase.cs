@@ -11,7 +11,7 @@ public class ListarUsuariosUseCase
     }
     public List<Usuario> Ejecutar(Usuario usuario)
     {
-        Permiso permiso = new Permiso();
+        Permiso permiso = Permiso.ListarUsuarios;
         permiso = Permiso.ListarUsuarios;
         if (!_autorizacion.PoseeElPermiso(usuario.Permisos, permiso))
             throw new FalloAutorizacionException(usuario.Nombre, "Listar Usuarios");

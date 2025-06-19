@@ -16,6 +16,8 @@ public class ListarAsistenciaAEventoUseCase
 
     public List<Persona> Ejecutar(int evento_id)
     {
+        if (!Validador_EventoDeportivo.exist_ID(evento_id, _ievento))
+            throw new EntidadNotFoundException("El ID ingresado no corresponde a ningun evento");
         List<Reserva> reservas = _ireserva.ListarReservas();
         List<Persona> asistentes = new List<Persona>();
         EventoDeportivo? evento = _ievento.GetEventoDeportivo(evento_id);
