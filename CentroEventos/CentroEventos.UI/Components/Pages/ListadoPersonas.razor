@@ -1,5 +1,5 @@
 @using CentroEventos.UI.Components
-@page "/listadoPersonas/{user:Usuario?}"
+@page "/listadoPersonas"
 @rendermode InteractiveServer
 using System.Runtime.InteropServices.Marshalling;
 
@@ -9,8 +9,17 @@ using System.Runtime.InteropServices.Marshalling;
 @inject PersonaBajaUseCase PersonaBajaUseCase
 @inject PersonaModificacionUseCase PersonaModificacionUseCase
 @inject NavigationManager Navegador
-
-<DialogosDeConfirmacion @ref="dialogo" OnConfirmado="Eliminar"/>
+@inject ServicioAutorizacion ServicioAutorizacion
+@inject UserState User
+@*SI el usuario llego hasta aqui sin pasar por inicio_sesion/registro*@
+@if (mostrarDialogo){
+<Mensaje @ref=dialogo 
+mensaje="Acceso no autorizado" 
+soloMensaje=true
+OnCerrado="VolverHome"/>}
+@if(!mostrarDialogo){
+    <DialogoEx  @ref="dialogoex"/>
+<DialogosDeConfirmacion @ref="dialogocon" OnConfirmado="Eliminar"/>
     <table class="table">
     <thead>
     <tr>
@@ -33,42 +42,82 @@ using System.Runtime.InteropServices.Marshalling;
         <td>@per.Email</td>
         <td>@per.Telefono</td>
         <td>
+           @if (Editar){
             <button class="btn btn-primary" @onclick="()=>Modificacion(per)">
                 Editar
-            </button>
+            </button>}
+        </td>
+        <td>
+            @if (Elimina){
             <button class="btn btn-danger" @onclick="()=>ConfirmarEliminacion(per)">
                 Eliminar
-            </button>
+            </button>}
         </td>
     </tr>
     }
+     <button class="btn btn-danger" @onclick="()=>VolverInicio()">
+            Volver al inicio
+        </button>
     </tbody>
     </table>
+}
 @code {
 List<Persona> _lista = new List<Persona>();
- [Parameter]public Usuario? user {get; set;}
+bool Editar;
+bool Elimina;
+DialogosDeConfirmacion? dialogocon;
+Persona? _persona = null;
+Usuario? user;
+DialogoEx? dialogoex;
+Mensaje? dialogo=null;
+bool mostrarDialogo=false;
 protected override void OnInitialized()
 {
-_lista = PersonaListadoUseCase.Listado();
+    user=User.user;
+  if (user ==null){
+    mostrarDialogo=true;
+  }
+  else{
+    _lista = PersonaListadoUseCase.Listado();
+    Editar= ServicioAutorizacion.PoseeElPermiso(user.Permisos,Permiso.PersonaModificacion);
+   Elimina= ServicioAutorizacion.PoseeElPermiso(user.Permisos,Permiso.PersonaBaja);
+    }
 }
-DialogosDeConfirmacion dialogo=new DialogosDeConfirmacion() ;
-Persona? _persona = null;
 private void ConfirmarEliminacion(Persona per)
 {
 _persona = per;
-dialogo.Mostrar($"¿Desea eliminar a la Persona {per.Nombre} {per.Apellido} {per.ID} {per.DNI}?");
+dialogocon?.Mostrar($"¿Desea eliminar a la Persona {per.Nombre} {per.Apellido} {per.ID} {per.DNI}?");
+}
+private void VolverInicio(){
+     Navegador.NavigateTo($"inicio");
+}
+private void VolverHome(){
+     Navegador.NavigateTo($"");
 }
 private void Modificacion(Persona per){
     Navegador.NavigateTo($"Persona/{per.ID}");
 }
 private void Eliminar()
 {
-if (_persona != null && user!=null )
+if (_persona !=null)
 {
-PersonaBajaUseCase.Baja(_persona.ID, user);
-_lista = PersonaListadoUseCase.Listado(); //se actualiza la lista de clientes
+    try{
+        if(user!=null){
+        PersonaBajaUseCase.Baja(_persona.ID, user);
+        _lista = PersonaListadoUseCase.Listado(); }
+}
+catch(Exception e){
+    dialogoex?.Mostrar(e.Message);
 }
 }
+}
+ protected override Task OnAfterRenderAsync(bool firstRender){
+        if (mostrarDialogo && dialogo != null && firstRender){
+            dialogo.Mostrar();
+            StateHasChanged();
+        }
+        return Task.CompletedTask;
+    } 
 }    using SQLitePCL;
 
 #nullable disable

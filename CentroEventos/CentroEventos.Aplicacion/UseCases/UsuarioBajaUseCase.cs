@@ -11,8 +11,7 @@ public class UsuarioBajaUseCase
     }
     public void Ejecutar(Usuario usuarioadmin, Usuario usuario)
     {
-        Permiso permiso = new Permiso();
-        permiso = Permiso.UsuarioBaja;
+        Permiso permiso= Permiso.UsuarioBaja;
         if (!_autorizacion.PoseeElPermiso(usuarioadmin.Permisos, permiso))
             throw new FalloAutorizacionException(usuarioadmin.Nombre, "Baja");
         if (!Validador_Usuario.Exist_Usuario(usuario.ID, _iusuario))

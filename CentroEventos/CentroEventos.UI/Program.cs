@@ -30,6 +30,7 @@ builder.Services.AddTransient<UsuarioAutoModificacionUseCase>();
 builder.Services.AddTransient<ListarAsistenciaAEventoUseCase>();
 builder.Services.AddTransient<ObtenerPersonaUseCase>();
 builder.Services.AddTransient<ObtenerReservaUseCase>();
+builder.Services.AddTransient<ObtenerEventoDeportivoUseCase>();
 builder.Services.AddTransient<ListarEventosConCupoDisponibleUseCase>();
 builder.Services.AddScoped<IRepositorioEventoDeportivo, RepositorioEventoDeportivo>();
 builder.Services.AddScoped<IRepositorioPersona, RepositorioPersona>();

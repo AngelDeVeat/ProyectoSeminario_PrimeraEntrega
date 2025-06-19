@@ -19,7 +19,7 @@ public class ReservaModificacionUseCase
 
     public void Ejecutar(Reserva reserva, Usuario usuario)
     {
-        Permiso permiso = new Permiso();
+        Permiso permiso = Permiso.ReservaBaja;
         permiso = Permiso.ReservaModificacion;
         if (!_autorizacion.PoseeElPermiso(usuario.Permisos, permiso))
             throw new FalloAutorizacionException(usuario.Nombre, "Modificacion");

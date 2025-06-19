@@ -15,7 +15,7 @@ public class ReservaBajaUseCase
 
     public void Ejecutar(int id, Usuario usuario)
     {
-        Permiso permiso = new Permiso();
+        Permiso permiso =Permiso.ReservaBaja;
         if (!_autorizacion.PoseeElPermiso(usuario.Permisos, permiso))
             throw new FalloAutorizacionException(usuario.Nombre, "Baja");
 

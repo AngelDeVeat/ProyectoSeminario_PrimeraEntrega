@@ -14,7 +14,7 @@ public class PersonaModificacionUseCase
 
     public void Modificacion(Persona persona, Usuario usuario)
     {
-        Permiso permiso = new Permiso();
+        Permiso permiso = Permiso.PersonaModificacion;
         if (!_autorizacion.PoseeElPermiso(usuario.Permisos, permiso))
             throw new FalloAutorizacionException(usuario.Nombre, "Modificacion");
 
