@@ -1,0 +1,56 @@
+@using CentroEventos.UI.Components
+@page "/Reserva/{id:int?}/{user:Usuario?}"
+@rendermode InteractiveServer
+@inject NavigationManager Navegador;
+using System.Linq.Expressions;
+
+@inject ReservaAltaUseCase ReservaAltaUseCase
+@inject ReservaModificacionUseCase ReservaModificacionUseCase
+@inject ObtenerReservaUseCase ObtenerReservaUseCase
+@inject ReservaModificacionUseCase ReservaModificacionUseCase
+<DialogoEx  @ref="dialogoex" />
+
+@if (_esnuevareserva)
+ {
+<h3>Agregando una nueva reserva</h3>
+ }
+ else
+{
+<h3> Modificando a la Reserva "@_reserva.ID"</h3>
+ }
+<input placeholder="ID Dueño de la Reserva" @bind="_reserva.PersonaID" class="form-control">
+<input placeholder="ID Evento a Reservar" @bind="_reserva.EventoDeportivoID" class="form-control">
+<button class="btn btn-primary" @onclick="Aceptar">Aceptar</button>
+@code {
+Reserva _reserva = new Reserva();
+[Parameter] public int? id{get;set;}
+[Parameter] public Usuario? user{get; set;}
+ DialogoEx dialogoex= new DialogoEx();
+bool _esnuevareserva=true;
+protected override void OnParametersSet()
+{
+if (id != null)
+{
+   var reserva = ObtenerReservaUseCase.Ejecutar(id.Value);
+  if (reserva != null){
+        _esnuevareserva=false;
+        _reserva=reserva;}
+}
+}
+
+void Aceptar()
+{
+    try{
+if (user!=null && _reserva !=null){
+    if (_esnuevareserva)
+      ReservaAltaUseCase.Ejecutar(_reserva, user);
+   else
+     ReservaModificacionUseCase.Ejecutar(_reserva,user);
+   }
+_reserva = new Reserva();
+Navegador.NavigateTo("listadoReservas");}
+catch(Exception e){
+    dialogoex.Mostrar(e.Message);
+}
+}
+}

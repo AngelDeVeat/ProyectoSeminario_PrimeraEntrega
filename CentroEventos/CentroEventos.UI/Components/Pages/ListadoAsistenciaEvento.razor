@@ -1,0 +1,76 @@
+@page "/listadoAsistenciaEvento"
+@inject ListarAsistenciaAEventoUseCase ListadoAsistenciaEventoUseCase
+@inject NavigationManager Navegador
+
+@inject UserState UserState
+<DialogoEx  @ref="dialogoex"/>
+
+<input placeholder="ID del Evento a buscar sus Asistencias" @bind="ID" class="form-control">
+<button class="btn btn-primary" @onclick="Aceptar">Aceptar</button>
+@if (visible){
+ <table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>DNI</th>
+        <th>NOMBRE</th>
+        <th>APELLIDO</th>
+        <th>EMAIL</th>
+        <th>TELEFONO</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var per in _lista)
+    {
+    <tr>
+        <td>@per.ID</td>
+        <td>@per.DNI</td>
+        <td>@per.Nombre</td>
+        <td>@per.Apellido</td>
+        <td>@per.Email</td>
+        <td>@per.Telefono</td>
+    </tr>
+    }
+         <button class="btn btn-danger" @onclick="()=>VolverInicio()">
+            Volver al inicio
+        </button>
+    </tbody>
+    </table>}
+@code {
+List<Persona> _lista = new List<Persona>();
+int? ID; 
+bool visible=false;
+DialogoEx dialogoex = new DialogoEx();
+Usuario User{get; set;}=null;
+protected override void OnInitialized(){
+  User=UserState.User;
+  if (User ==null){
+    dialogoex.Mostrar("Debe registrarse para acceder al menu");
+    Navegador.NavigateTo($"/Home");
+  }
+}
+ private void Aceptar()
+{
+ if (ID !=null){   
+    try{
+    _lista = ListadoAsistenciaEventoUseCase.Ejecutar(ID.Value);
+    visible=true;
+    }
+    catch(Exception e){
+        dialogoex.Mostrar(e.Message);
+    }}
+    
+else{
+    dialogoex.Mostrar("Debe ingresar un ID");
+     Navegador.NavigateTo($"inicio");
+}
+}
+
+
+
+
+private void VolverInicio(){
+     Navegador.NavigateTo($"inicio");
+}
+
+}
