@@ -1,0 +1,88 @@
+@using CentroEventos.UI.Components
+@page "/listadoReservas/{user:Usuario?}"
+@rendermode InteractiveServer
+using System.Runtime.InteropServices.Marshalling;
+
+using System.Runtime.InteropServices.Marshalling;
+
+@inject ReservaListadoUseCase ReservaListadoUseCase
+@inject ReservaBajaUseCase ReservaBajaUseCase
+@inject ReservaModificacionUseCase ReservaModificacionUseCase
+@inject NavigationManager Navegador
+@inject UserState UserState
+<DialogoEx  @ref="dialogoex"/>
+<DialogosDeConfirmacion @ref="dialogo" OnConfirmado="Eliminar"/>
+    <table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>ID EVENTO</th>
+        <th>ASISTENCIA</th>
+        <th>FECHA DE ALTA</th>
+        <th>DUEÑO</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var reserva in _lista)
+    {
+    <tr>
+        <td>@reserva.ID</td>
+        <td>@reserva.EventoDeportivoID</td>
+        <td>@reserva.EstadoAsistencia</td>
+        <td>@reserva.FechaAltaReserva</td>
+        <td>@reserva.PersonaID</td>
+        <td>
+            <button class="btn btn-primary" @onclick="()=>Modificacion(reserva)">
+                Editar
+            </button>
+            <button class="btn btn-danger" @onclick="()=>ConfirmarEliminacion(reserva)">
+                Eliminar
+            </button>
+        </td>
+    </tr>
+    }
+        <button class="btn btn-danger" @onclick="()=>VolverInicio()">
+            Volver al inicio
+        </button>
+    </tbody>
+    </table>
+@code {
+List<Reserva> _lista = new List<Reserva>();
+Usuario User{get; set;}=null;
+ DialogoEx dialogoex= new DialogoEx();
+protected override void OnInitialized()
+{User=UserState.User;
+  if (User ==null){
+    dialogoex.Mostrar("Debe registrarse para acceder al menu");
+    Navegador.NavigateTo($"/Home");
+  }
+else
+    _lista = ReservaListadoUseCase.Ejecutar();
+}
+DialogosDeConfirmacion dialogo=new DialogosDeConfirmacion() ;
+Reserva? _reserva = null;
+private void VolverInicio(){
+     Navegador.NavigateTo($"inicio");
+}
+private void ConfirmarEliminacion(Reserva reserva)
+{
+_reserva = reserva;
+dialogo.Mostrar($"¿Desea eliminar a la reserva {reserva.ID} {reserva.EstadoAsistencia} {reserva.FechaAltaReserva} {reserva.PersonaID}?");
+}
+private void Modificacion(Reserva reserva){
+    Navegador.NavigateTo($"Persona/{reserva.ID}");
+}
+private void Eliminar()
+{
+if (_reserva != null  )
+{try{
+ReservaBajaUseCase.Ejecutar(_reserva.ID, user);
+_lista = ReservaListadoUseCase.Ejecutar(); //se actualiza la lista de clientes
+} catch(Exception e){
+    dialogoex.Mostrar(e.Message);
+}}
+}
+}    using SQLitePCL;
+
+#nullable disable
+#line default

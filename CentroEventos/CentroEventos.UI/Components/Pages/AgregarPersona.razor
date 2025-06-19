@@ -1,0 +1,55 @@
+@page "/Persona/{id:int?}/{user:Usuario?}"
+@rendermode InteractiveServer
+@inject NavigationManager Navegador;
+@inject PersonaAltaUseCase PersonaAltaUseCase
+@inject PersonaModificacionUseCase PersonaModificacionUseCase
+@inject PersonaModificacionUseCase PersonaModificacionUseCase
+@inject ObtenerPersonaUseCase ObtenerPersonaUseCase
+<DialogoEx  @ref="dialogoex"/>
+@if (_esnuevapersona)
+ {
+<h3>Agregando un nuevo Cliente</h3>
+ }
+ else
+{
+<h3> Modificando al Cliente "@persona.Nombre"</h3>
+ }
+<input placeholder="DNI" @bind="persona.DNI" class="form-control">
+<input placeholder="Nombre" @bind="persona.Nombre" class="form-control">
+<input placeholder="Apellido" @bind="persona.Apellido" class="form-control">
+<input placeholder="Correo Electronico" @bind="persona.Email" class="form-control">
+<input placeholder="Telefono" @bind="persona.Telefono" class="form-control">
+<button class="btn btn-primary" @onclick="Aceptar">Aceptar</button>
+@code {
+Persona persona = new Persona();
+[Parameter] public int? id{get;set;}
+[Parameter] public Usuario? user{get; set;}
+bool _esnuevapersona=true;
+DialogoEx dialogoex = new DialogoEx();
+protected override void OnParametersSet()
+{
+if (id != null)
+{
+  var _persona = ObtenerPersonaUseCase.Ejecutar(id.Value);
+  if (_persona != null){
+      persona=_persona;
+      _esnuevapersona=false;
+   }
+}
+}
+void Aceptar()
+{
+  try{
+  if (user!=null){
+      if (_esnuevapersona)
+       PersonaAltaUseCase.Alta(persona, user);
+    else
+       PersonaModificacionUseCase.Modificacion(persona,user);
+   }
+persona = new Persona();
+Navegador.NavigateTo("listadoclientes");
+}
+ catch(Exception e){
+    dialogoex.Mostrar(e.Message);
+ }}
+}
