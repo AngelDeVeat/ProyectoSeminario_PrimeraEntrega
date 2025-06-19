@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace CentroEventos.Aplicacion;
 
 public class UsuarioAutoModificacionUseCase
@@ -7,25 +9,30 @@ public class UsuarioAutoModificacionUseCase
     {
         _iusuario = iusuario;
     }
-    public void Ejecutar(Usuario usuarioadmin,Usuario usuario)
+    public void Ejecutar(Usuario usuarioadmin,Usuario usuario, string contraseña)
     {
-        if (usuario.CorreoElectronico != usuario.CorreoElectronico)
-            if (!Validador_Usuario.Exist_Usuario(usuario.ID, _iusuario))
-                throw new EntidadNotFoundException("el usuario que se quiere modificar no existe");
-        if (!Validador_Usuario.isEmpty_Nombre(usuario.Nombre))
+        // no hace falta esto
+        //if (usuario.CorreoElectronico != usuarioadmin.CorreoElectronico)
+        //  if (!Validador_Usuario.Exist_Usuario(usuarioadmin.ID, _iusuario))
+        //    throw new EntidadNotFoundException("el usuario que se quiere modificar no existe");
+        if (Validador_Usuario.isEmpty_Nombre(usuario.Nombre))
             throw new ValidacionException("la validacion fallo debido a que el campo Nombre de la clase Usuario esta vacio");
-        if (!Validador_Usuario.isEmpty_Apellido(usuario.Apellido))
+        if (Validador_Usuario.isEmpty_Apellido(usuario.Apellido))
             throw new ValidacionException("la validacion fallo debido a que el campo Apellido de la clase Usuario esta vacio");
-        if (!Validador_Usuario.isEmpty_Email(usuario.CorreoElectronico))
+        if (Validador_Usuario.isEmpty_Email(usuario.CorreoElectronico))
             throw new ValidacionException("la validacion fallo debido a que el campo CorreoElectronico de la clase Usuario esta vacio");
         if (!Validador_Usuario.isUnique_Email(usuario.CorreoElectronico, _iusuario))
             throw new DuplicadoException("la validacion fallo debido a que el Correo Electonico utilizado ya esta registado");
-        if (!Validador_Usuario.isEmpty_Contraseña(usuario.Contraseña))
+
+        //string contraseña = Encoding.UTF8.GetString(usuario.Contraseña);
+        if (Validador_Usuario.isEmpty_Contraseña(contraseña))
             throw new ValidacionException("la validacion fallo debido a que el campo Contraseña de la clase Usuario esta vacio");
-        if (!Validador_Usuario.ContraseñaValida(usuario.Contraseña))
+        if (!Validador_Usuario.ContraseñaValida(contraseña))
             throw new ValidacionException("la validacion fallo debiado a que la contraseña ingresada no es valida");
         if (!Validador_Usuario.CorreoElectronicoValido(usuario.CorreoElectronico))
             throw new ValidacionException("la validacion fallo debido a el campo CorreoElectronico no es valido");
-        _iusuario.ModificarUsuario(usuario);
+
+        usuario.ID = usuarioadmin.ID;
+        _iusuario.ModificarUsuario(usuario, contraseña);
     }
 }

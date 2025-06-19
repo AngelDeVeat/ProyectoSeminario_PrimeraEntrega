@@ -15,4 +15,11 @@ public class CentroEventosContext : DbContext
     {
         optionsBuilder.UseSqlite("data source=CentroEventos.sqlite");
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+        modelBuilder.Entity<Usuario>()
+        .Property(a => a.Contraseña)
+        .HasColumnType("BINARY(32)");
+}
 }

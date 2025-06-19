@@ -1,0 +1,125 @@
+﻿@page "/inicio"
+@rendermode InteractiveServer
+
+@*SI el usuario llego hasta aqui sin pasar por inicio_sesion/registro*@
+<Mensaje @ref=dialogo 
+mensaje="Acceso no autorizado" 
+soloMensaje=true
+OnCerrado="VolverMain"/>
+
+@inject ServicioAutoizacion autorizacion;
+@inject UserState userState;
+@inject NavigationManager navigator;
+
+<h3>Selecciona una opcion</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Use Case</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var elem in _useCases)
+        {
+            <tr>
+                <td>@elem.Key</td>
+                <td>
+                    <button class="btn btn-primary" @onclick="() => IrA(elem.Value)">Acceder</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+   
+        <thead>
+            <tr>
+                <th>Menu Gestion de Usuarios</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var elem in _useCasesGestionUsers)
+            {
+                <tr>
+                    <td>@elem.Key</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="() => IrA(elem.Value)">Acceder</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    
+    <thead>
+        <tr>
+            <th>Auto Gestion</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var elem in _useCasesAutoGestion)
+        {
+            <tr>
+                <td>@elem.Key</td>
+                <td>
+                    <button class="btn btn-primary" @onclick="() => IrA(elem.Value)">Acceder</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@code {
+    Usuario user {get; set;} = null!;
+    Mensaje dialogo = null!;
+    bool mostrarDialogo = false, mostrarGestionUsuarios = false;
+
+    Dictionary<string, string> _useCases = new Dictionary<string, string>();
+    Dictionary<string, string> _useCasesGestionUsers = new Dictionary<string, string>();
+    Dictionary<string, string> _useCasesAutoGestion = new Dictionary<string, string>();
+    void VolverMain(){
+        navigator.NavigateTo("");
+    }
+    void IrA(string destino){
+        navigator.NavigateTo(destino);
+    }
+    protected override void OnInitialized(){
+        user = userState.user!;
+        if (user == null){
+            mostrarDialogo = true;
+        }
+        else{
+            // use cases generales
+            _useCases.Add("Agregar Personas", "AgregarPersona");
+            _useCases.Add("Listar y/o modificar Personas", "ListadoPersonas");
+            _useCases.Add("Agregar Eventos Deportivos", "AgregarEventoDeportivo");
+            _useCases.Add("Listar y/o modificar Eventos Deportivos", "ListadoEventosDeportivos");
+            _useCases.Add("Agregar Reservas", "AgregarReserva");
+            _useCases.Add("Listar y/o modificar Reservas", "ListadoReservas");
+            
+            _useCases.Add("Listar eventos con cupo disponible", "ListadoEventosConCupoDisponible");
+            _useCases.Add("Listar asistentes a un evento", "ListadoAsistenciaEvento");
+            // si el user posee todos los permisos o algunos de los permisos para gestion de usuario
+            if (autorizacion.PoseeElPermiso(user.Permisos, Permiso.Todos) ||
+                autorizacion.PoseeElPermiso(user.Permisos, Permiso.UsuarioBaja) ||
+                autorizacion.PoseeElPermiso(user.Permisos, Permiso.UsuarioModificacion) ||
+                autorizacion.PoseeElPermiso(user.Permisos, Permiso.DarPermisos) ||
+                autorizacion.PoseeElPermiso(user.Permisos, Permiso.ListarUsuarios)){
+
+                mostrarGestionUsuarios = true;
+                _useCasesGestionUsers.Add("Listar y/o modificar Usuarios", "ListarUsuarios");
+            }
+            _useCasesGestionUsers.Add("Listar y/o modificar Usuarios", "ListarUsuarios");
+            // use cases de auto gestion
+            _useCasesAutoGestion.Add("Modificar usuario actual", "AutoModificar");
+        }
+    }
+    protected override Task OnAfterRenderAsync(bool firstRender){
+        if (mostrarDialogo && dialogo != null && firstRender){
+            dialogo.Mostrar();
+            mostrarDialogo = false;
+            StateHasChanged();
+        }
+        return Task.CompletedTask;
+    } 
+
+}
