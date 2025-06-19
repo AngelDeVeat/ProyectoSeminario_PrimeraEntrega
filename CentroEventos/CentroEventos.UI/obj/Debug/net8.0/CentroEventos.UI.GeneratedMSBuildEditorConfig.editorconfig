@@ -38,12 +38,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBZ3JlZ2FyUmVzZXJ2YS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/Pages/AutoModificar.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBdXRvTW9kaWZpY2FyLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/Pages/Counter.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb3VudGVyLnJhem9y
+[C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/Pages/DarPermisos.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xEYXJQZXJtaXNvcy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/Pages/Error.razor]
@@ -86,12 +82,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xMaXN0YXJVc3Vhcmlvcy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/Pages/Registro.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xSZWdpc3Ryby5yYXpvcg==
+[C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/Pages/Modificar.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNb2RpZmljYXIucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/Pages/Weather.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xXZWF0aGVyLnJhem9y
+[C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/Pages/Registro.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xSZWdpc3Ryby5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/Routes.razor]

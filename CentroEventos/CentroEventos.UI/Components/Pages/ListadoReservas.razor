@@ -48,10 +48,10 @@ using System.Runtime.InteropServices.Marshalling;
     </table>
 @code {
 List<Reserva> _lista = new List<Reserva>();
-Usuario User{get; set;}=null;
+Usuario? User{get; set;}=null;
  DialogoEx dialogoex= new DialogoEx();
 protected override void OnInitialized()
-{User=UserState.User;
+{User=UserState.user;
   if (User ==null){
     dialogoex.Mostrar("Debe registrarse para acceder al menu");
     Navegador.NavigateTo($"/Home");
@@ -76,7 +76,7 @@ private void Eliminar()
 {
 if (_reserva != null  )
 {try{
-ReservaBajaUseCase.Ejecutar(_reserva.ID, user);
+ReservaBajaUseCase.Ejecutar(_reserva.ID, User!);
 _lista = ReservaListadoUseCase.Ejecutar(); //se actualiza la lista de clientes
 } catch(Exception e){
     dialogoex.Mostrar(e.Message);

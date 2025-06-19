@@ -2,7 +2,7 @@
 @rendermode InteractiveServer
 @inject NavigationManager navigator;
 @inject UserState userState;
-@inject ServicioAutoizacion servicioAutoizacion;
+@inject ServicioAutorizacion servicioAutorizacion;
 @inject ListarUsuariosUseCase listarUsuariosUseCase
 @inject UsuarioBajaUseCase usuarioBajaUseCase
 
@@ -39,9 +39,22 @@ OnCerrado="VolverMain"/>
                 }
             </td>
             <td>
-                <button class="btn btn-primary">Editar</button>
-                <button class="btn btn-primary">Dar Permisos</button>
-                <button class="btn btn-danger" @onclick="()=>ConfirmarEliminacion(u)">Eliminar</button>
+                @*el admin puede podificar a quien quiera*@
+                @*si no es admin, debe tener permiso, pero puede auto modificarse, no puede modificar al admin*@
+                @if ((user!.ID == 1) || ((permisoModificacion || user!.ID == u.ID) && u.ID != 1)){
+                    <button class="btn btn-primary" @onclick="()=>ModificarUser(u)" >Editar</button>
+                }
+
+                @if ((user!.ID == 1) || (permisoDarPermiso && user!.ID == u.ID && u.ID != 1)){
+                    <button class="btn btn-primary" @onclick="()=>ModificarPermisos(u)">Dar Permisos</button>
+                }
+
+                @*si es el admin, no necesita permisos para nada*@
+                @*si no es admin, solo puede bajar si tiene el permiso, si el que se quiere bajar no es el mismo
+                y si no esta intentado bajas al admin*@
+                @if ((user!.ID == 1) || (permisoBaja && u.ID != user!.ID && u.ID != 1)){
+                    <button class="btn btn-danger" @onclick="()=>ConfirmarEliminacion(u)">Eliminar</button>
+                }
             </td>
         </tr>
         }
@@ -66,9 +79,20 @@ OnConfirmado="Eliminar"/>
 @code {
     Usuario? user {get;set;} = null!; 
     List<Usuario> _lista = new List<Usuario>();
-    bool mostrarDialogo = false;
+    bool mostrarDialogo = false, permisoBaja = false, permisoModificacion = false, permisoDarPermiso = false;
     string mensaje_Exception = "";
     Mensaje dialogo_NoAutorizado = null!, dialogo_1 = null!, dialogo_2 = null!, dialogo_3 = null!;
+
+    // MODIFICAR PERMISOS
+    private void ModificarPermisos(Usuario u){
+        navigator.NavigateTo($"DarPermisos/{u}");
+    }
+
+    // MODIFICAR USUARIO
+    private void ModificarUser(Usuario u){
+        navigator.NavigateTo($"Modificar/{u.ID}");
+    }
+
     // ELIMINAR USUARIO
     Usuario? _userParaEliminar = null;
     private void ConfirmarEliminacion(Usuario u)
@@ -77,6 +101,7 @@ OnConfirmado="Eliminar"/>
         dialogo_3.CambiarMensaje($"¿Desea eliminar al usuario {u.Nombre} {u.Apellido}?");
         dialogo_3.Mostrar();
     }
+
     private void Eliminar()
     {
         try{
@@ -103,15 +128,14 @@ OnConfirmado="Eliminar"/>
             mostrarDialogo = true;
         }
         else{
-            try{
-                if(servicioAutoizacion.PoseeElPermiso(user.Permisos, Permiso.ListarUsuarios))
-                    _lista = listarUsuariosUseCase.Ejecutar(user);
-                else
-                    _lista.Add(user);
-            }
-            catch (Exception e){
-                mensaje_Exception = e.Message;
-            }
+            if(servicioAutorizacion.PoseeElPermiso(user.Permisos, Permiso.ListarUsuarios))
+                _lista = listarUsuariosUseCase.Ejecutar(user);
+            else
+                _lista.Add(user);
+
+            permisoBaja = servicioAutorizacion.PoseeElPermiso(user.Permisos, Permiso.UsuarioBaja);
+            permisoModificacion = servicioAutorizacion.PoseeElPermiso(user.Permisos, Permiso.UsuarioModificacion);
+            permisoDarPermiso = servicioAutorizacion.PoseeElPermiso(user.Permisos, Permiso.DarPermisos);
         }
     }
     protected override Task OnAfterRenderAsync(bool firstRender){
@@ -120,10 +144,6 @@ OnConfirmado="Eliminar"/>
                 dialogo_NoAutorizado.Mostrar();
                 mostrarDialogo = false;
                 StateHasChanged();
-            }
-            else if (mensaje_Exception != ""){
-                dialogo_1.CambiarMensaje(mensaje_Exception);
-                dialogo_1.Mostrar();
             }
         }
         return Task.CompletedTask;

@@ -57,16 +57,16 @@ using System.Runtime.InteropServices.Marshalling;
     </table>
 @code {
 List<EventoDeportivo> _lista = new List<EventoDeportivo>();
-Usuario User{get; set;}=null;
+Usuario? User{get; set;}=null;
  DialogoEx dialogoex = new DialogoEx();
  bool Editar;
 bool Elimina;
 
 protected override void OnInitialized()
 {
-  Editar= ServicioAutorizacion.PoseeElPermiso(User.Permisos,Permiso.EventoModificacion);
+  Editar= ServicioAutorizacion.PoseeElPermiso(User!.Permisos,Permiso.EventoModificacion);
    Elimina= ServicioAutorizacion.PoseeElPermiso(User.Permisos,Permiso.EventoBaja);
-    User=UserState.User;
+    User=UserState.user;
   if (User ==null){
     dialogoex.Mostrar("Debe registrarse para acceder al menu");
     Navegador.NavigateTo($"/Home");
@@ -92,7 +92,7 @@ private void Eliminar()
 if (_evento !=null)
 {
     try{
-EventoDeportivoBajaUseCase.Baja(_evento.ID, User);
+EventoDeportivoBajaUseCase.Baja(_evento.ID, User!);
 _lista = EventoDeportivoListadoUseCase.Listado(); //se actualiza la lista de clientes
 }
 catch(Exception e){

@@ -1,8 +1,8 @@
-﻿@page "/AutoModificar"
+﻿@page "/DarPermisos/{toModify:Usuario?}" 
 @rendermode InteractiveServer
 @inject NavigationManager navigator;
 @inject UserState userState;
-@inject UsuarioAutoModificacionUseCase autoModificacionUseCase;
+@inject DarPermisosUseCase darPermisosUseCase;
 
 @*SI el usuario llego hasta aqui sin pasar por inicio_sesion/registro*@
 <Mensaje @ref=dialogo 
@@ -10,16 +10,25 @@ mensaje="Acceso no autorizado"
 soloMensaje=true
 OnCerrado="VolverMain"/>
 
-<h3>Ingrese la nueva informacion del usuario actual</h3>
+<h3>Seleccione los permisos que quiere agregar</h3>
 
-<input placeholder="Nuevo Nombre" @bind="_nombre" class="form-control">
-<input placeholder="Nuevo Apellido" @bind="_apellido" class="form-control">
-<input placeholder="Nuevo Correo Electronico" @bind="_email" class="form-control">
-<input placeholder="Nueva Contraseña" @bind="_contraseña" class="form-control">
+<ul>
+    @foreach (var item in user.Permisos)
+    {
+        <li>
+            <input type="checkbox"
+                   checked="@permisos.Contains(item)"
+                   @onchange="(e) => CambiarSeleccion(item, ((ChangeEventArgs)e).Value)" />
+            @item
+        </li>
+    }
+</ul>
 
 <button class="btn btn-primary" @onclick="Aceptar">Aceptar</button>
+
 <h3>Volver a la pagina de inicio</h3>
 <button class="btn btn-secondary" @onclick="IrInicio">Aceptar</button>
+
 @*Opcion 1*@
 <Mensaje @ref=dialogo 
 mensaje="No se ha podido modificar el usuario debido a un problema con la informacion nueva" 
@@ -31,11 +40,10 @@ soloMensaje=true
 OnCerrado="IrInicio"/> 
 
 @code {
-    string _nombre = "";
-    string _apellido = "";
-    string _email = "";
-    string _contraseña = "";
+    List<Permiso> permisos = new List<Permiso>();
     Usuario user {get;set;} = null!;
+    [Parameter] public Usuario? toModify {get;set;} = null!;
+    [Parameter] public int? ID {get;set;} = null!;
     Mensaje dialogo = null!, dialogo_2 = null!, dialogo_noAutorizado = null!;
     bool mostrarDialogo = false;  
 
@@ -55,23 +63,26 @@ OnCerrado="IrInicio"/>
             StateHasChanged();
         }
         return Task.CompletedTask;
-    } 
+    }
     
-    void IrInicio(){
+    private void IrInicio(){
         navigator.NavigateTo("inicio");
     }
-    void Aceptar(){
-        try{
-            Usuario user_nuevo = new Usuario(_nombre, _apellido, _email);
-            autoModificacionUseCase.Ejecutar(user, user_nuevo, _contraseña);
-            // si se registra correctamente 
-            // aca tendria que ir a la pagina principal
-            dialogo_2.Mostrar();
-        }
-        catch (Exception e){
-            dialogo.CambiarMensaje(e.Message);
-            dialogo.Mostrar();
-        }
+    private void CambiarSeleccion(Permiso item, object? valor)
+{
+    bool isChecked = valor is bool b && b; // Convierte el valor recibido a bool
+    if (isChecked)
+    {
+        if (!permisos.Contains(item))
+            permisos.Add(item); // Si está marcado y no estaba, lo agrega
+    }
+    else
+    {
+        permisos.Remove(item); // Si está desmarcado, lo quita
+    }
+}
+    private void Aceptar(){
+        darPermisosUseCase.Ejecutar(user, toModify!, permisos);
     }
 }
 

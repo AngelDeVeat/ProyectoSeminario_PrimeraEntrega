@@ -159,3 +159,5 @@ C:\Users\Usuario\Proyecto_Final\ProyectoSeminario_PrimeraEntrega\CentroEventos\C
 C:\Users\Usuario\Proyecto_Final\ProyectoSeminario_PrimeraEntrega\CentroEventos\CentroEventos.UI\obj\Debug\net8.0\CentroEventos.UI.pdb
 C:\Users\Usuario\Proyecto_Final\ProyectoSeminario_PrimeraEntrega\CentroEventos\CentroEventos.UI\obj\Debug\net8.0\CentroEventos.UI.genruntimeconfig.cache
 C:\Users\Usuario\Proyecto_Final\ProyectoSeminario_PrimeraEntrega\CentroEventos\CentroEventos.UI\obj\Debug\net8.0\ref\CentroEventos.UI.dll
+c:\Users\Usuario\Documents\SeminarioLenguajes\Proyecto_PrimeraEntrega\ProyectoSeminario_PrimeraEntrega\CentroEventos\CentroEventos.UI\obj\Debug\net8.0\scopedcss\Components\DialogoEx.razor.rz.scp.css
+c:\Users\Usuario\Documents\SeminarioLenguajes\Proyecto_PrimeraEntrega\ProyectoSeminario_PrimeraEntrega\CentroEventos\CentroEventos.UI\obj\Debug\net8.0\scopedcss\Components\DialogosDeConfirmacion.razor.rz.scp.css

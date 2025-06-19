@@ -41,9 +41,9 @@ List<Persona> _lista = new List<Persona>();
 int? ID; 
 bool visible=false;
 DialogoEx dialogoex = new DialogoEx();
-Usuario User{get; set;}=null;
+Usuario? User{get; set;}=null;
 protected override void OnInitialized(){
-  User=UserState.User;
+  User=UserState.user;
   if (User ==null){
     dialogoex.Mostrar("Debe registrarse para acceder al menu");
     Navegador.NavigateTo($"/Home");
