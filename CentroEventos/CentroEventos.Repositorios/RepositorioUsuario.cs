@@ -1,6 +1,6 @@
 using System;
-using System.Security.Cryptography;
-using System.Text;
+//using System.Security.Cryptography;
+//using System.Text;
 using CentroEventos.Aplicacion;
 
 namespace CentroEventos.Repositorios;
@@ -11,7 +11,7 @@ public class RepositorioUsuario : IRepositorioUsuario
     public RepositorioUsuario() { }
 
     // el user paso como param no tiene ni la contraseña ni los permisos
-    public void AgregarUsuario(Usuario usuario, string contraseña)
+    public void AgregarUsuario(Usuario usuario, byte[] contraseña)
     {
         CentroEventosSqlite.Inicializar();
 
@@ -25,11 +25,11 @@ public class RepositorioUsuario : IRepositorioUsuario
         usuario.Permisos.AddRange(permisos);
 
         // aplicar hash a la contraseña 
-        SHA256 sha256 = SHA256.Create();
-        byte[] hashValue;
-        hashValue = sha256.ComputeHash(Encoding.UTF8.GetBytes(contraseña));
+        //SHA256 sha256 = SHA256.Create();
+        //byte[] hashValue;
+        //hashValue = sha256.ComputeHash(Encoding.UTF8.GetBytes(contraseña));
         // damos al user la version hasheada de la contraseña
-        usuario.Contraseña = hashValue;
+        usuario.Contraseña = contraseña;// hashValue;
 
         context.Add(usuario);
         context.SaveChanges();
@@ -60,7 +60,7 @@ public class RepositorioUsuario : IRepositorioUsuario
         return Usuario;
     }
 
-    public void ModificarUsuario(Usuario usuario, string contraseña)
+    public void ModificarUsuario(Usuario usuario, byte[] contraseña)
     {
         CentroEventosSqlite.Inicializar();
 
@@ -73,11 +73,11 @@ public class RepositorioUsuario : IRepositorioUsuario
             aModificar.Nombre = usuario.Nombre;
 
             // aplicar hash a la contraseña 
-            SHA256 sha256 = SHA256.Create();
-            byte[] hashValue;
-            hashValue = sha256.ComputeHash(Encoding.UTF8.GetBytes(contraseña));
+            //SHA256 sha256 = SHA256.Create();
+            //byte[] hashValue;
+            //hashValue = sha256.ComputeHash(Encoding.UTF8.GetBytes(contraseña));
             // le damos al user la version hasheada de la nueva contraseña
-            aModificar.Contraseña = hashValue;
+            aModificar.Contraseña = contraseña;
 
             aModificar.CorreoElectronico = usuario.CorreoElectronico;
 
@@ -93,6 +93,7 @@ public class RepositorioUsuario : IRepositorioUsuario
         if (aModificar != null)
         {
             // VERIFICA QUE ESTO ESTE BIEN CAPO
+            aModificar.Permisos.Clear();
             aModificar.Permisos.AddRange(permisos);
 
             context.SaveChanges();   

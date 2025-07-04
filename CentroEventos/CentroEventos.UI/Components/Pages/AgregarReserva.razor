@@ -1,13 +1,13 @@
 @using CentroEventos.UI.Components
 @page "/Reserva/{id:int?}"
-@rendermode InteractiveServer
+@*@rendermode InteractiveServer*@
 @inject NavigationManager Navegador;
-using System.Linq.Expressions;
 
 @inject ReservaAltaUseCase ReservaAltaUseCase
 @inject ReservaModificacionUseCase ReservaModificacionUseCase
 @inject ObtenerReservaUseCase ObtenerReservaUseCase
 @inject ReservaModificacionUseCase ReservaModificacionUseCase
+@inject ServicioAutorizacion servicioAutorizacion
 @inject UserState User
 @*SI el usuario llego hasta aqui sin pasar por inicio_sesion/registro*@
 <Mensaje @ref=dialogo 
@@ -15,33 +15,52 @@ mensaje="Acceso no autorizado"
 soloMensaje=true
 OnCerrado="VolverHome"/>
 <DialogoEx  @ref="dialogoex" />
+@*SI el usuario llego hasta aqui mediante la url, pudo haberse saltado las verificaciones de permisos*@
+<Mensaje @ref=dialogo_2 
+mensaje="No posees el permiso para ralizar esta accion" 
+soloMensaje=true
+OnCerrado="VolverInicio"/>
 
-@if (_esnuevareserva)
- {
-<h3>Agregando una nueva reserva</h3>
- }
- else
-{
-<h3> Modificando a la Reserva "@_reserva.ID"</h3>
- }
-<input placeholder="ID Dueño de la Reserva" @bind="_reserva.PersonaID" class="form-control">
-<input placeholder="ID Evento a Reservar" @bind="_reserva.EventoDeportivoID" class="form-control">
-<button class="btn btn-primary" @onclick="Aceptar">Aceptar</button>
-<button class="btn btn-danger" @onclick="()=>VolverInicio()">
-            Volver al inicio
-        </button>
+@if(!mostrarDialogo){
+  @if (_esnuevareserva)
+  {
+    <h3>Agregando una nueva reserva</h3>
+  }
+  else
+  {
+    <h3> Modificando a la Reserva "@_reserva.ID"</h3>
+  }
+  <input placeholder="ID Dueño de la Reserva" @bind="_reserva.PersonaID" class="form-control">
+  <input placeholder="ID Evento a Reservar" @bind="_reserva.EventoDeportivoID" class="form-control">
+  <button class="btn btn-primary" @onclick="Aceptar">Aceptar</button>
+  <button class="btn btn-danger" @onclick="()=>VolverInicio()">Volver al inicio</button>
+}
 @code {
 Reserva _reserva = new Reserva();
 [Parameter] public int? id{get;set;}
-Mensaje? dialogo=null;
+Mensaje? dialogo=null, dialogo_2=null;
  DialogoEx? dialogoex;
  Usuario? user{get;set;}=null;
- bool mostrarDialogo=false;
+ bool mostrarDialogo=false, mostrarDialogo_FaltaPermisos_Alta, mostrarDialogo_FaltaPermisos_Modi = false;
 bool _esnuevareserva=true;
 protected override void OnInitialized(){
   user=User.user;
   if (user ==null){
     mostrarDialogo=true;
+  }
+  else{
+    if (!servicioAutorizacion.PoseeElPermiso(user.Permisos, Permiso.ReservaModificacion)){
+      // no tiene permisos para modificar y esta aqui para modificar
+      
+        mostrarDialogo_FaltaPermisos_Modi = true;
+      
+    }
+    if (!servicioAutorizacion.PoseeElPermiso(user.Permisos, Permiso.ReservaAlta)){
+      // faltan permisos para alta y esta aqui para alta
+      
+        mostrarDialogo_FaltaPermisos_Alta = true;
+      
+    }
   }
 }
 protected override void OnParametersSet()
@@ -50,36 +69,50 @@ if (id != null)
 {
    var reserva = ObtenerReservaUseCase.Ejecutar(id.Value);
   if (reserva != null){
-        _esnuevareserva=false;
-        _reserva=reserva;}
+        _reserva=reserva;
+        _esnuevareserva = false;
+  }
 }
 }
 private void VolverInicio(){
-     Navegador.NavigateTo($"inicio");
-     }
-     private void VolverHome(){
-     Navegador.NavigateTo($"");
+     Navegador.NavigateTo($"/inicio");
 }
+private void VolverHome(){
+     Navegador.NavigateTo($"/");
+}
+
 void Aceptar()
 {
-    try{
-if (user!=null && _reserva !=null){
-    if (_esnuevareserva)
-      ReservaAltaUseCase.Ejecutar(_reserva, user);
-   else
-     ReservaModificacionUseCase.Ejecutar(_reserva,user);
-   }
-_reserva = new Reserva();
-Navegador.NavigateTo("listadoReservas");}
-catch(Exception e){
-    dialogoex?.Mostrar(e.Message);
-}
+  try{
+    if (user!=null){
+      if (_esnuevareserva)
+        ReservaAltaUseCase.Ejecutar(_reserva, user);
+      else
+        ReservaModificacionUseCase.Ejecutar(_reserva,user);
+    }
+    _reserva = new Reserva();
+    Navegador.NavigateTo("/listadoReservas");
+  }
+  catch(Exception e){
+      dialogoex?.Mostrar(e.Message);
+  }
 }
  protected override Task OnAfterRenderAsync(bool firstRender){
         if (mostrarDialogo && dialogo != null && firstRender){
             dialogo.Mostrar();
-            mostrarDialogo = false;
             StateHasChanged();
+        }
+        else if(mostrarDialogo_FaltaPermisos_Modi && dialogo_2 != null && firstRender){
+          if (id != null){
+            dialogo_2.Mostrar();
+            StateHasChanged();
+          }
+        }
+        else if(mostrarDialogo_FaltaPermisos_Alta && dialogo_2 != null && firstRender){
+          if (id == null){
+            dialogo_2.Mostrar();
+            StateHasChanged();
+          }
         }
         return Task.CompletedTask;
     } 

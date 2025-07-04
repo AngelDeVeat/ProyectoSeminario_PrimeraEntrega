@@ -1,25 +1,33 @@
 ﻿@page "/Modificar/{ID:int?}"
-@rendermode InteractiveServer
+@*@rendermode InteractiveServer*@
 @inject NavigationManager navigator;
 @inject UserState userState;
 @inject UsuarioModificacionUseCase modificacionUseCase;
+@inject ServicioAutorizacion ServicioAutorizacion;
 
 @*SI el usuario llego hasta aqui sin pasar por inicio_sesion/registro*@
-<Mensaje @ref=dialogo 
+<Mensaje @ref=dialogo_noAutorizado 
 mensaje="Acceso no autorizado" 
 soloMensaje=true
 OnCerrado="VolverMain"/>
+@*SI el usuario llego hasta aqui mediante la url, pudo haberse saltado las verificaciones de permisos*@
+<Mensaje @ref=dialogo_noAutorizado2 
+mensaje="No posees el permiso para ralizar esta accion" 
+soloMensaje=true
+OnCerrado="IrInicio"/>
 
-<h3>Ingrese la nueva informacion del usuario actual</h3>
+@if (!mostrarDialogo || !mostrarDialogo_FaltaPermisos){
+    <h3>Ingrese la nueva informacion del usuario actual</h3>
 
-<input placeholder="Nuevo Nombre" @bind="_nombre" class="form-control">
-<input placeholder="Nuevo Apellido" @bind="_apellido" class="form-control">
-<input placeholder="Nuevo Correo Electronico" @bind="_email" class="form-control">
-<input placeholder="Nueva Contraseña" @bind="_contraseña" class="form-control">
+    <input placeholder="Nuevo Nombre" @bind="_nombre" class="form-control">
+    <input placeholder="Nuevo Apellido" @bind="_apellido" class="form-control">
+    <input placeholder="Nuevo Correo Electronico" @bind="_email" class="form-control">
+    <input placeholder="Nueva Contraseña" @bind="_contraseña" class="form-control">
 
-<button class="btn btn-primary" @onclick="Aceptar">Aceptar</button>
-<h3>Volver a la pagina de inicio</h3>
-<button class="btn btn-secondary" @onclick="IrInicio">Aceptar</button>
+    <button class="btn btn-primary" @onclick="Aceptar">Aceptar</button>
+
+    <button class="btn btn-danger" @onclick="IrInicio">Volver a Inicio</button>
+
 @*Opcion 1*@
 <Mensaje @ref=dialogo 
 mensaje="No se ha podido modificar el usuario debido a un problema con la informacion nueva" 
@@ -29,6 +37,7 @@ soloMensaje=true/>
 mensaje="El usuario se ha modificado correctamente" 
 soloMensaje=true
 OnCerrado="IrInicio"/> 
+}
 
 @code {
     string _nombre = "";
@@ -37,35 +46,55 @@ OnCerrado="IrInicio"/>
     string _contraseña = "";
     Usuario user {get;set;} = null!;
     [Parameter] public int? ID {get;set;} = null!;
-    Mensaje dialogo = null!, dialogo_2 = null!, dialogo_noAutorizado = null!;
-    bool mostrarDialogo = false;  
+    Mensaje dialogo = null!, dialogo_2 = null!, dialogo_noAutorizado = null!, dialogo_noAutorizado2 = null!;
+    bool mostrarDialogo = false, mostrarDialogo_FaltaPermisos = false;  
 
     void VolverMain(){
-        navigator.NavigateTo("");
+        navigator.NavigateTo("/");
     }
     protected override void OnInitialized(){
         user = userState.user!;
         if (user == null){
             mostrarDialogo = true;
         }
+        else {
+
+            if (!ServicioAutorizacion.PoseeElPermiso(user.Permisos, Permiso.UsuarioModificacion)){
+                mostrarDialogo_FaltaPermisos = true;
+            }
+        }
     }
     protected override Task OnAfterRenderAsync(bool firstRender){
-        if (mostrarDialogo && dialogo != null && firstRender){
+        if (mostrarDialogo && dialogo_noAutorizado != null && firstRender){
             dialogo_noAutorizado.Mostrar();
-            mostrarDialogo = false;
             StateHasChanged();
+        }
+        else if(mostrarDialogo_FaltaPermisos && dialogo_noAutorizado2 != null && firstRender){
+          if (ID != user.ID){
+            dialogo_noAutorizado2.Mostrar();
+            StateHasChanged();
+          }
+          
         }
         return Task.CompletedTask;
     }
     
     void IrInicio(){
-        navigator.NavigateTo("inicio");
+        navigator.NavigateTo("/inicio");
     }
     void Aceptar(){
         try{
             Usuario user_nuevo = new Usuario(_nombre, _apellido, _email);
             user_nuevo.ID = (int)ID!;
-            modificacionUseCase.Ejecutar(user, user_nuevo, _contraseña);
+            bool esAutoModificacion = false;
+            if (user_nuevo.ID == user.ID) esAutoModificacion = true;
+            modificacionUseCase.Ejecutar(user, user_nuevo, _contraseña, esAutoModificacion);
+
+            if (esAutoModificacion){
+                userState.user!.Nombre = user_nuevo.Nombre;
+                userState.user.Apellido = user_nuevo.Apellido;
+                userState.user.CorreoElectronico = user_nuevo.CorreoElectronico;
+            }
             // si se registra correctamente 
             // aca tendria que ir a la pagina principal
             dialogo_2.Mostrar();

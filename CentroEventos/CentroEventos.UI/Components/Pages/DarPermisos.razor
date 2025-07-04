@@ -1,88 +1,138 @@
-﻿@page "/DarPermisos/{toModify:Usuario?}" 
-@rendermode InteractiveServer
+﻿@page "/DarPermisos/{ID:int?}" 
+@*@rendermode InteractiveServer*@
 @inject NavigationManager navigator;
+@inject ObtenerUsuarioUseCase obtenerUsuarioUseCase;
 @inject UserState userState;
+@inject NavMenuService MenuService;
 @inject DarPermisosUseCase darPermisosUseCase;
+@inject ServicioAutorizacion ServicioAutorizacion;
 
 @*SI el usuario llego hasta aqui sin pasar por inicio_sesion/registro*@
-<Mensaje @ref=dialogo 
+<Mensaje @ref=dialogo_noAutorizado 
 mensaje="Acceso no autorizado" 
 soloMensaje=true
 OnCerrado="VolverMain"/>
+@*SI el usuario llego hasta aqui mediante la url, pudo haberse saltado las verificaciones de permisos*@
+<Mensaje @ref=dialogo_noAutorizado2 
+mensaje="No posees el permiso para ralizar esta accion" 
+soloMensaje=true
+OnCerrado="IrInicio"/>
 
-<h3>Seleccione los permisos que quiere agregar</h3>
+@if (!mostrarDialogo || !mostrarDialogo_FaltaPermisos){
+    <h3>El usuario posee los siguientes permisos</h3>
+    <ul>
+        @foreach (var item in usuarioAModificar.Permisos)
+            {
+                <li>@item</li>
+            }
+    </ul>
+    <h3>Seleccione los permisos que desea agregar o quitar</h3>
+    <h2>(los que ya estan marcados son los que el usuario ya posee)</h2>
+    <ul>
+        @if (usuarioAModificar != null){
+            @foreach (var item in todosLosPermisos)
+            {
+                <li>
+                    <input type="checkbox"
+                        checked="@permisos.Contains(item)"
+                        @onchange="(e) => CambiarSeleccion(item, ((ChangeEventArgs)e).Value)" />
+                    @item
+                </li>
+            }
+        }
+    </ul>
 
-<ul>
-    @foreach (var item in user.Permisos)
-    {
-        <li>
-            <input type="checkbox"
-                   checked="@permisos.Contains(item)"
-                   @onchange="(e) => CambiarSeleccion(item, ((ChangeEventArgs)e).Value)" />
-            @item
-        </li>
-    }
-</ul>
+    <button class="btn btn-primary" @onclick="Aceptar">Aceptar</button>
 
-<button class="btn btn-primary" @onclick="Aceptar">Aceptar</button>
-
-<h3>Volver a la pagina de inicio</h3>
-<button class="btn btn-secondary" @onclick="IrInicio">Aceptar</button>
-
+    <button class="btn btn-danger" @onclick="IrInicio">Volver a Inicio</button>
+}
 @*Opcion 1*@
 <Mensaje @ref=dialogo 
-mensaje="No se ha podido modificar el usuario debido a un problema con la informacion nueva" 
+mensaje="No se ha podido modificar los permisos" 
 soloMensaje=true/>
 @*Opcion 2*@
 <Mensaje @ref=dialogo_2 
-mensaje="El usuario se ha modificado correctamente" 
+mensaje="Los permisos se han modificado correctamente correctamente" 
 soloMensaje=true
 OnCerrado="IrInicio"/> 
 
 @code {
     List<Permiso> permisos = new List<Permiso>();
+    List<Permiso> todosLosPermisos = new List<Permiso>();
+
     Usuario user {get;set;} = null!;
-    [Parameter] public Usuario? toModify {get;set;} = null!;
+    Usuario usuarioAModificar {get;set;} = null!;
     [Parameter] public int? ID {get;set;} = null!;
-    Mensaje dialogo = null!, dialogo_2 = null!, dialogo_noAutorizado = null!;
-    bool mostrarDialogo = false;  
+    Mensaje dialogo = null!, dialogo_2 = null!, dialogo_noAutorizado = null!, dialogo_noAutorizado2 = null!;
+    bool mostrarDialogo = false, mostrarDialogo_FaltaPermisos = false;  
 
     void VolverMain(){
-        navigator.NavigateTo("");
+        navigator.NavigateTo("/");
     }
     protected override void OnInitialized(){
         user = userState.user!;
         if (user == null){
             mostrarDialogo = true;
         }
+        else{
+            if (!ServicioAutorizacion.PoseeElPermiso(user.Permisos, Permiso.DarPermisos)){
+                mostrarDialogo_FaltaPermisos = true;
+            }
+        }
+    }
+
+    protected override void OnParametersSet(){
+        if (ID != null){
+            todosLosPermisos = Enum.GetValues(typeof(Permiso)).Cast<Permiso>().ToList();
+
+            usuarioAModificar = obtenerUsuarioUseCase.Ejecutar(ID!.Value)!;
+            permisos.AddRange(usuarioAModificar.Permisos);
+            StateHasChanged();
+        }
     }
     protected override Task OnAfterRenderAsync(bool firstRender){
-        if (mostrarDialogo && dialogo != null && firstRender){
+        if (mostrarDialogo && dialogo_noAutorizado != null && firstRender){
             dialogo_noAutorizado.Mostrar();
-            mostrarDialogo = false;
             StateHasChanged();
+        }
+        else if(mostrarDialogo_FaltaPermisos && dialogo_noAutorizado2 != null && firstRender){
+          dialogo_noAutorizado2.Mostrar();
+          StateHasChanged();
         }
         return Task.CompletedTask;
     }
     
     private void IrInicio(){
-        navigator.NavigateTo("inicio");
+        // aca deberia llamarse a la funcion Actualizar de NavMenu
+        MenuService.ActualizarMenu();
+        navigator.NavigateTo("/inicio");
     }
     private void CambiarSeleccion(Permiso item, object? valor)
-{
-    bool isChecked = valor is bool b && b; // Convierte el valor recibido a bool
-    if (isChecked)
     {
-        if (!permisos.Contains(item))
-            permisos.Add(item); // Si está marcado y no estaba, lo agrega
+        bool isChecked = valor is bool b && b; // Convierte el valor recibido a bool
+        if (isChecked)
+        {
+            if (!permisos.Contains(item))
+                permisos.Add(item); // Si está marcado y no estaba, lo agrega
+        }
+        else{
+            if (permisos.Contains(item)){
+                permisos.RemoveAll(x => x.Equals(item));
+            }
+        }
     }
-    else
-    {
-        permisos.Remove(item); // Si está desmarcado, lo quita
-    }
-}
     private void Aceptar(){
-        darPermisosUseCase.Ejecutar(user, toModify!, permisos);
+        try{
+            darPermisosUseCase.Ejecutar(user, usuarioAModificar, permisos);
+            if (usuarioAModificar.ID == user.ID){
+                userState.user!.Permisos = permisos;
+            }
+            dialogo_2.Mostrar();
+        }
+        catch (Exception e){
+            dialogo.CambiarMensaje(e.Message);
+            dialogo.Mostrar();
+        }
     }
 }
 

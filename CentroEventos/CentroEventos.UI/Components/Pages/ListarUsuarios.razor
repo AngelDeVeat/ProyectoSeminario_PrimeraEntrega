@@ -1,5 +1,5 @@
 ﻿@page "/ListarUsuarios"
-@rendermode InteractiveServer
+@*@rendermode InteractiveServer*@
 @inject NavigationManager navigator;
 @inject UserState userState;
 @inject ServicioAutorizacion servicioAutorizacion;
@@ -12,54 +12,55 @@ mensaje="Acceso no autorizado"
 soloMensaje=true
 OnCerrado="VolverMain"/>
 
-<h3>ListarUsuarios</h3>
+@if (!mostrarDialogo){
+    <h3>ListarUsuarios</h3>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>NOMBRE</th>
-            <th>APELLIDO</th>
-            <th>CORREO ELECTRONICO</th>
-            <th>PERMISOS</th>
-            <th>ACCIONES</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var u in _lista)
-        {
-        <tr>
-            <td>@u.ID</td>
-            <td>@u.Nombre</td>
-            <td>@u.Apellido</td>
-            <td>@u.CorreoElectronico</td>
-            <td>
-                @foreach(var p in u.Permisos){
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>NOMBRE</th>
+                <th>APELLIDO</th>
+                <th>CORREO ELECTRONICO</th>
+                <th>PERMISOS</th>
+                <th>ACCIONES</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var u in _lista)
+            {
+            <tr>
+                <td>@u.ID</td>
+                <td>@u.Nombre</td>
+                <td>@u.Apellido</td>
+                <td>@u.CorreoElectronico</td>
+                <td>
                     @string.Join(", ", u.Permisos)
-                }
-            </td>
-            <td>
-                @*el admin puede podificar a quien quiera*@
-                @*si no es admin, debe tener permiso, pero puede auto modificarse, no puede modificar al admin*@
-                @if ((user!.ID == 1) || ((permisoModificacion || user!.ID == u.ID) && u.ID != 1)){
-                    <button class="btn btn-primary" @onclick="()=>ModificarUser(u)" >Editar</button>
-                }
+                </td>
+                <td>
+                    @*el admin puede podificar a quien quiera*@
+                    @*si no es admin, debe tener permiso, pero puede auto modificarse, no puede modificar al admin*@
+                    @if ((user!.ID == 1) || ((permisoModificacion || user!.ID == u.ID) && u.ID != 1)){
+                        <button class="btn btn-primary" @onclick="()=>ModificarUser(u)" >Editar</button>
+                    }
 
-                @if ((user!.ID == 1) || (permisoDarPermiso && user!.ID == u.ID && u.ID != 1)){
-                    <button class="btn btn-primary" @onclick="()=>ModificarPermisos(u)">Dar Permisos</button>
-                }
+                    @if ((user!.ID == 1) || (permisoDarPermiso && user!.ID == u.ID && u.ID != 1)){
+                        <button class="btn btn-primary" @onclick="()=>ModificarPermisos(u)">Dar Permisos</button>
+                    }
 
-                @*si es el admin, no necesita permisos para nada*@
-                @*si no es admin, solo puede bajar si tiene el permiso, si el que se quiere bajar no es el mismo
-                y si no esta intentado bajas al admin*@
-                @if ((user!.ID == 1) || (permisoBaja && u.ID != user!.ID && u.ID != 1)){
-                    <button class="btn btn-danger" @onclick="()=>ConfirmarEliminacion(u)">Eliminar</button>
-                }
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
+                    @*si es el admin, no necesita permisos para nada*@
+                    @*si no es admin, solo puede bajar si tiene el permiso, si el que se quiere bajar no es el mismo
+                    y si no esta intentado bajas al admin*@
+                    @if ((user!.ID == 1) || (permisoBaja && u.ID != user!.ID && u.ID != 1)){
+                        <button class="btn btn-danger" @onclick="()=>ConfirmarEliminacion(u)">Eliminar</button>
+                    }
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+    <button class="btn btn-danger" @onclick="IrInicio">Volver a Inicio</button>
 
 @*Opcion 1-fallo autorizacion listado*@
 <Mensaje @ref=dialogo_1 
@@ -75,22 +76,23 @@ soloMensaje=true/>
 mensaje="¿Desea realizar esta accion?" 
 soloMensaje=false
 OnConfirmado="Eliminar"/>
+}
 
 @code {
     Usuario? user {get;set;} = null!; 
     List<Usuario> _lista = new List<Usuario>();
     bool mostrarDialogo = false, permisoBaja = false, permisoModificacion = false, permisoDarPermiso = false;
-    string mensaje_Exception = "";
+   // string mensaje_Exception = "";
     Mensaje dialogo_NoAutorizado = null!, dialogo_1 = null!, dialogo_2 = null!, dialogo_3 = null!;
 
     // MODIFICAR PERMISOS
     private void ModificarPermisos(Usuario u){
-        navigator.NavigateTo($"DarPermisos/{u}");
+        navigator.NavigateTo($"/DarPermisos/{u.ID}");
     }
 
     // MODIFICAR USUARIO
     private void ModificarUser(Usuario u){
-        navigator.NavigateTo($"Modificar/{u.ID}");
+        navigator.NavigateTo($"/Modificar/{u.ID}");
     }
 
     // ELIMINAR USUARIO
@@ -115,10 +117,10 @@ OnConfirmado="Eliminar"/>
     }
 
     void IrInicio(){
-        navigator.NavigateTo("inicio");
+        navigator.NavigateTo("/inicio");
     }
     void VolverMain(){
-        navigator.NavigateTo("");
+        navigator.NavigateTo("/");
     }
     // CHEQUERAR QUE USUARIO NO SEA NULL
     protected override void OnInitialized()
@@ -128,21 +130,24 @@ OnConfirmado="Eliminar"/>
             mostrarDialogo = true;
         }
         else{
-            if(servicioAutorizacion.PoseeElPermiso(user.Permisos, Permiso.ListarUsuarios))
+            if(servicioAutorizacion.PoseeElPermiso(user.Permisos, Permiso.ListarUsuarios)){
+                _lista.Clear();
                 _lista = listarUsuariosUseCase.Ejecutar(user);
-            else
+            }
+            else{
+                _lista.Clear();
                 _lista.Add(user);
-
+            }
             permisoBaja = servicioAutorizacion.PoseeElPermiso(user.Permisos, Permiso.UsuarioBaja);
             permisoModificacion = servicioAutorizacion.PoseeElPermiso(user.Permisos, Permiso.UsuarioModificacion);
             permisoDarPermiso = servicioAutorizacion.PoseeElPermiso(user.Permisos, Permiso.DarPermisos);
+            StateHasChanged();
         }
     }
     protected override Task OnAfterRenderAsync(bool firstRender){
         if (dialogo_NoAutorizado != null && firstRender){
             if (mostrarDialogo){
                 dialogo_NoAutorizado.Mostrar();
-                mostrarDialogo = false;
                 StateHasChanged();
             }
         }

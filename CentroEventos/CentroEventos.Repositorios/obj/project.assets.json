@@ -1285,19 +1285,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Repositorios\\CentroEventos.Repositorios.csproj",
       "projectName": "CentroEventos.Repositorios",
       "projectPath": "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Repositorios\\CentroEventos.Repositorios.csproj",
       "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Repositorios\\obj\\",
-=======
-      "projectUniqueName": "C:\\Users\\Usuario\\Proyecto_final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Repositorios\\CentroEventos.Repositorios.csproj",
-      "projectName": "CentroEventos.Repositorios",
-      "projectPath": "C:\\Users\\Usuario\\Proyecto_final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Repositorios\\CentroEventos.Repositorios.csproj",
-      "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Usuario\\Proyecto_final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Repositorios\\obj\\",
->>>>>>> origin/main
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -1317,13 +1309,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-<<<<<<< HEAD
             "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj": {
               "projectPath": "C:\\Users\\Usuario\\Documents\\SeminarioLenguajes\\Proyecto_PrimeraEntrega\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj"
-=======
-            "C:\\Users\\Usuario\\Proyecto_final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj": {
-              "projectPath": "C:\\Users\\Usuario\\Proyecto_final\\ProyectoSeminario_PrimeraEntrega\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj"
->>>>>>> origin/main
             }
           }
         }

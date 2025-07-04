@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using System.Text;
 
 namespace CentroEventos.Aplicacion;
@@ -30,6 +31,10 @@ public class UsuarioAutoModificacionUseCase
             throw new ValidacionException("la validacion fallo debido a el campo CorreoElectronico no es valido");
 
         usuario.ID = usuarioadmin.ID;
-        _iusuario.ModificarUsuario(usuario, contraseña);
+        // aplicar hash a la contraseña 
+        SHA256 sha256 = SHA256.Create();
+        byte[] hashValue;
+        hashValue = sha256.ComputeHash(Encoding.UTF8.GetBytes(contraseña));
+        _iusuario.ModificarUsuario(usuario, hashValue);
     }
 }

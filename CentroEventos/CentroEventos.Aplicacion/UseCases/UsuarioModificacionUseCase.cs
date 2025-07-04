@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using System.Text;
 
 namespace CentroEventos.Aplicacion;
@@ -11,11 +12,14 @@ public class UsuarioModificacionUseCase
         _iusuario = iusuario;
         _autorizacion = autorizacion;
     }
-    public void Ejecutar(Usuario usuarioadmin, Usuario usuario, string contraseña)
+    public void Ejecutar(Usuario usuarioadmin, Usuario usuario, string contraseña, bool esAutoModificacion)
     {
         Permiso permiso = Permiso.UsuarioModificacion;
-        if (!_autorizacion.PoseeElPermiso(usuarioadmin.Permisos, permiso))
-            throw new FalloAutorizacionException(usuarioadmin.Nombre, "Modificacion");
+        if (!esAutoModificacion)
+        {
+            if (!_autorizacion.PoseeElPermiso(usuarioadmin.Permisos, permiso))
+                throw new FalloAutorizacionException(usuarioadmin.Nombre, "Modificacion");
+        }
         if (!Validador_Usuario.Exist_Usuario(usuario.ID, _iusuario))
             throw new EntidadNotFoundException("el usuario que se quiere modificar no existe");
         if (Validador_Usuario.isEmpty_Nombre(usuario.Nombre))
@@ -38,6 +42,12 @@ public class UsuarioModificacionUseCase
             throw new ValidacionException("la validacion fallo debiado a que la contraseña ingresada no es valida");
         if (!Validador_Usuario.CorreoElectronicoValido(usuario.CorreoElectronico))
             throw new ValidacionException("la validacion fallo debido a el campo CorreoElectronico no es valido");
-        _iusuario.ModificarUsuario(usuario, contraseña);
+
+        // aplicar hash a la contraseña 
+        SHA256 sha256 = SHA256.Create();
+        byte[] hashValue;
+        hashValue = sha256.ComputeHash(Encoding.UTF8.GetBytes(contraseña));
+
+        _iusuario.ModificarUsuario(usuario, hashValue);
     }
 }

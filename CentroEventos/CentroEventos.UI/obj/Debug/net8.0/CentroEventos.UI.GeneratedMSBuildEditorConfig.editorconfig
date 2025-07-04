@@ -22,10 +22,6 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/Mensaje.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNZW5zYWplLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/Pages/AgregarEventoDeportivo.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBZ3JlZ2FyRXZlbnRvRGVwb3J0aXZvLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
@@ -102,10 +98,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xEaWFsb2dvRXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-56tvms9gsv
 
-[C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/DialogoEx2.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xEaWFsb2dvRXgyLnJhem9y
-build_metadata.AdditionalFiles.CssScope = b-iyzn97ylbe
-
 [C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/DialogosDeConfirmacion.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xEaWFsb2dvc0RlQ29uZmlybWFjaW9uLnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-naspfr8gsd
@@ -117,3 +109,7 @@ build_metadata.AdditionalFiles.CssScope = b-uopeu9fc6a
 [C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/Layout/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTmF2TWVudS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-fpokdk2a72
+
+[C:/Users/Usuario/Documents/SeminarioLenguajes/Proyecto_PrimeraEntrega/ProyectoSeminario_PrimeraEntrega/CentroEventos/CentroEventos.UI/Components/Mensaje.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNZW5zYWplLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-ge09nz4sel

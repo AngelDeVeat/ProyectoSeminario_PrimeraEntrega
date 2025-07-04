@@ -1,13 +1,17 @@
 ﻿@rendermode InteractiveServer
 @if (visible){
-    <h3>@mensaje</h3>
-    @if (!soloMensaje){
-        <button class="btn btn-primary" @onclick="CerrarYConfirmar">Aceptar</button>
-        <button class="btn btn-secondary" @onclick="Cerrar">Cancelar</button>
-    }
-    else{
-        <button class="btn btn-primary" @onclick="Cerrar">Cerrar</button>
-    }
+    <div class="dialogo-contenedor">
+        <div class="dialogo-contenido">
+            <h3>@mensaje</h3>
+            @if (!soloMensaje){
+                <button class="btn btn-primary" @onclick="CerrarYConfirmar">Aceptar</button>
+                <button class="btn btn-secondary" @onclick="Cerrar">Cancelar</button>
+            }
+            else{
+                <button class="btn btn-primary" @onclick="Cerrar">Cerrar</button>
+            }
+        </div>
+    </div>
 }
 
 @code {

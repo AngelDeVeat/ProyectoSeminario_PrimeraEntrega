@@ -1,8 +1,9 @@
 ﻿@page "/inicio_sesion"
-@rendermode InteractiveServer
+@*@rendermode InteractiveServer*@
 @inject UserState userState;
 @inject IniciarSesionUseCase iniciarSesionUseCase;
-@inject NavigationManager navigator
+@inject NavMenuService MenuService;
+@inject NavigationManager navigator;
 
 <h3>Inicio de Sesion</h3>
 <input placeholder="Correo Electronico" @bind="_email" class="form-control">
@@ -25,9 +26,21 @@ OnCerrado="IrMain"/>
     Usuario user {get;set;} = null!;
 
     Mensaje dialogo = null!, dialogo_2 = null!;
+
+    protected override void OnInitialized(){
+        userState.user = null;
+        // aca deberia llamarse a la funcion Actualizar de NavMenu
+        MenuService.ActualizarMenu();
+    } 
+
     void IrMain(){
         userState.user = user;
-        navigator.NavigateTo("inicio");
+        
+        Console.WriteLine("Usuario seteado en login: " + (userState.user?.Nombre ?? "null"));
+        Console.WriteLine("Referencia de userState: " + userState.GetHashCode());
+        // aca deberia llamarse a la funcion Actualizar de NavMenu
+        MenuService.ActualizarMenu();
+        navigator.NavigateTo("/inicio");
     }
     void Aceptar (){
         try{

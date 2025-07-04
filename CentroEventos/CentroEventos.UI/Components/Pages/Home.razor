@@ -1,6 +1,8 @@
 ﻿@page "/"
-@rendermode InteractiveServer
+@*@rendermode InteractiveServer*@
 @inject NavigationManager navegador;
+@inject NavMenuService MenuService;
+@inject UserState userState;
 
 <PageTitle>Home</PageTitle>
 
@@ -10,10 +12,15 @@
 <button class="btn btn-secondary" @onclick="InicioSesion">Iniciar Sesion</button>
 
 @code {
+    protected override void OnInitialized(){
+        userState.user = null;
+        // aca deberia llamarse a la funcion Actualizar de NavMenu
+        MenuService.ActualizarMenu();
+    }
     void Registro(){
-        navegador.NavigateTo("registro");
+        navegador.NavigateTo("/registro");
     }
     void InicioSesion(){
-        navegador.NavigateTo("inicio_sesion");
+        navegador.NavigateTo("/inicio_sesion");
     }
 }

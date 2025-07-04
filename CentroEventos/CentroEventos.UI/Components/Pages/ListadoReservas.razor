@@ -1,9 +1,6 @@
 @using CentroEventos.UI.Components
 @page "/listadoReservas"
-@rendermode InteractiveServer
-using System.Runtime.InteropServices.Marshalling;
-
-using System.Runtime.InteropServices.Marshalling;
+@*@rendermode InteractiveServer*@
 
 @inject ReservaListadoUseCase ReservaListadoUseCase
 @inject ReservaBajaUseCase ReservaBajaUseCase
@@ -82,10 +79,10 @@ else{
 DialogosDeConfirmacion? dialogocon;
 Reserva? _reserva = null;
 private void VolverInicio(){
-     Navegador.NavigateTo($"inicio");
+     Navegador.NavigateTo($"/inicio");
 }
 private void VolverHome(){
-     Navegador.NavigateTo($"");
+     Navegador.NavigateTo($"/");
 }
 private void ConfirmarEliminacion(Reserva reserva)
 {
@@ -93,7 +90,7 @@ _reserva = reserva;
 dialogocon?.Mostrar($"¿Desea eliminar a la reserva {reserva.ID} {reserva.EstadoAsistencia} {reserva.FechaAltaReserva} {reserva.PersonaID}?");
 }
 private void Modificacion(Reserva reserva){
-    Navegador.NavigateTo($"Reserva/{reserva.ID}");
+    Navegador.NavigateTo($"/Reserva/{reserva.ID}");
 }
 private void Eliminar()
 {
@@ -113,7 +110,4 @@ _lista = ReservaListadoUseCase.Ejecutar(); }
         }
         return Task.CompletedTask;
     } 
-}    using SQLitePCL;
-
-#nullable disable
-#line default
+}    

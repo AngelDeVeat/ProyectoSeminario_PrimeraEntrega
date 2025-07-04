@@ -1,6 +1,4 @@
 /* _content/CentroEventos.UI/Components/DialogoEx.razor.rz.scp.css */
-<<<<<<< HEAD
-=======
 .dialogo-contenedor[b-56tvms9gsv] {
 position: fixed;
 top:0;
@@ -17,24 +15,6 @@ justify-content: center;
 padding: 20px;
 background-color: white;
 }
-/* _content/CentroEventos.UI/Components/DialogoEx2.razor.rz.scp.css */
-.dialogo-contenedor[b-iyzn97ylbe] {
-position: fixed;
-top:0;
-left: 0;
-right: 0;
-bottom:0;
-background-color: rgba(0, 0, 0, 0.5);
-z-index: 1;
-display: flex;
-align-items: center;
-justify-content: center;
-}
-.dialogo-contenido[b-iyzn97ylbe]{
-padding: 20px;
-background-color: white;
-}
->>>>>>> origin/main
 /* _content/CentroEventos.UI/Components/DialogosDeConfirmacion.razor.rz.scp.css */
 .dialogo-contenedor[b-naspfr8gsd] {
 position: fixed;
@@ -254,4 +234,21 @@ main[b-uopeu9fc6a] {
         height: calc(100vh - 3.5rem);
         overflow-y: auto;
     }
+}
+/* _content/CentroEventos.UI/Components/Mensaje.razor.rz.scp.css */
+.dialogo-contenedor[b-ge09nz4sel] {
+position: fixed;
+top:0;
+left: 0;
+right: 0;
+bottom:0;
+background-color: rgba(0, 0, 0, 0.5);
+z-index: 1;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.dialogo-contenido[b-ge09nz4sel]{
+padding: 20px;
+background-color: white;
 }
