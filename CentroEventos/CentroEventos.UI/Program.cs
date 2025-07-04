@@ -46,10 +46,13 @@ builder.Services.AddTransient<UsuarioBajaUseCase>();
 builder.Services.AddTransient<UsuarioModificacionUseCase>();
 builder.Services.AddTransient<DarPermisosUseCase>();
 builder.Services.AddTransient<ListarUsuariosUseCase>();
-builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
-builder.Services.AddScoped<IServicioAutorizacion, ServicioAutorizacion>();
+//builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
+//builder.Services.AddScoped<IServicioAutorizacion, ServicioAutorizacion>();
+builder.Services.AddTransient<ObtenerUsuarioUseCase>();
 // La clase user state contendra el usuario que haya iniciado sesion/ registrado actualmente
 builder.Services.AddScoped<UserState>();
+// servicio al cual se va a suscribir nav menu y los demas componentes para poder actualizar el primero
+builder.Services.AddSingleton<NavMenuService>();
 
 var app = builder.Build();
 

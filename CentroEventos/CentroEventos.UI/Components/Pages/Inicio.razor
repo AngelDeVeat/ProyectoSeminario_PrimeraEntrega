@@ -1,6 +1,5 @@
 ﻿@page "/inicio"
-@rendermode InteractiveServer
-
+@*@rendermode InteractiveServer*@
 @*SI el usuario llego hasta aqui sin pasar por inicio_sesion/registro*@
 <Mensaje @ref=dialogo 
 mensaje="Acceso no autorizado" 
@@ -9,88 +8,132 @@ OnCerrado="VolverMain"/>
 
 @inject ServicioAutorizacion autorizacion;
 @inject UserState userState;
+@inject NavMenuService MenuService;
 @inject NavigationManager navigator;
 
-<h3>Selecciona una opcion</h3>
+@if (!mostrarDialogo){
+    <h3>Selecciona una opcion</h3>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Use Case</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var elem in _useCases)
-        {
-            <tr>
-                <td>@elem.Key</td>
-                <td>
-                    <button class="btn btn-primary" @onclick="() => IrA(elem.Value)">Acceder</button>
-                </td>
-            </tr>
-        }
-    </tbody>
-   
+    <table class="table">
         <thead>
             <tr>
-                <th>Menu Gestion de Usuarios</th>
+                <th>Use Case</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var elem in _useCasesGestionUsers)
+            @foreach (var elem in _useCases)
             {
                 <tr>
-                    <td>@elem.Key</td>
+                    <td>@elem.Titulo</td>
                     <td>
-                        <button class="btn btn-primary" @onclick="() => IrA(elem.Value)">Acceder</button>
+                        @if (elem.Permiso_requerido == null || autorizacion.PoseeElPermiso(user.Permisos, elem.Permiso_requerido.Value)){
+                            <button class="btn btn-primary" @onclick="() => IrA(elem.Direccion!)">Acceder</button>
+                        }
+                        else{
+                            <td>No tienes permiso</td>
+                        }
                     </td>
                 </tr>
             }
         </tbody>
-</table>
-
-
+    
+            <thead>
+                <tr>
+                    <th>Menu Gestion de Usuarios</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var elem in _useCasesGestionUsers)
+                {
+                    <tr>
+                        <td>@elem.Titulo</td>
+                        <td>
+                            @if (elem.Permiso_requerido == null || autorizacion.PoseeElPermiso(user.Permisos, elem.Permiso_requerido.Value)){
+                                <button class="btn btn-primary" @onclick="() => IrA(elem.Direccion!)">Acceder</button>
+                            }
+                            else{
+                                <td>No tienes permiso</td>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+    </table>
+}
 
 @code {
     Usuario user {get; set;} = null!;
     Mensaje dialogo = null!;
     bool mostrarDialogo = false;//, mostrarGestionUsuarios = false;
 
-    Dictionary<string, string> _useCases = new Dictionary<string, string>();
-    Dictionary<string, string> _useCasesGestionUsers = new Dictionary<string, string>();
+    List<UseCases_Info> _useCases =new List<UseCases_Info>();
+    List<UseCases_Info> _useCasesGestionUsers =new List<UseCases_Info>();
     void VolverMain(){
-        navigator.NavigateTo("");
+        navigator.NavigateTo("/");
     }
     void IrA(string destino){
-        navigator.NavigateTo(destino);
+        navigator.NavigateTo("/"+destino);
     }
     protected override void OnInitialized(){
+        Console.WriteLine("SE ACTIVO EL ONINITIALIZED DE INICIO");
+        userState.OnUserChanged += UserChanged;
         user = userState.user!;
         if (user == null){
             mostrarDialogo = true;
+            Console.WriteLine("ES NULL");
         }
         else{
+            Console.WriteLine("NO ES NULL");
+            // aca deberia llamarse a la funcion Actualizar de NavMenu
+            //MenuService.ActualizarMenu();
             // use cases generales
-            _useCases.Add("Agregar Personas", "Persona");
-            _useCases.Add("Listar y/o modificar Personas", "listadoPersonas");
-            _useCases.Add("Agregar Eventos Deportivos", "EventoDeportivo");
-            _useCases.Add("Listar y/o modificar Eventos Deportivos", "listadoEventosDeportivos");
-            _useCases.Add("Agregar Reservas", "Reserva");
-            _useCases.Add("Listar y/o modificar Reservas", "listadoReservas");
+            _useCases.Clear();
+            _useCases.Add(new UseCases_Info("Agregar Personas", "Persona", Permiso.PersonaAlta));
+            _useCases.Add(new UseCases_Info("Listar y/o modificar Personas", "listadoPersonas"));
+            _useCases.Add(new UseCases_Info("Agregar Eventos Deportivos", "EventoDeportivo", Permiso.EventoAlta));
+            _useCases.Add(new UseCases_Info("Listar y/o modificar Eventos Deportivos", "listadoEventosDeportivos"));
+            _useCases.Add(new UseCases_Info("Agregar Reservas", "Reserva", Permiso.ReservaAlta));
+            _useCases.Add(new UseCases_Info("Listar y/o modificar Reservas", "listadoReservas"));
             
-            _useCases.Add("Listar eventos con cupo disponible", "ListadoEventosConCupoDisponible");
-            _useCases.Add("Listar asistentes a un evento", "ListadoAsistenciaEvento");
-           
-            _useCasesGestionUsers.Add("Listar y/o modificar Usuarios", "ListarUsuarios");
+            _useCases.Add(new UseCases_Info("Listar eventos con cupo disponible", "ListadoEventosConCupoDisponible"));
+            _useCases.Add(new UseCases_Info("Listar asistentes a un evento", "ListadoAsistenciaEvento"));
+           // use cases de gestion de usuario
+            _useCasesGestionUsers.Add(new UseCases_Info("Listar y/o modificar Usuarios", "ListarUsuarios"));
+            StateHasChanged();
+
+            foreach(Permiso info in user.Permisos){
+                Console.WriteLine($"aja: {info}");
+            }
         }
     }
     protected override Task OnAfterRenderAsync(bool firstRender){
         if (mostrarDialogo && dialogo != null && firstRender){
             dialogo.Mostrar();
-            mostrarDialogo = false;
             StateHasChanged();
         }
         return Task.CompletedTask;
     } 
 
+    void UserChanged()
+    {
+        user = userState.user!;
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        userState.OnUserChanged -= UserChanged;
+    }
+    public class UseCases_Info
+    {
+        public string? Titulo{get;set;}
+        public string? Direccion{get;set;}
+        public Permiso? Permiso_requerido{get;set;}
+
+        public UseCases_Info(string titulo, string direccion, Permiso? permiso = null){
+            Titulo = titulo;
+            Direccion = direccion;
+            Permiso_requerido = permiso;
+        }
+    }
 }

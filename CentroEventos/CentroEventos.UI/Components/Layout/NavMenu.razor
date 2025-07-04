@@ -1,4 +1,6 @@
 ﻿@inject UserState User
+@inject NavMenuService MenuService
+
 @inject ServicioAutorizacion ServicioAutorizacion
 
 <div class="top-row ps-3 navbar navbar-dark">
@@ -11,7 +13,21 @@
 
 <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
     <nav class="flex-column">
-        <div class="nav-item px-3">
+        <ul>
+            @foreach (var item in menuItems){
+                @if (iniciado){
+                    if(item.Permiso_requerido == null ||
+                       ServicioAutorizacion.PoseeElPermiso(user!.Permisos, item.Permiso_requerido.Value)){
+                        <li><a href="@item.Url">@item.Nombre</a></li>
+                    }
+                }
+                else{
+                    <li><a href="@item.Url">@item.Nombre</a></li>
+                }
+            }
+        </ul>
+
+        @*<div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
             </NavLink>
@@ -61,7 +77,7 @@
             <NavLink class="nav-link" href="ListadoEventosConCupoDisponible">
             <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> ListadoEventosConCupoDisponible
             </NavLink>
-        </div>
+        </div>*@
         @*
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="registro">
@@ -77,11 +93,65 @@
     </nav>
 </div>
 @code{
-    bool ver=false;
     Usuario? user{get;set;}=null;
+    bool iniciado = false;
+    private List<MenuItem> menuItems = new()
+    {
+        new MenuItem("Home", "/"),
+        new MenuItem("Registro", "/registro"),
+        new MenuItem("Iniciar Sesion", "/inicio_sesion"),
+    };
     protected override void OnInitialized(){
-        user=User.user;
-        if (user!=null)
-            ver=true;
+        MenuService.OnMenuChanged += Actualizar;
+        Actualizar();
+    }
+    public void Actualizar(){
+        
+        // Actualiza el usuario actual
+        user = User.user;
+            Console.WriteLine("NavMenu.Actualizar() llamado. Usuario: " + (user?.Nombre ?? "null"));
+Console.WriteLine("Referencia de userState: " + User.GetHashCode());
+        iniciado = user != null;
+
+        // Limpia el menú antes de reconstruirlo
+        menuItems.Clear();
+
+        // Menú base
+        menuItems.Add(new MenuItem("Home", "/"));
+        menuItems.Add(new MenuItem("Registro", "/registro"));
+        menuItems.Add(new MenuItem("Iniciar Sesion", "/inicio_sesion"));
+
+        // Si el usuario está autenticado, agrega los ítems adicionales
+        if (iniciado)
+        {
+            menuItems.Add(new MenuItem("Menu principal", "/inicio"));
+            menuItems.Add(new MenuItem("Listado Asistentes a Evento", "/listadoAsistenciaEvento"));
+            menuItems.Add(new MenuItem("Listado Eventos", "/listadoEventosDeportivos"));
+            menuItems.Add(new MenuItem("Listado Eventos con cupo disponible", "/listadoEventosConCupoDisponible"));
+            menuItems.Add(new MenuItem("Listado Personas", "/listadoPersonas"));
+            menuItems.Add(new MenuItem("Listado Reservas", "/listadoReservas"));
+            menuItems.Add(new MenuItem("Listado Usuarios", "/ListarUsuarios"));
+
+            menuItems.Add(new MenuItem("Agregar Persona", "/Persona", Permiso.PersonaAlta));
+            menuItems.Add(new MenuItem("Agregar Evento", "/EventoDeportivo", Permiso.EventoAlta));
+            menuItems.Add(new MenuItem("Agregar Reserva", "/Reserva", Permiso.ReservaAlta));
+        }
+
+        InvokeAsync(StateHasChanged);
+    }
+    public void Dispose()
+    {
+        MenuService.OnMenuChanged -= Actualizar;
+    }
+
+    public class MenuItem{
+        public string? Nombre { get; set; }
+        public string? Url { get; set; }
+        public Permiso? Permiso_requerido {get; set;}
+        public MenuItem(string nombre, string url, Permiso? permiso = null){
+            Nombre = nombre;
+            Url = url;
+            Permiso_requerido = permiso;
+        }
     }
 }

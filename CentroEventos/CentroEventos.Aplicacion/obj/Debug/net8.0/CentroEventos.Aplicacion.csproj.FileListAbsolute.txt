@@ -1,0 +1,12 @@
+C:\Users\Usuario\Documents\SeminarioLenguajes\Proyecto_PrimeraEntrega\ProyectoSeminario_PrimeraEntrega\CentroEventos\CentroEventos.Aplicacion\bin\Debug\net8.0\CentroEventos.Aplicacion.deps.json
+c:\Users\Usuario\Documents\SeminarioLenguajes\Proyecto_PrimeraEntrega\ProyectoSeminario_PrimeraEntrega\CentroEventos\CentroEventos.Aplicacion\bin\Debug\net8.0\CentroEventos.Aplicacion.dll
+c:\Users\Usuario\Documents\SeminarioLenguajes\Proyecto_PrimeraEntrega\ProyectoSeminario_PrimeraEntrega\CentroEventos\CentroEventos.Aplicacion\bin\Debug\net8.0\CentroEventos.Aplicacion.pdb
+c:\Users\Usuario\Documents\SeminarioLenguajes\Proyecto_PrimeraEntrega\ProyectoSeminario_PrimeraEntrega\CentroEventos\CentroEventos.Aplicacion\obj\Debug\net8.0\CentroEventos.Aplicacion.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\Usuario\Documents\SeminarioLenguajes\Proyecto_PrimeraEntrega\ProyectoSeminario_PrimeraEntrega\CentroEventos\CentroEventos.Aplicacion\obj\Debug\net8.0\CentroEventos.Aplicacion.AssemblyInfoInputs.cache
+c:\Users\Usuario\Documents\SeminarioLenguajes\Proyecto_PrimeraEntrega\ProyectoSeminario_PrimeraEntrega\CentroEventos\CentroEventos.Aplicacion\obj\Debug\net8.0\CentroEventos.Aplicacion.AssemblyInfo.cs
+c:\Users\Usuario\Documents\SeminarioLenguajes\Proyecto_PrimeraEntrega\ProyectoSeminario_PrimeraEntrega\CentroEventos\CentroEventos.Aplicacion\obj\Debug\net8.0\CentroEventos.Aplicacion.csproj.CoreCompileInputs.cache
+c:\Users\Usuario\Documents\SeminarioLenguajes\Proyecto_PrimeraEntrega\ProyectoSeminario_PrimeraEntrega\CentroEventos\CentroEventos.Aplicacion\obj\Debug\net8.0\CentroEventos.Aplicacion.sourcelink.json
+c:\Users\Usuario\Documents\SeminarioLenguajes\Proyecto_PrimeraEntrega\ProyectoSeminario_PrimeraEntrega\CentroEventos\CentroEventos.Aplicacion\obj\Debug\net8.0\CentroEventos.Aplicacion.dll
+c:\Users\Usuario\Documents\SeminarioLenguajes\Proyecto_PrimeraEntrega\ProyectoSeminario_PrimeraEntrega\CentroEventos\CentroEventos.Aplicacion\obj\Debug\net8.0\refint\CentroEventos.Aplicacion.dll
+c:\Users\Usuario\Documents\SeminarioLenguajes\Proyecto_PrimeraEntrega\ProyectoSeminario_PrimeraEntrega\CentroEventos\CentroEventos.Aplicacion\obj\Debug\net8.0\CentroEventos.Aplicacion.pdb
+C:\Users\Usuario\Documents\SeminarioLenguajes\Proyecto_PrimeraEntrega\ProyectoSeminario_PrimeraEntrega\CentroEventos\CentroEventos.Aplicacion\obj\Debug\net8.0\ref\CentroEventos.Aplicacion.dll

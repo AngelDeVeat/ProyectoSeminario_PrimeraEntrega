@@ -1,7 +1,7 @@
 @page "/listadoEventosConCupoDisponible"
 @inject ListarEventosConCupoDisponibleUseCase ListarEventosConCupoDisponibleUseCase
 @inject UserState User
-@rendermode InteractiveServer
+@*@rendermode InteractiveServer*@
 @inject NavigationManager Navegador
 @if (mostrarDialogo)
 {
@@ -59,10 +59,10 @@ List<EventoDeportivo> _lista= new List<EventoDeportivo>();
 
  }
  private void VolverInicio(){
-     Navegador.NavigateTo($"inicio");
+     Navegador.NavigateTo($"/inicio");
 }
 private void VolverHome(){
-     Navegador.NavigateTo($"");
+     Navegador.NavigateTo($"/");
 }
 protected override Task OnAfterRenderAsync(bool firstRender){
         if (mostrarDialogo && dialogo != null && firstRender){

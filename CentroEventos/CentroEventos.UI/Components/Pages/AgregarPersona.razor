@@ -1,17 +1,26 @@
 @page "/Persona/{id:int?}"
-@rendermode InteractiveServer
+@*@rendermode InteractiveServer*@
 @inject NavigationManager Navegador;
 @inject PersonaAltaUseCase PersonaAltaUseCase
 @inject PersonaModificacionUseCase PersonaModificacionUseCase
 @inject PersonaModificacionUseCase PersonaModificacionUseCase
 @inject ObtenerPersonaUseCase ObtenerPersonaUseCase
+@inject ServicioAutorizacion servicioAutorizacion
 @inject UserState User
 @*SI el usuario llego hasta aqui sin pasar por inicio_sesion/registro*@
 <Mensaje @ref=dialogo 
 mensaje="Acceso no autorizado" 
 soloMensaje=true
 OnCerrado="VolverHome"/>
+
+@*SI el usuario llego hasta aqui mediante la url, pudo haberse saltado las verificaciones de permisos*@
+<Mensaje @ref=dialogo_2 
+mensaje="No posees el permiso para ralizar esta accion" 
+soloMensaje=true
+OnCerrado="VolverInicio"/>
+
 <DialogoEx  @ref="dialogoex"/>
+@if(!mostrarDialogo){
 @if (_esnuevapersona)
  {
 <h3>Agregando un nueva Persona</h3>
@@ -29,18 +38,33 @@ OnCerrado="VolverHome"/>
 <button class="btn btn-danger" @onclick="()=>VolverInicio()">
             Volver al inicio
         </button>
+}
 @code {
 Persona persona = new Persona();
-Mensaje? dialogo=null;
+Mensaje? dialogo=null, dialogo_2=null;
 [Parameter] public int? id{get;set;}
 bool _esnuevapersona=true;
 DialogoEx? dialogoex;
 Usuario? user{get; set;}=null;
-bool mostrarDialogo= false;
+bool mostrarDialogo= false, mostrarDialogo_FaltaPermisos_Alta, mostrarDialogo_FaltaPermisos_Modi = false;
 protected override void OnInitialized(){
   user=User.user;
   if (user ==null){
     mostrarDialogo=true;
+  }
+  else{
+    if (!servicioAutorizacion.PoseeElPermiso(user.Permisos, Permiso.PersonaModificacion)){
+      // no tiene permisos para modificar y esta aqui para modificar
+      
+        mostrarDialogo_FaltaPermisos_Modi = true;
+      
+    }
+    if (!servicioAutorizacion.PoseeElPermiso(user.Permisos, Permiso.PersonaAlta)){
+      // faltan permisos para alta y esta aqui para alta
+      
+        mostrarDialogo_FaltaPermisos_Alta = true;
+      
+    }
   }
 }
 protected override void OnParametersSet()
@@ -55,10 +79,10 @@ if (id != null)
 }
 }
 private void VolverInicio(){
-     Navegador.NavigateTo($"inicio");
+     Navegador.NavigateTo($"/inicio");
 }
 private void VolverHome(){
-     Navegador.NavigateTo($"");
+     Navegador.NavigateTo($"/");
 }
 void Aceptar()
 {
@@ -70,7 +94,7 @@ void Aceptar()
        PersonaModificacionUseCase.Modificacion(persona,user);
    }
 persona = new Persona();
-Navegador.NavigateTo("listadoPersonas");
+Navegador.NavigateTo("/listadoPersonas");
 }
  catch(Exception e){
     dialogoex?.Mostrar(e.Message);
@@ -79,8 +103,19 @@ Navegador.NavigateTo("listadoPersonas");
  protected override Task OnAfterRenderAsync(bool firstRender){
         if (mostrarDialogo && dialogo != null && firstRender){
             dialogo.Mostrar();
-            mostrarDialogo = false;
             StateHasChanged();
+        }
+        else if(mostrarDialogo_FaltaPermisos_Modi && dialogo_2 != null && firstRender){
+          if (id != null){
+            dialogo_2.Mostrar();
+            StateHasChanged();
+          }
+        }
+        else if(mostrarDialogo_FaltaPermisos_Alta && dialogo_2 != null && firstRender){
+          if (id == null){
+            dialogo_2.Mostrar();
+            StateHasChanged();
+          }
         }
         return Task.CompletedTask;
     } 

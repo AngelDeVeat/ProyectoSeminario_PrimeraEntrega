@@ -1,9 +1,6 @@
 
 @page "/listadoEventosDeportivos"
-@rendermode InteractiveServer
-using System.Runtime.InteropServices.Marshalling;
-
-using System.Runtime.InteropServices.Marshalling;
+@*@rendermode InteractiveServer*@
 
 @inject EventoDeportivoListadoUseCase EventoDeportivoListadoUseCase
 @inject EventoDeportivoBajaUseCase  EventoDeportivoBajaUseCase
@@ -88,10 +85,10 @@ protected override void OnInitialized()
 DialogosDeConfirmacion? dialogocon;
 EventoDeportivo? _evento =null;
 private void VolverInicio(){
-     Navegador.NavigateTo($"inicio");
+     Navegador.NavigateTo($"/inicio");
 }
 private void VolverHome(){
-     Navegador.NavigateTo($"");
+     Navegador.NavigateTo($"/");
 }
 private void ConfirmarEliminacion(EventoDeportivo evento)
 {
@@ -122,7 +119,4 @@ catch(Exception e){
         }
         return Task.CompletedTask;
     } 
-}    using SQLitePCL;
-
-#nullable disable
-#line default
+}

@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using System.Text;
 
 namespace CentroEventos.Aplicacion;
@@ -27,6 +28,12 @@ public class RegistrarseUseCase
             throw new ValidacionException("la validacion fallo debiado a que la contraseña ingresada no es valida");
         if (!Validador_Usuario.CorreoElectronicoValido(usuario.CorreoElectronico))
             throw new ValidacionException("la validacion fallo debido a que el CorreoElectronico no es valido");
-        _iusuario.AgregarUsuario(usuario, contraseña);
+        
+        // aplicar hash a la contraseña 
+        SHA256 sha256 = SHA256.Create();
+        byte[] hashValue;
+        hashValue = sha256.ComputeHash(Encoding.UTF8.GetBytes(contraseña));
+
+        _iusuario.AgregarUsuario(usuario, hashValue);
     }
 }

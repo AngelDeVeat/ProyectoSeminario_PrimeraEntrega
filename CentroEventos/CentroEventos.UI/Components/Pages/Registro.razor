@@ -1,8 +1,10 @@
 ﻿@page "/registro"
-@rendermode InteractiveServer
+@*@rendermode InteractiveServer*@
 @inject UserState userState;
 @inject RegistrarseUseCase registrarseUseCase;
+@inject NavMenuService MenuService;
 @inject NavigationManager navigator;
+
 
 <h3>Registro</h3>
 
@@ -29,9 +31,17 @@ OnCerrado="IrMain"/>
     string _contraseña = "";
     Usuario user {get;set;} = null!;
     Mensaje dialogo = null!, dialogo_2 = null!;  
+
+    protected override void OnInitialized(){
+        userState.user = null;
+        // aca deberia llamarse a la funcion Actualizar de NavMenu
+        MenuService.ActualizarMenu();
+    }
+
     void IrMain(){
         userState.user = user;
-        navigator.NavigateTo("inicio");
+        MenuService.ActualizarMenu();
+        navigator.NavigateTo("/inicio");
     }
     void Aceptar(){
         try{
